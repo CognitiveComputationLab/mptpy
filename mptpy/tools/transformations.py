@@ -27,7 +27,6 @@ def word_to_tree(word):
 
     """
     nested = nested_list(word)
-    print("nested ", nested)
     root = create_from_nested(nested, word.is_leaf)
     return root
 

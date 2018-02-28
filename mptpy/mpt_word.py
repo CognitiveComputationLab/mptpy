@@ -79,9 +79,9 @@ class MPTWord(object):
         return abst
 
     def split(self):
-        """ Splits an MPT represented as a word from the formal MPT language into
-        its positive and negative subtrees following the success edge (parameter
-        probability) or failure (inverse parameter probability) edge.
+        """ Splits an MPT represented as a word from the formal MPT language
+        into its positive and negative subtrees following the success edge
+        (parameter probability) or failure (inverse parameter probability) edge.
 
         Returns
         -------

@@ -6,11 +6,11 @@ Paulina Friemann <friemanp@cs.uni-freiburg.de>
 Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
-
+import json
 import tools.transformations as transformations
 
 
-def to_tikz(mpt, code_path):
+def to_tikz(mpt):
     """ Generate tikz code for given MPT
     Parameters
     ----------
@@ -21,7 +21,16 @@ def to_tikz(mpt, code_path):
         specify where to save the tikz code
     """
 
-    raise NotImplementedError
+    def recursive_translation(subtree, temp=""):
+        if not isinstance(subtree, list):
+            return subtree
+        pos = recursive_translation(subtree[1][0])
+        neg = recursive_translation(subtree[1][1])
+        return "[." + subtree[0] + " " + pos + " " + neg + " ]"
+
+    nested = transformations.nested_list(mpt.word)
+    return r"\Tree " + recursive_translation(nested)
+
 
 
 def cmd_draw(mpt):

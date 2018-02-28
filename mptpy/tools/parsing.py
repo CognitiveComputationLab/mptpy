@@ -191,6 +191,6 @@ def create_from_nested(nested, is_leaf):
 
     if isinstance(nested, list) and len(nested) == 1: # list of only one param
         nested = nested[0]
-    print(nested)
+
     root = create_from_nested_node(nested)
     return root
