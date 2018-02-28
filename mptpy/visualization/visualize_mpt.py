@@ -7,6 +7,9 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
 
+import tools.transformations as transformations
+
+
 def to_tikz(mpt, code_path):
     """ Generate tikz code for given MPT
     Parameters
@@ -26,8 +29,35 @@ def cmd_draw(mpt):
 
     Parameters
     ----------
-    mpt : MPT
+    mpt : MPTWord
         MPT to be drawn
     """
+    word = mpt
 
-    raise NotImplementedError
+    subtree = transformations.nested_list(word)
+    _dfs_print(subtree, word.is_leaf)
+
+
+def _dfs_print(subtree, is_leaf, depth=0):
+    """ Prints a tree recursively via depth first search
+
+    Parameters
+    ----------
+    subtree : list
+        tree as a nested list
+
+    """
+    to_print = '\t' * depth
+
+    if not isinstance(subtree, list): # leaf
+        to_print += subtree
+        print(to_print)
+        return
+
+    neg = subtree[1][1]  # negative subtree
+    pos = subtree[1][0]  # positive subtree
+
+    _dfs_print(neg, is_leaf, depth + 1)
+    to_print += subtree[0] # current node
+    print(to_print)
+    _dfs_print(pos, is_leaf, depth + 1)

@@ -8,21 +8,20 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 """
 
 import re
-import string
 from node import Node
 
 
 def parse_file(file_path, form=None):
     """ Parse a .txt or .model file and return the MPT model in
-    the BMPT form 
-    
+    the BMPT form
+
     Parameters
     ----------
     file_path : str
         path to the model file
     form : ["easy", "BMPT"], optional
         format of the file
-    
+
     Returns
     -------
     str
@@ -88,11 +87,11 @@ def parse_branches(lines, sep=" "):
         for i, branch in enumerate(answer[1]):
             answer[1][i] = branch.split("*")
 
-    tree_str = dict_to_BMPT(tree, sep=sep)
+    tree_str = dict_to_bmpt(tree, sep=sep)
     return tree_str
 
 
-def dict_to_BMPT(tree, sep=" "):
+def dict_to_bmpt(tree, sep=" "):
     """ Turns a dictionary of answers and corresponding branches
     to a tree in the formal language
 
@@ -115,7 +114,7 @@ def dict_to_BMPT(tree, sep=" "):
 
     pos_tree, neg_tree = split_tree(tree)
 
-    return root + sep + dict_to_BMPT(pos_tree) + sep + dict_to_BMPT(neg_tree)
+    return root + sep + dict_to_bmpt(pos_tree) + sep + dict_to_bmpt(neg_tree)
 
 
 def split_tree(tree):
@@ -190,5 +189,8 @@ def create_from_nested(nested, is_leaf):
 
         return node_obj
 
+    if isinstance(nested, list) and len(nested) == 1: # list of only one param
+        nested = nested[0]
+    print(nested)
     root = create_from_nested_node(nested)
     return root

@@ -38,3 +38,12 @@ def test_is_leaf():
     assert_equals(True, mpt3.is_leaf("13"))
     assert_equals(False, mpt3.is_leaf("p3"))
     assert_equals(False, mpt3.is_leaf("pq"))
+
+def test_split():
+    word1 = MPTWord("p A B")
+    assert_equals(word1.split(), ('A', 'B'))
+    word2 = MPTWord('a N b N O')
+    assert_equals(word2.split(), ('N', 'b N O'))
+    word3 = MPTWord('a b N O N')
+    assert_equals(word3.split(), ('b N O', 'N'))
+

@@ -23,8 +23,6 @@ class Node(object):
         self.pos = pos
         self.neg = neg
 
-        print(self.content, self.leaf, self.pos, self.neg)
-
     def __str__(self):
         return "Node({})".format(self.content)
 

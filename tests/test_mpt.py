@@ -7,11 +7,12 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
 
+import string
 from nose.tools import assert_equals, assert_false
 from tests.context import mptpy
-from mptpy.mpt import MPT
+from mptpy.mpt import MPT, build_from_file
 
-MODEL_DIR = "test_models/test_build/"
+MODEL_DIR = "tests/test_models/test_build"
 
 
 def test_equals():
@@ -22,3 +23,27 @@ def test_equals():
 
     assert_equals(mpt1, mpt2)
     assert_false(mpt1 == mpt3)
+
+
+def test_to_easy():
+    """ Test the translation to the easy format """
+    mpt = build_from_file(MODEL_DIR + "/test1.model")
+    easy = mpt.to_easy()
+    print(easy)
+    assert_equals(easy, "a * bc * c\na * bc * (1-c)\na * (1-bc) * a + a * (1-bc) * (1-a) * e\na * (1-bc) * (1-a) * (1-e)\n(1-a) * d\n(1-a) * (1-d)\n")
+
+def test_save():
+    mpt = build_from_file(MODEL_DIR + "/test1.model")
+    mpt.save(MODEL_DIR + "/testsave.model")
+
+    mpt.save(MODEL_DIR + "/testsavebmpt.model", form="BMPT")
+
+
+def test_branch_formulae():
+    leaf = lambda x: all([ch in string.ascii_uppercase for ch in x])
+    mpt1 = MPT('p A B', is_leaf=leaf)
+
+    assert_equals(mpt1.get_formulae(), (['p', '(1 - p)'], ['A', 'B']))
+
+    mpt2 = MPT('r N g N O', is_leaf=leaf)
+    assert_equals(mpt2.get_formulae(), (['r', '(1 - r) * g', '(1 - r) * (1 - g)'], ['N', 'N', 'O']))

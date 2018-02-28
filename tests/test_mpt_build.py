@@ -20,10 +20,11 @@ def test_mpt_from_file():
     """ Test if building from a file functions properly """
     file_path = MODEL_DIR + "test1.model"
     mpt_obj = mptpy.mpt.build_from_file(file_path)
-    assert_equals(mpt_obj.word.word, "a b c 0 1 a 2 e 2 3 d 4 5")
+    assert_equals(mpt_obj.word.str_, "a bc c 0 1 a 2 e 2 3 d 4 5")
     assert_equals(mpt_obj.root.content, "a")
 
-    root = Node("a", Node("b", Node("c", Node("0", leaf=True), Node("1", leaf=True)), Node("a", Node("2"), Node("e", Node("2", leaf=True), Node("3", leaf=True)))), Node("d", Node("4", leaf=True), Node("5", leaf=True)))
+    root = Node("a", Node("bc", Node("c", Node("0", leaf=True), Node("1", leaf=True)), Node("a", Node("2"), Node("e", Node("2", leaf=True), Node("3", leaf=True)))), Node("d", Node("4", leaf=True), Node("5", leaf=True)))
+    mpt_obj.draw()
     assert_equals(root, mpt_obj.root)
 
 
@@ -32,6 +33,7 @@ def test_mpt_from_word():
     file_path = MODEL_DIR + "test1.model"
     mpt_obj = mptpy.mpt.build_from_file(file_path)
 
-    mpt_obj2 = mptpy.mpt.MPT("a b c 0 1 a 2 e 2 3 d 4 5")
+    mpt_obj2 = mptpy.mpt.MPT("a bc c 0 1 a 2 e 2 3 d 4 5")
+    mpt_obj2.draw()
 
     assert_equals(mpt_obj, mpt_obj2)

@@ -11,7 +11,7 @@ from itertools import filterfalse
 from tools.parsing import create_from_nested
 
 
-def word_to_tree(word, sep=" "):
+def word_to_tree(word):
     """ Translate an MPT in the BMPT language (see Purdy & Batchelder 2009) to
     a binary tree
 
@@ -26,7 +26,8 @@ def word_to_tree(word, sep=" "):
         root node of the MPT
 
     """
-    nested = nested_list(word.word, word.is_leaf, sep)
+    nested = nested_list(word)
+    print("nested ", nested)
     root = create_from_nested(nested, word.is_leaf)
     return root
 
@@ -55,8 +56,69 @@ def tree_to_word(node, sep=" "):
     return node.content + sep + pos + sep + neg
 
 
+def to_easy(mpt):
+    """ Transforms the MPT to the easy format
+
+    Parameters
+    ----------
+    mpt : MPT
+        MPT model
+
+    Returns
+    -------
+    str
+        tree in the easy format
+
+    """
+    lines = get_lines(nested_list(mpt.word), dict())
+
+    easy = ""
+    for key in sorted(lines.keys()):
+        line = " + ".join(lines[key]) + "\n"
+        easy += line
+    return easy
+
+
+def get_lines(subtree, lines, temp=""):
+    """ Builds a dictionary of the answers and the
+    respective branch formulas
+
+    Parameters
+    ----------
+    subtree : list
+        tree as a nested list
+
+    lines : dict
+        empty dictionary to be filled
+
+    Returns
+    -------
+    dict(int, string)
+        Dictionary of the answer categories of the tree and the branch formulas
+
+    """
+
+    if isinstance(subtree, list):
+        neg = subtree[1][1]  # right subtree
+        pos = subtree[1][0]  # left subtree
+
+        left_mult = " * " if isinstance(pos, list) else ""
+        right_mult = " * " if isinstance(neg, list) else ""
+
+        get_lines(pos, lines, temp + subtree[0] + left_mult)
+        get_lines(neg, lines, temp + "(1-" + subtree[0] + ")" + right_mult)
+
+        return lines
+
+    else:
+    # we reached the leaf
+        key = int(subtree)
+        if key not in lines:
+            lines[key] = []
+        lines[key] += [temp]
+
 # TODO
-def nested_list(str_, is_leaf, sep=" "):
+def nested_list(word):
     """Turns a word for a subtree into a nested list
     Parameters
     ----------
@@ -67,14 +129,17 @@ def nested_list(str_, is_leaf, sep=" "):
     list
         nested list of nodes and leaves in subtree
     """
-    if not isinstance(str_, list):
-        str_ = str_.split(sep)
 
-    subtrees = parse_tree(str_, is_leaf)
+    str_ = word.str_.split(word.sep)
+    # if only leaf
+    if len(str_) == 1:
+        return str_
+
+    subtrees = _parse_tree(str_, word.is_leaf)
     return subtrees[0]
 
 
-def pop_down(stack):
+def _pop_down(stack):
     """Appends the last element on the stack to the one below
 
     Parameters
@@ -93,7 +158,7 @@ def pop_down(stack):
         stack[-1].append([temp])
 
 
-def parse_tree(str_, is_leaf):
+def _parse_tree(str_, is_leaf):
     """ Parse the mpt word and translate it to a nested list
     Parameters
     ----------
@@ -129,10 +194,10 @@ def parse_tree(str_, is_leaf):
         if len(stack[-1]) > 1:
             # if last thing on stack is "full", append downwards
             while len(stack[-1][1]) == 2 and len(stack) > 1:
-                pop_down(stack)
+                _pop_down(stack)
 
     # cleanup
     while len(stack) > 1:
-        pop_down(stack)
+        _pop_down(stack)
 
     return stack
