@@ -30,7 +30,7 @@ def run(model_file, save_file):
     mpt = build_from_file(model_file)
     tikz = to_tikz(mpt)
     with open(save_file, 'w') as output:
-        output.write(tikz) 
+        output.write(tikz)
 
 
 if __name__ == "__main__":

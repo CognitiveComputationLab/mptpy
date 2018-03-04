@@ -14,8 +14,8 @@ from tools.transformations import word_to_tree, tree_to_word, to_easy
 from tools.parsing import parse_file
 from visualization.visualize_mpt import cmd_draw
 
-
-def build_from_file(file_path, form=None):
+# TODO remove data
+def build_from_file(file_path, data, form=None):
     """ Build MPT object from a file (.model or .txt)
 
     Parameters
@@ -28,7 +28,7 @@ def build_from_file(file_path, form=None):
     MPT
         MPT object constructed from the file
     """
-    word = parse_file(file_path, form=form)
+    word = parse_file(file_path, data, form=form)
 
     return MPT(word)
 
@@ -58,7 +58,7 @@ class MPT(object):
         elif isinstance(mpt, str):
             self.word = MPTWord(mpt, sep=sep)
             if is_leaf:
-                self.word.set_is_leaf(is_leaf)
+                self.word.is_leaf = is_leaf
             self.root = word_to_tree(self.word)
 
     def to_string(self):

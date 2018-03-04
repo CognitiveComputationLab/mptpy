@@ -8,10 +8,13 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 """
 
 import re
+import os
+import numpy as np
 from node import Node
+import tools.joint_tree as joint_tree
 
-
-def parse_file(file_path, form=None):
+# TODO remove data
+def parse_file(file_path, data, form=None):
     """ Parse a .txt or .model file and return the MPT model in
     the BMPT form
 
@@ -35,8 +38,8 @@ def parse_file(file_path, form=None):
         if any("*" in line for line in lines):
             form = "easy"
 
-    # TODO check for multiple lines
-
+    # TODO check for multiple lines, remove data
+    lines = process_file(lines, data)
     return lines[0] if form == "BMPT" else parse_branches(lines)
 
 
@@ -86,6 +89,8 @@ def parse_branches(lines, sep=" "):
     for answer in tree.items():
         for i, branch in enumerate(answer[1]):
             answer[1][i] = branch.split("*")
+
+    subtrees = []
 
     tree_str = dict_to_bmpt(tree, sep=sep)
     return tree_str
@@ -194,3 +199,53 @@ def create_from_nested(nested, is_leaf):
 
     root = create_from_nested_node(nested)
     return root
+
+
+def process_file(model_lines, data=""):
+    """ Processes the source file lines by splitting into additive sublists.
+
+    Parameters
+    ----------
+    _filename : str
+        Lines in model file.
+
+    Returns
+    -------
+    list(str)
+
+
+    """
+
+    subtrees = []
+
+    print(os.path.abspath("temp/model.restr"))
+
+    # split the model lines at empty lines ([])
+    indices = [i for i, x in enumerate(model_lines) if x == '']
+    for i, j in zip([0] + indices, indices + [None]):
+        i += (i != 0)
+        subtrees.append(model_lines[i:j])
+
+    max_params = 0
+    for subtree in subtrees:
+        max_params += len(subtree) - 1
+
+    if os.path.exists("temp/model.restr"):
+        os.remove("temp/model.restr")
+
+    if len(subtrees) > 1:
+        data = np.genfromtxt(data, delimiter=',', dtype='int')
+        if -1 in data[0]:
+            data = data[1:]
+
+        subtrees, static_params = joint_tree.join_subtrees(subtrees, data)
+
+        with open("temp/model.restr", "w") as file_:
+            for param, value in static_params.items():
+                print(param, value)
+                file_.write("{} = {}\n".format(param, value))
+
+    else:
+        subtrees = subtrees[0]
+
+    return subtrees#, max_params # TODO

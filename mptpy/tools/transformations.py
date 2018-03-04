@@ -69,7 +69,7 @@ def to_easy(mpt):
         tree in the easy format
 
     """
-    lines = get_lines(nested_list(mpt.word), dict())
+    lines = _get_lines(nested_list(mpt.word), dict())
 
     easy = ""
     for key in sorted(lines.keys()):
@@ -78,7 +78,7 @@ def to_easy(mpt):
     return easy
 
 
-def get_lines(subtree, lines, temp=""):
+def _get_lines(subtree, lines, temp=""):
     """ Builds a dictionary of the answers and the
     respective branch formulas
 
@@ -104,8 +104,8 @@ def get_lines(subtree, lines, temp=""):
         left_mult = " * " if isinstance(pos, list) else ""
         right_mult = " * " if isinstance(neg, list) else ""
 
-        get_lines(pos, lines, temp + subtree[0] + left_mult)
-        get_lines(neg, lines, temp + "(1-" + subtree[0] + ")" + right_mult)
+        _get_lines(pos, lines, temp + subtree[0] + left_mult)
+        _get_lines(neg, lines, temp + "(1-" + subtree[0] + ")" + right_mult)
 
         return lines
 
@@ -121,8 +121,9 @@ def nested_list(word):
     """Turns a word for a subtree into a nested list
     Parameters
     ----------
-    str_ : str
+    word : MPTWord
         tree in string form
+
     Returns
     -------
     list

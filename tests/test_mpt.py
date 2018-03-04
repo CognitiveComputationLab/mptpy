@@ -23,6 +23,7 @@ def test_equals():
 
     assert_equals(mpt1, mpt2)
     assert_false(mpt1 == mpt3)
+    assert_false(mpt1 != mpt2)
 
 
 def test_to_easy():

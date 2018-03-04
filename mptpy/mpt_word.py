@@ -20,17 +20,6 @@ class MPTWord(object):
         # defines what characterizes a leaf node
         self.is_leaf = lambda node: all([ch in string.digits for ch in node])
 
-    def set_is_leaf(self, func):
-        """ Set the characteristic function of a leaf node
-        Parameters
-        ----------
-        func : function
-            The characteristic function of a leaf node -
-            by default: lambda node: all([ch in string.digits for ch in node])
-
-        """
-        self.is_leaf = func
-
     def get_answers(self):
         """ Return all the answers
 

@@ -18,7 +18,7 @@ sys.path.insert(0, PATH)
 from mpt import build_from_file
 
 
-def run(file):
+def run(file, data):
     """ Draw an MPT modelto the command line
 
     Parameters
@@ -27,7 +27,7 @@ def run(file):
         path to the model file
     """
 
-    mpt = build_from_file(file)
+    mpt = build_from_file(file, data)
     mpt.draw()
 
 
@@ -39,4 +39,4 @@ if __name__ == "__main__":
         print("Usage: python3 -m visualize_mpt <model_file>")
         exit()
 
-    run(sys.argv[1])
+    run(sys.argv[1], sys.argv[2])
