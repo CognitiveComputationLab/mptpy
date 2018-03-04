@@ -15,7 +15,7 @@ from tools.parsing import parse_file
 from visualization.visualize_mpt import cmd_draw
 
 # TODO remove data
-def build_from_file(file_path, data, form=None):
+def build_from_file(file_path, data=None, form=None):
     """ Build MPT object from a file (.model or .txt)
 
     Parameters
@@ -28,7 +28,7 @@ def build_from_file(file_path, data, form=None):
     MPT
         MPT object constructed from the file
     """
-    word = parse_file(file_path, data, form=form)
+    word = parse_file(file_path, data=data, form=form)
 
     return MPT(word)
 

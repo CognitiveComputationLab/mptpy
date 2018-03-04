@@ -14,7 +14,7 @@ from node import Node
 import tools.joint_tree as joint_tree
 
 # TODO remove data
-def parse_file(file_path, data, form=None):
+def parse_file(file_path, data=None, form=None):
     """ Parse a .txt or .model file and return the MPT model in
     the BMPT form
 
@@ -39,7 +39,7 @@ def parse_file(file_path, data, form=None):
             form = "easy"
 
     # TODO check for multiple lines, remove data
-    lines = process_file(lines, data)
+    lines = process_file(lines, data=data)
     return lines[0] if form == "BMPT" else parse_branches(lines)
 
 
@@ -201,7 +201,7 @@ def create_from_nested(nested, is_leaf):
     return root
 
 
-def process_file(model_lines, data=""):
+def process_file(model_lines, data=None):
     """ Processes the source file lines by splitting into additive sublists.
 
     Parameters
@@ -234,9 +234,10 @@ def process_file(model_lines, data=""):
         os.remove("temp/model.restr")
 
     if len(subtrees) > 1:
-        data = np.genfromtxt(data, delimiter=',', dtype='int')
-        if -1 in data[0]:
-            data = data[1:]
+        if data is not None:
+            data = np.genfromtxt(data, delimiter=',', dtype='int')
+            if -1 in data[0]:
+                data = data[1:]
 
         subtrees, static_params = joint_tree.join_subtrees(subtrees, data)
 
