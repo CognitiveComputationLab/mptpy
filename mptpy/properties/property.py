@@ -7,6 +7,8 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
 
+import re
+
 
 def check(mpt, mpt_property):
     """ check for property
@@ -42,4 +44,7 @@ def identifiable(mpt):
         whether tree is identifiable
     """
 
-    raise NotImplementedError
+    free_params = [
+        x for x in set(mpt.word.parameters) if not re.match(r'y\d+', x)
+    ]
+    return len(free_params) <= mpt.max_parameters()

@@ -29,8 +29,8 @@ def test_get_only_parameter():
 
 
 def test_parsing():
-    word = parsing.parse_file(MODEL_DIR + "/test1.model")
+    word, pft = parsing.parse_file(MODEL_DIR + "/test1.model")
     assert_equals(word, "a bc c 0 1 a 2 e 2 3 d 4 5")
 
-    word = parsing.parse_file(MODEL_DIR + "/testBMPT.model")
+    word, pft = parsing.parse_file(MODEL_DIR + "/testBMPT.model")
     assert_equals(word, "a b c 0 1 a 2 e 2 3 def 4 5")

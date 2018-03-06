@@ -30,11 +30,12 @@ def test_mpt_from_file():
 
 def test_static_variables():
     """ Test the construction of mpts with multiple subtrees """
-    mpt = mptpy.mpt.build_from_file(MODEL_DIR + "2htm.model")
+    mpt = mptpy.mpt.build_from_file(MODEL_DIR + "2htms.txt")
 
-    # right or left first?
-    assert_equals(mpt.word.str_, "y0 y1 D0 0 G1 0 1 Dn 3 G1 2 3 D0 4 G2 4 5")
-    assert_equals(mpt.word.str_, "y0 D0 0 G1 0 1 y1 Dn 3 G1 2 3 D0 4 G2 4 5")
+    assert_equals(
+        mpt.string,
+        "y0 y5 y8 Do 0 G1 0 1 Dn 3 G1 2 3 y6 Do 4 G2 4 5 y7 Dn 7 G2 6 7 Do 8 G3 8 9 y1 y4 Dn 11 G3 10 11 Do 12 G4 12 13 y2 Dn 15 G4 14 15 y3 Do 16 G5 16 17 Dn 19 G5 18 19"
+    )
 
 
 def test_mpt_from_word():

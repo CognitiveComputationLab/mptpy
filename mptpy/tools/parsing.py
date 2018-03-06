@@ -8,13 +8,11 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 """
 
 import re
-import os
-import numpy as np
 from node import Node
 import tools.joint_tree as joint_tree
 
-# TODO remove data
-def parse_file(file_path, data=None, form=None):
+
+def parse_file(file_path, form=None):
     """ Parse a .txt or .model file and return the MPT model in
     the BMPT form
 
@@ -38,9 +36,16 @@ def parse_file(file_path, data=None, form=None):
         if any("*" in line for line in lines):
             form = "easy"
 
-    # TODO check for multiple lines, remove data
-    lines = process_file(lines, data=data)
-    return lines[0] if form == "BMPT" else parse_branches(lines)
+    lines = split_subtrees(lines)
+
+    if len(lines) > 1:
+        prefix_tree = joint_tree.get_prefix_tree(lines)
+        lines = prefix_tree.join_subtrees(lines)
+    else:
+        lines = lines[0]
+        prefix_tree = None
+
+    return lines[0] if form == "BMPT" else easy_to_bmpt(lines), prefix_tree
 
 
 def get_lines(file_path):
@@ -63,7 +68,7 @@ def get_lines(file_path):
         return lines
 
 
-def parse_branches(lines, sep=" "):
+def easy_to_bmpt(lines, sep=" "):
     """ Turns the lines of a tree in the easy file format
     to a tree in the formal language
 
@@ -89,8 +94,6 @@ def parse_branches(lines, sep=" "):
     for answer in tree.items():
         for i, branch in enumerate(answer[1]):
             answer[1][i] = branch.split("*")
-
-    subtrees = []
 
     tree_str = dict_to_bmpt(tree, sep=sep)
     return tree_str
@@ -201,52 +204,24 @@ def create_from_nested(nested, is_leaf):
     return root
 
 
-def process_file(model_lines, data=None):
-    """ Processes the source file lines by splitting into additive sublists.
+def split_subtrees(model_lines):
+    """ If the model contains multiple subtrees, split
+    formulae at the empty lines
 
     Parameters
     ----------
-    _filename : str
-        Lines in model file.
-
+    model_lines : list
+        List of lines in the model file
+    
     Returns
     -------
-    list(str)
-
-
+    list
+        List of subtrees
     """
-
     subtrees = []
-
-    print(os.path.abspath("temp/model.restr"))
-
     # split the model lines at empty lines ([])
     indices = [i for i, x in enumerate(model_lines) if x == '']
     for i, j in zip([0] + indices, indices + [None]):
         i += (i != 0)
         subtrees.append(model_lines[i:j])
-
-    max_params = 0
-    for subtree in subtrees:
-        max_params += len(subtree) - 1
-
-    if os.path.exists("temp/model.restr"):
-        os.remove("temp/model.restr")
-
-    if len(subtrees) > 1:
-        if data is not None:
-            data = np.genfromtxt(data, delimiter=',', dtype='int')
-            if -1 in data[0]:
-                data = data[1:]
-
-        subtrees, static_params = joint_tree.join_subtrees(subtrees, data)
-
-        with open("temp/model.restr", "w") as file_:
-            for param, value in static_params.items():
-                print(param, value)
-                file_.write("{} = {}\n".format(param, value))
-
-    else:
-        subtrees = subtrees[0]
-
-    return subtrees#, max_params # TODO
+    return subtrees

@@ -7,13 +7,16 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
 
-from fitter import Fitter
+from fitting.fitter import Fitter
 
 
 class ScipyFitter(Fitter):
     """ Tree fitting using SciPy """
 
-    def fit_mpt(self, tree_path, data_path, use_fia=False):
+    def __init__(self, data_path, sep=',', header=None):
+        super().__init__(data_path, sep=sep, header=header)
+
+    def fit_mpt(self, mpt, use_fia=False):
         """ Fit the given tree using SciPy
 
         Parameters
@@ -34,5 +37,7 @@ class ScipyFitter(Fitter):
             BIC, GSQ, Likelihood (and optionally FIA)
 
         """
-
-        raise NotImplementedError
+        if mpt.prefix_tree is not None:
+            # the model consists of several subtrees, create restriction files
+            self._clear_temp_dir("temp/")
+            self._compute_parameter_ratios(mpt, "temp/")

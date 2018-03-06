@@ -29,11 +29,10 @@ def run(file):
 
     mpt = build_from_file(file)
     mpt.draw()
+    print(mpt)
 
 
 if __name__ == "__main__":
-
-    print(sys.argv)
 
     if len(sys.argv) < 2:
         print("Usage: python3 -m visualize_mpt <model_file>")

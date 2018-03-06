@@ -24,12 +24,12 @@ def test_abstract():
 def test_get_answers():
     """ Test if returning all the leaf node contents works """
     mpt2 = MPTWord("pq b c 1 2 pq 4 e 4 5 z 6 7")
-    assert_equals(mpt2.get_answers(), ["1", "2", "4", "4", "5", "6", "7"])
+    assert_equals(mpt2.answers, ["1", "2", "4", "4", "5", "6", "7"])
 
 def test_get_parameters():
     """ Test if returning all the parameters works """
     mpt2 = MPTWord("pq b c 1 2 pq 4 e 4 5 z 6 7")
-    assert_equals(mpt2.get_parameters(), ["pq", "b", "c", "pq", "e", "z"])
+    assert_equals(mpt2.parameters, ["pq", "b", "c", "pq", "e", "z"])
 
 def test_is_leaf():
     """ Test if judging nodes to be leaves or not works """

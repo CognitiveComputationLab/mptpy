@@ -20,7 +20,8 @@ class MPTWord(object):
         # defines what characterizes a leaf node
         self.is_leaf = lambda node: all([ch in string.digits for ch in node])
 
-    def get_answers(self):
+    @property
+    def answers(self):
         """ Return all the answers
 
         Returns
@@ -31,7 +32,8 @@ class MPTWord(object):
         split = self.str_.split(self.sep)
         return list(filter(self.is_leaf, split))
 
-    def get_parameters(self):
+    @property
+    def parameters(self):
         """ Return all the (inner node) parameters
 
         Returns
@@ -52,8 +54,8 @@ class MPTWord(object):
         """
         abst = ""
         # this retains the order
-        answer_set = list(dict.fromkeys(self.get_answers()))
-        param_set = list(dict.fromkeys(self.get_parameters()))
+        answer_set = list(dict.fromkeys(self.answers))
+        param_set = list(dict.fromkeys(self.parameters))
 
         for node in self.str_.split(" "):
             # add whitespace only after first node

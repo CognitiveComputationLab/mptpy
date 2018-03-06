@@ -42,9 +42,9 @@ def test_save():
 
 def test_branch_formulae():
     leaf = lambda x: all([ch in string.ascii_uppercase for ch in x])
-    mpt1 = MPT('p A B', is_leaf=leaf)
+    mpt1 = MPT('p A B', leaf_test=leaf)
 
     assert_equals(mpt1.get_formulae(), (['p', '(1 - p)'], ['A', 'B']))
 
-    mpt2 = MPT('r N g N O', is_leaf=leaf)
+    mpt2 = MPT('r N g N O', leaf_test=leaf)
     assert_equals(mpt2.get_formulae(), (['r', '(1 - r) * g', '(1 - r) * (1 - g)'], ['N', 'N', 'O']))

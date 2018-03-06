@@ -14,8 +14,8 @@ from tools.transformations import word_to_tree, tree_to_word, to_easy
 from tools.parsing import parse_file
 from visualization.visualize_mpt import cmd_draw
 
-# TODO remove data
-def build_from_file(file_path, data=None, form=None):
+
+def build_from_file(file_path, form=None):
     """ Build MPT object from a file (.model or .txt)
 
     Parameters
@@ -28,9 +28,11 @@ def build_from_file(file_path, data=None, form=None):
     MPT
         MPT object constructed from the file
     """
-    word = parse_file(file_path, data=data, form=form)
+    word, prefix_tree = parse_file(file_path, form=form)
 
-    return MPT(word)
+    mpt = MPT(word)
+    mpt.prefix_tree = prefix_tree
+    return mpt
 
 
 class MPT(object):
@@ -38,7 +40,7 @@ class MPT(object):
 
     """
 
-    def __init__(self, mpt, sep=" ", is_leaf=None):
+    def __init__(self, mpt, sep=" ", leaf_test=None):
         """ Constructs the MPT object.
 
         Parameters
@@ -47,6 +49,7 @@ class MPT(object):
             String object.
 
         """
+        self.prefix_tree = None
 
         # mpt given as root node
         if isinstance(mpt, Node):
@@ -57,11 +60,12 @@ class MPT(object):
         # mpt given as word
         elif isinstance(mpt, str):
             self.word = MPTWord(mpt, sep=sep)
-            if is_leaf:
-                self.word.is_leaf = is_leaf
+            if leaf_test:
+                self.word.is_leaf = leaf_test
             self.root = word_to_tree(self.word)
 
-    def to_string(self):
+    @property
+    def string(self):
         """ Convenience function to retrieve the string representation
 
         Returns
@@ -71,6 +75,15 @@ class MPT(object):
         """
         return self.word.str_
 
+    def max_parameters(self):
+        """ The maximal number of free parameters in the model
+
+        Returns
+        -------
+        int
+            max number of free parameters
+        """
+        return self.prefix_tree.max_parameters()
 
     def get_formulae(self):
         """ Extracts the branch formulae underlying the represented MPT.
@@ -84,7 +97,7 @@ class MPT(object):
         classes : list(str)
             Outcome category identifiers corresponding the the branch formulae.
         """
-        word = self.to_string()
+        word = self.string
         if len(word) == 1:
             return [''], [word]
 

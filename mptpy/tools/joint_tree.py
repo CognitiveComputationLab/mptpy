@@ -7,19 +7,15 @@ Nicolas Riesterer <riestern@tf.uni-freiburg.de>
 
 """
 
-import sys
-import os
-import datetime
-
 import numpy as np
 
-from coco.mpt import parser as cp
 
 class PrefixNode(object):
     def __init__(self, left=None, right=None, content='.'):
         self.left = left
         self.right = right
         self.content = content
+        self.subtrees = None
 
     def to_string(self):
         left = self.left.to_string() if self.left is not None else '.'
@@ -40,6 +36,13 @@ class PrefixNode(object):
             right = ['(1 - {}) * {}'.format(self.content, f) for f in right_formulae]
 
         return left + right
+
+    def get_max_free_params(self):
+        max_params = 0
+
+        for subtree in self.subtrees:
+            max_params += len(subtree) - 1
+        return max_params
 
     def set_parameters(self, param_list):
         if not param_list:
@@ -66,6 +69,19 @@ class PrefixNode(object):
 
         return params
 
+    def compute_ratios(self, data):
+        n_subtrees = len(self.subtrees)
+        subtree_observations = []
+        idx = 0
+        for subtree_idx in range(n_subtrees):
+            n_cats = len(self.subtrees[subtree_idx])
+            subtree_observations.append(data[idx:(idx + n_cats)].sum())
+            idx += n_cats
+        subtree_observations = np.array(subtree_observations)
+
+        ratios = self.comp_param_ratios(subtree_observations)
+        return ratios
+
     def comp_param_ratios(self, observations):
         n_left = len(self.left.to_formulae()) if self.left else 1
         n_right = len(self.right.to_formulae()) if self.right else 1
@@ -78,6 +94,20 @@ class PrefixNode(object):
         if n_right > 1:
             result_dict.update(self.right.comp_param_ratios(observations[n_left:]))
         return result_dict
+
+    def join_subtrees(self, subtrees):
+
+        prefix_formulae = self.to_formulae()
+
+        # Merge the trees
+        merged_subtrees = merge_trees(prefix_formulae, subtrees)
+        merged_tree = [f for sub in merged_subtrees for f in sub]
+
+        return merged_tree
+
+    def __str__(self):
+        return self.content + self.left.__str__() + self.right.__str__()
+
 
 def generate_prefix_tree(n_subtrees):
     if n_subtrees <= 1:
@@ -110,6 +140,7 @@ def merge_trees(prefix_formulae, subtrees):
 
     return merged
 
+
 def generate_prefix_parameters(n_subtrees):
     n_prefix_params = n_subtrees - 1
     n_leading_zeros = int(np.ceil(np.log10(n_prefix_params)))
@@ -118,19 +149,8 @@ def generate_prefix_parameters(n_subtrees):
     return prefix_params
 
 
-def compute_rations(n_subtrees, subtrees, data, prefix_tree):
-    subtree_observations = []
-    idx = 0
-    for subtree_idx in range(n_subtrees):
-        n_cats = len(subtrees[subtree_idx])
-        subtree_observations.append(data[idx:(idx+n_cats)].sum())
-        idx += n_cats
-    subtree_observations = np.array(subtree_observations)
+def get_prefix_tree(subtrees):
 
-    ratios = prefix_tree.comp_param_ratios(subtree_observations)
-    return ratios
-
-def join_subtrees(subtrees, data=None):
     n_subtrees = len(subtrees)
 
     # Generate the prefix tree
@@ -139,16 +159,6 @@ def join_subtrees(subtrees, data=None):
     # Assign the parameters
     prefix_params = generate_prefix_parameters(n_subtrees)
     prefix_tree.set_parameters(prefix_params)
-    prefix_formulae = prefix_tree.to_formulae()
+    prefix_tree.subtrees = subtrees
 
-    # Merge the trees
-    merged_subtrees = merge_trees(prefix_formulae, subtrees)
-    merged_tree = [f for sub in merged_subtrees for f in sub]
-
-    # Compute parameter ratios and print as MPT restrictions
-    if data is not None:
-        ratios = compute_rations(n_subtrees, subtrees, data, prefix_tree)
-    else:
-        ratios = prefix_tree.static_parameters()
-
-    return merged_tree, ratios
+    return prefix_tree
