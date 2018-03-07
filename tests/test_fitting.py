@@ -25,7 +25,7 @@ def test_remove_header():
 
     data = np.genfromtxt(data_file, delimiter=',', dtype='int')
 
-    data_wo_header = fitter.remove_header()
+    data_wo_header = fitter.remove_header(data)
     assert_true((data_wo_header == data[1:]).all())
 
 
@@ -40,7 +40,7 @@ def test_comp_parameter_ratios():
 
     fitter = ScipyFitter(MODEL_DIR + "/broeder.csv")
 
-    ratios = fitter._compute_parameter_ratios(thtm)
+    ratios = fitter._compute_parameter_ratios(thtm, fitter.read_data())
     for key, value in ratios.items():
         ratios[key] = round(value, 1)
 

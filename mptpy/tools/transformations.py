@@ -31,9 +31,8 @@ def word_to_tree(word):
     return root
 
 
-def tree_to_word(node, sep=" "):
-    """ Translate a multinomial processing tree (MPT) to the corresponding word
-    in the formal language.
+def tree_to_str(node, sep=" "):
+    """ Translate a multinomial processing tree (MPT) to a string.
 
     Parameters
     ----------
@@ -42,16 +41,15 @@ def tree_to_word(node, sep=" "):
 
     Returns
     -------
-    MPTWord
-        MPT in the BMPT language format
+    str
+        MPT as a string
 
     """
-
     if node.leaf:
         return str(node.content)
 
-    pos = tree_to_word(node.pos)
-    neg = tree_to_word(node.neg)
+    pos = tree_to_str(node.pos)
+    neg = tree_to_str(node.neg)
     return node.content + sep + pos + sep + neg
 
 
@@ -110,7 +108,7 @@ def _get_lines(subtree, lines, temp=""):
         return lines
 
     else:
-    # we reached the leaf
+        # we reached the leaf
         key = int(subtree)
         if key not in lines:
             lines[key] = []
@@ -131,6 +129,7 @@ def nested_list(word):
     """
 
     str_ = word.str_.split(word.sep)
+
     # if only leaf
     if len(str_) == 1:
         return str_
@@ -172,6 +171,7 @@ def _parse_tree(str_, is_leaf):
     """
     num_params = len(list(filterfalse(is_leaf, str_)))
     num_children = []
+
     # initialize num_children to -1 for all inner nodes
     for _ in range(num_params):
         num_children.append(-1)

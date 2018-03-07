@@ -48,3 +48,11 @@ def test_branch_formulae():
 
     mpt2 = MPT('r N g N O', leaf_test=leaf)
     assert_equals(mpt2.get_formulae(), (['r', '(1 - r) * g', '(1 - r) * (1 - g)'], ['N', 'N', 'O']))
+
+    mpt3 = build_from_file(MODEL_DIR + "/test1.model")
+    print(mpt3.get_formulae())
+    assert_equals(mpt3.get_formulae(), ([
+        'a * bc * c', 'a * bc * (1 - c)', 'a * (1 - bc) * a',
+        'a * (1 - bc) * (1 - a) * e', 'a * (1 - bc) * (1 - a) * (1 - e)',
+        '(1 - a) * d', '(1 - a) * (1 - d)'
+    ], ['0', '1', '2', '2', '3', '4', '5']))

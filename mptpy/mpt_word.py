@@ -9,16 +9,21 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 import string
 from itertools import filterfalse
+from tools.transformations import nested_list
+
 
 class MPTWord(object):
     """ MPT in the BMPT format """
 
-    def __init__(self, word, sep=" "):
+    def __init__(self, word, sep=" ", leaf_test=None):
         self.str_ = word
         self.sep = sep
 
         # defines what characterizes a leaf node
-        self.is_leaf = lambda node: all([ch in string.digits for ch in node])
+        if leaf_test is None:
+            self.is_leaf = lambda node: all([ch in string.digits for ch in node])
+        else:
+            self.is_leaf = leaf_test
 
     @property
     def answers(self):
@@ -29,8 +34,8 @@ class MPTWord(object):
         list
             list of all the answers, with duplicates
         """
-        split = self.str_.split(self.sep)
-        return list(filter(self.is_leaf, split))
+        list_ = self.str_.split(self.sep)
+        return list(filter(self.is_leaf, list_))
 
     @property
     def parameters(self):
@@ -41,8 +46,8 @@ class MPTWord(object):
         list
             list of all the parameters, with duplicates
         """
-        split = self.str_.split(self.sep)
-        return list(filterfalse(self.is_leaf, split))
+        list_ = self.str_.split(self.sep)
+        return list(filterfalse(self.is_leaf, list_))
 
     def abstract(self):
         """ Calculate an abstract version of the tree
@@ -57,10 +62,10 @@ class MPTWord(object):
         answer_set = list(dict.fromkeys(self.answers))
         param_set = list(dict.fromkeys(self.parameters))
 
-        for node in self.str_.split(" "):
+        for node in self.str_.split(self.sep):
             # add whitespace only after first node
             if abst:
-                abst += " "
+                abst += self.sep
             if node in answer_set:
                 abst += "a" + str(answer_set.index(node))
             elif node in param_set:
@@ -69,7 +74,7 @@ class MPTWord(object):
                 raise KeyError
         return abst
 
-    def split(self):
+    def split_pos_neg(self):
         """ Splits an MPT represented as a word from the formal MPT language
         into its positive and negative subtrees following the success edge
         (parameter probability) or failure (inverse parameter probability) edge.
@@ -82,20 +87,19 @@ class MPTWord(object):
         neg_subtree : str
             String representation of the negative subtree.
         """
-
         expected_outcomes = 1
         pos = []
         split_string = self.str_.split()
         for idx, item in enumerate(split_string[1:]):
-            if item.islower():
+            if not self.is_leaf(item):
                 pos.append(item)
                 expected_outcomes += 1
-            elif item.isupper():
+            elif self.is_leaf(item):
                 pos.append(item)
                 expected_outcomes -= 1
 
             if expected_outcomes == 0:
-                return ' '.join(pos), ' '.join(split_string[idx + 2:])
+                return self.sep.join(pos), self.sep.join(split_string[idx + 2:])
 
     def __eq__(self, other):
         return self.str_ == other.str_
@@ -105,3 +109,16 @@ class MPTWord(object):
 
     def __str__(self):
         return self.str_
+
+    def __add__(self, other):
+
+        new = MPTWord(self.str_ + self.sep.join(list(other)), self.sep)
+        new.is_leaf = self.is_leaf
+        return new
+
+    def __getitem__(self, idx):
+        return list(self)[idx]
+
+    def __iter__(self):
+        list_ = self.str_.split(sep=self.sep)
+        return iter(list_)

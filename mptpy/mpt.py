@@ -10,7 +10,7 @@
 import os
 from mpt_word import MPTWord
 from node import Node
-from tools.transformations import word_to_tree, tree_to_word, to_easy
+import tools.transformations as trans
 from tools.parsing import parse_file
 from visualization.visualize_mpt import cmd_draw
 
@@ -55,14 +55,14 @@ class MPT(object):
         if isinstance(mpt, Node):
             print(mpt)
             self.root = mpt
-            self.word = tree_to_word(self.root, sep=sep)
+            self.word = MPTWord(trans.tree_to_str(self.root, sep=sep))
 
         # mpt given as word
         elif isinstance(mpt, str):
-            self.word = MPTWord(mpt, sep=sep)
+            self.word = MPTWord(mpt, sep=sep, leaf_test=leaf_test)
             if leaf_test:
                 self.word.is_leaf = leaf_test
-            self.root = word_to_tree(self.word)
+            self.root = trans.word_to_tree(self.word)
 
     @property
     def string(self):
@@ -97,14 +97,12 @@ class MPT(object):
         classes : list(str)
             Outcome category identifiers corresponding the the branch formulae.
         """
-        word = self.string
-        if len(word) == 1:
-            return [''], [word]
+        if len(list(self.word)) == 1:
+            return [''], [self.string]
 
         # Obtain this trees information
-        param = word[0]
-        subtrees = self.word.split()
-        print(subtrees)
+        param = self.word[0]
+        subtrees = self.word.split_pos_neg()
 
         # Obtain the subtree branch formulae
         pos_sub_branches = MPT(subtrees[0], self.word.sep, self.word.is_leaf).get_formulae()
@@ -136,7 +134,7 @@ class MPT(object):
             tree in the easy format
 
         """
-        return to_easy(self)
+        return trans.to_easy(self)
 
     def save(self, path, form="easy"):
         """ Saves the tree to a file
@@ -152,7 +150,7 @@ class MPT(object):
             os.makedirs(directory)
         file_ = open(path, "w")
 
-        to_print = to_easy(self) if form == "easy" else self.word.str_
+        to_print = trans.to_easy(self) if form == "easy" else self.word.str_
         file_.write(to_print)
         file_.close()
 

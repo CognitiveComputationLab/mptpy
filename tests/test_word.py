@@ -7,9 +7,13 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
 
+import string
 from nose.tools import assert_equals, assert_false
 from tests.context import mptpy
 from mptpy.mpt_word import MPTWord
+
+MODEL_DIR = "tests/test_models/test_build"
+
 
 def test_abstract():
     """ Test the abstract formulation of MPT strings """
@@ -40,10 +44,18 @@ def test_is_leaf():
     assert_equals(False, mpt3.is_leaf("pq"))
 
 def test_split():
-    word1 = MPTWord("p A B")
-    assert_equals(word1.split(), ('A', 'B'))
-    word2 = MPTWord('a N b N O')
-    assert_equals(word2.split(), ('N', 'b N O'))
-    word3 = MPTWord('a b N O N')
-    assert_equals(word3.split(), ('b N O', 'N'))
+    """ Test if splitting the word into positive and negative subtrees works """
+    leaf = lambda x: all([ch in string.ascii_uppercase for ch in x])
+    word1 = MPTWord("p A B", leaf_test=leaf)
+    assert_equals(word1.split_pos_neg(), ('A', 'B'))
+    word2 = MPTWord('a N b N O', leaf_test=leaf)
+    assert_equals(word2.split_pos_neg(), ('N', 'b N O'))
+    word3 = MPTWord('a b N O N', leaf_test=leaf)
+    assert_equals(word3.split_pos_neg(), ('b N O', 'N'))
 
+    word4 = mptpy.mpt.build_from_file(MODEL_DIR + "/test1.model").word
+    assert_equals(word4.split_pos_neg(), ('bc c 0 1 a 2 e 2 3', 'd 4 5'))
+
+def test_list():
+    word = MPTWord("a 1 b 1 2")
+    assert_equals(list(word), ['a', '1', 'b', '1', '2'])

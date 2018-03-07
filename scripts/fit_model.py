@@ -68,16 +68,20 @@ def parse_commandlineargs():
         help="Data table column separator. (Default='{}')".format(s_default))
 
     parser.add_argument(
-        '-h',
         '--header',
         action='store_true',
         help="Is the first not-commented line a header?")
+
+    parser.add_argument(
+        '--llik',
+        action='store_true'
+    )
 
     args = parser.parse_args()
     return vars(args)
 
 
-def run(model_file, data_file, sep=',', header=None):
+def run(model_path, data_path, sep=',', header=None, n_optim=10, llik=False):
     """ Draw an MPT modelto the command line
 
     Parameters
@@ -88,10 +92,16 @@ def run(model_file, data_file, sep=',', header=None):
         path to the data file
     """
 
-    mpt = build_from_file(model_file)
-    fitter = ScipyFitter(data_file, sep=sep, header=header)
-    evaluation = fitter.fit_mpt(mpt)
-    print(evaluation)
+    mpt = build_from_file(model_path)
+    func = "llik" if llik else "rmse"
+    fitter = ScipyFitter(data_path, sep=sep, header=header, func=func)
+    evaluation = fitter.fit_mpt(mpt, n_optim)
+
+    # Print the result
+    print()
+    for key, value in evaluation.items():
+        print("{}: {}".format(key, value))
+
 
 
 if __name__ == "__main__":

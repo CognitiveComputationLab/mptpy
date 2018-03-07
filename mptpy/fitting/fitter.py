@@ -22,20 +22,30 @@ class Fitter(object):
         self.header = header
 
     @abstractmethod
-    def fit_mpt(self, mpt, use_fia):
+    def fit_mpt(self, mpt, n_optim, use_fia):
         """ Fit the tree and return all metrics """
         pass
 
-    def remove_header(self):
-        """ Test if the data has a header
+    def read_data(self):
+        """ Read out the data and remove the header
+        
+        Returns
+        -------
+        list
+            data without header
+        """
+        data = np.genfromtxt(self.data_path, delimiter=self.sep, dtype='int')
+        data = self.remove_header(data)
+        return data
+
+    def remove_header(self, data):
+        """ Remove the header from the data
 
         Returns
         -------
-        bool
-            whether the data file has a header
+        list
+            Data without header
         """
-        data = np.genfromtxt(self.data_path, delimiter=',', dtype='int')
-
         skip = 0
         for line in data:
             if -1 in line:
@@ -45,27 +55,31 @@ class Fitter(object):
 
         return data[skip:]
 
-    def _compute_parameter_ratios(self, mpt):
+    def _compute_parameter_ratios(self, mpt, data):
         """ Compute the ratios of the static parameters of an MPT model
 
         Parameters
         ----------
         mpt : MPT
+            MPT to be fitted
 
+        data : list
+            Observation Data
+
+        Returns
+        -------
+        dict
+            Dictionary of static parameters and their values
         """
-        # TODO
-        data = np.genfromtxt(self.data_path, delimiter=',', dtype='int')
-
-        if self.header is None or self.header:
-            data = self.remove_header()
-
-        static_params = mpt.prefix_tree.compute_ratios(data)
+        static_params = {}
+        if mpt.prefix_tree is not None:
+            static_params = mpt.prefix_tree.compute_ratios(data)
 
         return static_params
 
     def _save_parameter_ratios(self, static_params, temp_dir):
         """ Save the restrictions for the static parameters to a file
-        
+
         Parameters
         ----------
         temp_dir : str

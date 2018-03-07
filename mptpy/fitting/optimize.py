@@ -6,99 +6,11 @@
 
 """
 
-import time
-
 import numpy as np
 from scipy.optimize import minimize
 
-from coco.mpt import em as ce
-from coco.mpt import likelihood as cl
-from coco.mpt import parser as cp
+from fitting import likelihood as lh
 
-def run_optimization(
-        cat_formulae, observations,
-        starting_assignment=None, max_iterations=None, print_logs=False,
-        ignore_factorials=False):
-    """ Executes the EM algorithm to optimize parameters with respect to the
-    logarithmic likelihood of an MPT model.
-
-    Parameters
-    ----------
-    cat_formulae : list(str)
-        List of strings containing the formulae for the MPT categories.
-
-    observations : list(int)
-        List of integers representing the category observations.
-
-    starting_assignment : dict, optional
-        Dictionary containing key/value pairs of parameters and initial
-        assignments, respectively.
-
-    max_iterations : int, optional
-        Number of maximum iterations. None, if the algorithm should be forced
-        to run until convergence.
-
-    print_logs : Boolean, optional
-        True, if logs per epoch (likelihood, assignment, branch frequencies)
-        are to be printed. False, otherwise.
-
-    Returns
-    -------
-    assignments : dict
-        Dictionary containing key-value pairs of parameters and final
-        estimates, respectively.
-
-    log_likelihoods : list(float)
-        List of log likelihoods encountered during the optimization procedure.
-
-    """
-
-    # Initialize the algorithm
-    params = cp.extract_params(cat_formulae)
-    ass = starting_assignment
-    if not ass:
-        #pylint: disable=no-member
-        values = np.random.uniform(size=(len(params),))
-        #pylint: enable=no-member
-        ass = dict(zip(params, values))
-    branch_freq_estimates = None
-
-    it_counter = 1
-    log_likelihoods = []
-
-    # Iteratively optimize the parameter assignments until convergence is
-    # reached or the maximum number of iterations exceeded.
-    while not max_iterations or it_counter < max_iterations:
-        # Start timer for this iteration
-        start = time.time()
-
-        # Perform the expectation and maximization steps
-        branch_freq_estimates = ce.estep(ass, cat_formulae, observations)
-        ass = ce.mstep(ass, cat_formulae, branch_freq_estimates)
-
-        # Compute the current likelihood
-        lik = cl.log_likelihood(
-            cat_formulae,
-            ass,
-            observations,
-            ignore_factorials=ignore_factorials)
-
-        log_likelihoods.append(lik)
-
-        if len(log_likelihoods) >= 2 and np.abs(
-                log_likelihoods[-1] - log_likelihoods[-2]) < 1e-9:
-            break
-
-        if print_logs:
-            print("Iteration {} (took {:.2f}s)...".format(
-                it_counter, time.time() - start))
-            print("   Likelihood:", lik)
-            # print("   New assignment:", ass)
-            # print("   New branch_freq_estimates:", branch_freq_estimates)
-            print()
-        it_counter += 1
-
-    return ass, log_likelihoods
 
 def optim_llik(param_values, cat_formulae, param_names, data):
     """ Realizes an objective function based on the log likelihood value of a
@@ -139,8 +51,9 @@ def optim_llik(param_values, cat_formulae, param_names, data):
 
     # Construct the assignment dictionary
     ass = dict(zip(param_names, param_values))
-    llik = cl.log_likelihood(cat_formulae, ass, data, ignore_factorials=True)
+    llik = lh.log_likelihood(cat_formulae, ass, data, ignore_factorials=True)
     return -1 * llik
+
 
 def optim_rmse(param_values, cat_formulae, param_names, data):
     """ Realizes an objective function based on the Root-Mean-Squared Error
@@ -184,7 +97,7 @@ def optim_rmse(param_values, cat_formulae, param_names, data):
     ass = dict(zip(param_names, param_values))
 
     # Compute the individual RMSE values
-    cat_probs = np.array([cl.eval_formula(f, ass) for f in cat_formulae])
+    cat_probs = np.array([lh.eval_formula(f, ass) for f in cat_formulae])
     preds = data.sum() * cat_probs
     return np.sqrt(np.mean((preds - data) ** 2))
 
