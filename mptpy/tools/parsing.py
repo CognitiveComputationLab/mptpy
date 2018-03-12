@@ -8,11 +8,13 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 """
 
 import re
+import string
 from node import Node
 import tools.joint_tree as joint_tree
+from tools import transformations as trans
 
 
-def parse_file(file_path, form=None):
+def parse_file(file_path, form=None, sep=' '):
     """ Parse a .txt or .model file and return the MPT model in
     the BMPT form
 
@@ -38,14 +40,21 @@ def parse_file(file_path, form=None):
 
     lines = split_subtrees(lines)
 
-    if len(lines) > 1:
-        prefix_tree = joint_tree.get_prefix_tree(lines)
-        lines = prefix_tree.join_subtrees(lines)
+    if len(lines) > 1 and form == "BMPT":
+        leaf_test = lambda node: all([ch in string.digits for ch in node])
+        lines = bmpt_to_easy(lines, ' ', leaf_test)
+        form = "easy"
+
+    prefix_tree = joint_tree.get_prefix_tree(lines)
+
+    lines = prefix_tree.join_subtrees(lines)
+
+    if form == "easy":
+        lines = easy_to_bmpt(lines)
     else:
         lines = lines[0]
-        prefix_tree = None
 
-    return lines[0] if form == "BMPT" else easy_to_bmpt(lines), prefix_tree
+    return lines, prefix_tree
 
 
 def get_lines(file_path):
@@ -68,7 +77,31 @@ def get_lines(file_path):
         return lines
 
 
-def easy_to_bmpt(lines, sep=" "):
+def bmpt_to_easy(lines, sep, leaf_test):
+    """ Turns the lines of a tree in the bmpt file format
+    to a tree in the easy format
+
+    Parameters
+    ----------
+    lines : list
+        list of lines of the file in the bmpt format
+    sep : str
+        separator
+    leaf_test : func
+        function to test for leaves
+
+    Returns
+    -------
+    str
+        Tree in easy form
+
+    """
+    lines = [[trans.to_easy(line[0], sep, leaf_test)] for line in lines]
+    lines = [subtree[0].rstrip().split("\n") for subtree in lines]
+    return lines
+
+
+def easy_to_bmpt(lines, sep=' '):
     """ Turns the lines of a tree in the easy file format
     to a tree in the formal language
 

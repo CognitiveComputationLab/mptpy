@@ -60,8 +60,6 @@ class MPT(object):
         # mpt given as word
         elif isinstance(mpt, str):
             self.word = MPTWord(mpt, sep=sep, leaf_test=leaf_test)
-            if leaf_test:
-                self.word.is_leaf = leaf_test
             self.root = trans.word_to_tree(self.word)
 
     @property

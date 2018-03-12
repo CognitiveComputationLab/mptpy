@@ -9,7 +9,6 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 import string
 from itertools import filterfalse
-from tools.transformations import nested_list
 
 
 class MPTWord(object):

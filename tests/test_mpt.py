@@ -11,6 +11,7 @@ import string
 from nose.tools import assert_equals, assert_false
 from tests.context import mptpy
 from mptpy.mpt import MPT, build_from_file
+from mptpy.properties import property
 
 MODEL_DIR = "tests/test_models/test_build"
 
@@ -56,3 +57,8 @@ def test_branch_formulae():
         'a * (1 - bc) * (1 - a) * e', 'a * (1 - bc) * (1 - a) * (1 - e)',
         '(1 - a) * d', '(1 - a) * (1 - d)'
     ], ['0', '1', '2', '2', '3', '4', '5']))
+
+def test_identifiable():
+    mpt = build_from_file(MODEL_DIR + "/test1.model")
+    ident = property.check(mpt, "identifiable")
+    assert_equals(ident, True)

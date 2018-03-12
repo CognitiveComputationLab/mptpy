@@ -34,3 +34,6 @@ def test_parsing():
 
     word, pft = parsing.parse_file(MODEL_DIR + "/testBMPT.model")
     assert_equals(word, "a b c 0 1 a 2 e 2 3 def 4 5")
+
+    word, pft = parsing.parse_file(MODEL_DIR + "/testBMPT2.model")
+    assert_equals(word, "y0 a c 0 1 1 b 2 3")

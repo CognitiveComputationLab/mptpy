@@ -93,6 +93,7 @@ def run(model_path, data_path, sep=',', header=None, n_optim=10, llik=False):
     """
 
     mpt = build_from_file(model_path)
+    mpt.draw()
     func = "llik" if llik else "rmse"
     fitter = ScipyFitter(data_path, sep=sep, header=header, func=func)
     evaluation = fitter.fit_mpt(mpt, n_optim)

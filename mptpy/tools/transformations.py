@@ -9,6 +9,7 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 from itertools import filterfalse
 from tools.parsing import create_from_nested
+#from mptpy.mpt_word import MPTWord
 
 
 def word_to_tree(word):
@@ -53,13 +54,13 @@ def tree_to_str(node, sep=" "):
     return node.content + sep + pos + sep + neg
 
 
-def to_easy(mpt):
+def to_easy(mpt, sep=' ', leaf_test=None):
     """ Transforms the MPT to the easy format
 
     Parameters
     ----------
-    mpt : MPT
-        MPT model
+    mpt : [MPT, MPTWord, str]
+        MPT model as either MPT or MPTWord object or str
 
     Returns
     -------
@@ -67,7 +68,40 @@ def to_easy(mpt):
         tree in the easy format
 
     """
-    lines = _get_lines(nested_list(mpt.word), dict())
+    if type(mpt).__name__ == "MPT":
+        mpt = mpt.word
+
+    elif isinstance(mpt, str):
+        nested = _parse_tree(mpt.split(sep), leaf_test)[0]
+        lines = _get_lines(nested, dict())
+
+
+    if type(mpt).__name__ == "MPTWord":
+        lines = _get_lines(nested_list(mpt), dict())
+
+    easy = ""
+    for key in sorted(lines.keys()):
+        line = " + ".join(lines[key]) + "\n"
+        easy += line
+    return easy
+
+
+
+def word_to_easy(word):
+    """ Transforms a word to the easy format
+
+    Parameters
+    ----------
+    word : MPTWord
+        MPT model word
+
+    Returns
+    -------
+    str
+        tree in the easy format
+
+    """
+    lines = _get_lines(nested_list(word), dict())
 
     easy = ""
     for key in sorted(lines.keys()):

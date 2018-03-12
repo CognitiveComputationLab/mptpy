@@ -97,6 +97,9 @@ class PrefixNode(object):
 
     def join_subtrees(self, subtrees):
 
+        if len(subtrees) == 1:
+            return subtrees[0]
+
         prefix_formulae = self.to_formulae()
 
         # Merge the trees
@@ -153,12 +156,17 @@ def get_prefix_tree(subtrees):
 
     n_subtrees = len(subtrees)
 
-    # Generate the prefix tree
-    prefix_tree = generate_prefix_tree(n_subtrees)
+    if n_subtrees > 1:
+        # Generate the prefix tree
+        prefix_tree = generate_prefix_tree(n_subtrees)
 
-    # Assign the parameters
-    prefix_params = generate_prefix_parameters(n_subtrees)
-    prefix_tree.set_parameters(prefix_params)
+        # Assign the parameters
+    
+        prefix_params = generate_prefix_parameters(n_subtrees)
+        prefix_tree.set_parameters(prefix_params)
+    else:
+        prefix_tree = PrefixNode()
+    
     prefix_tree.subtrees = subtrees
 
     return prefix_tree

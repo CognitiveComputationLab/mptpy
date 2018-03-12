@@ -44,7 +44,13 @@ def identifiable(mpt):
         whether tree is identifiable
     """
 
+    max_params = 0
+    for subtree in mpt.prefix_tree.subtrees:
+        max_params += len(subtree) - 1
+
     free_params = [
         x for x in set(mpt.word.parameters) if not re.match(r'y\d+', x)
     ]
-    return len(free_params) <= mpt.max_parameters()
+
+
+    return len(free_params) <= max_params
