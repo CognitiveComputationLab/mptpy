@@ -9,7 +9,7 @@
 import numpy as np
 from scipy.optimize import minimize
 
-from fitting import likelihood as lh
+from . import likelihood as lh
 
 
 def optim_llik(param_values, cat_formulae, param_names, data):

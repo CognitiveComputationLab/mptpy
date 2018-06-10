@@ -11,6 +11,9 @@ import os
 from nose.tools import assert_equals
 from tests.context import mptpy
 from mptpy.tools import parsing
+from mptpy.tools.easy_parser import EasyParser
+from mptpy.tools.bmpt_parser import BmptParser
+from mptpy.mpt import build_from_file
 
 
 MODEL_DIR = os.path.abspath("tests/test_models/test_build")
@@ -18,7 +21,7 @@ MODEL_DIR = os.path.abspath("tests/test_models/test_build")
 
 def test_get_lines():
     """ Test the reading of lines of the file """
-    lines = parsing.get_lines(MODEL_DIR + "/test1.model")
+    lines, leaves = parsing.get_lines(MODEL_DIR + "/test1.model")
     assert_equals(lines, ["a * bc * c", "a * bc * (1-c)", "a * (1-bc) * a + a * (1-bc) * (1-a) * e", "a * (1-bc) * (1-a) * (1-e)", "(1-a) * d", "(1-a) * (1-d)"])
 
 
@@ -29,11 +32,37 @@ def test_get_only_parameter():
 
 
 def test_parsing():
-    word, pft = parsing.parse_file(MODEL_DIR + "/test1.model")
+    word, pft, _ = parsing.parse_file(MODEL_DIR + "/test1.model")
     assert_equals(word, "a bc c 0 1 a 2 e 2 3 d 4 5")
 
-    word, pft = parsing.parse_file(MODEL_DIR + "/testBMPT.model")
+    word, pft, _ = parsing.parse_file(MODEL_DIR + "/testBMPT.model")
     assert_equals(word, "a b c 0 1 a 2 e 2 3 def 4 5")
 
-    word, pft = parsing.parse_file(MODEL_DIR + "/testBMPT2.model")
+    word, pft, _ = parsing.parse_file(MODEL_DIR + "/testBMPT2.model")
     assert_equals(word, "y0 a c 0 1 1 b 2 3")
+
+def test_custom_leaves():
+    mpt1 = build_from_file(MODEL_DIR + "/testcustomleaves.txt")
+    mpt2 = build_from_file(MODEL_DIR + "/testBMPT.model")
+    assert_equals(mpt1, mpt2)
+
+def test_easy_parsing():
+    parser = EasyParser()
+    word = parser.read(MODEL_DIR + "/test1.model")
+    assert_equals(word, "a bc c 0 1 a 2 e 2 3 d 4 5")
+
+def test_bmpt_parsing():
+    parser = BmptParser()
+    word = parser.open(MODEL_DIR + "/testBMPT.model")
+    print(parser.word)
+    assert_equals(parser.word, "a b c 0 1 a 2 e 2 3 def 4 5")
+
+    word = parser.open(MODEL_DIR + "/testBMPT2.model")
+    assert_equals(parser.word, "y0 a c 0 1 1 b 2 3")
+
+    word = parser.open(MODEL_DIR + "/testcustomleaves.txt")
+    assert_equals(parser.word, "a b c albert ega a tante e tante 3 def 4 5")
+
+    mpt1 = build_from_file(MODEL_DIR + "/testcustomleaves.txt")
+    mpt2 = build_from_file(MODEL_DIR + "/testBMPT.model")
+    assert_equals(mpt1, mpt2)

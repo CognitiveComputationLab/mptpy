@@ -7,7 +7,7 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
 
-from fitter import Fitter
+from .fitter import Fitter
 
 
 class EMFitter(Fitter):

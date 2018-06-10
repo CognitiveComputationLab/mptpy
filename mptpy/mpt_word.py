@@ -9,6 +9,7 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 import string
 from itertools import filterfalse
+from collections import OrderedDict
 
 
 class MPTWord(object):
@@ -57,9 +58,10 @@ class MPTWord(object):
             a b 1 0 c 1 0 -> p0 p1 a0 a1 p2 a0 a1
         """
         abst = ""
+
         # this retains the order
-        answer_set = list(dict.fromkeys(self.answers))
-        param_set = list(dict.fromkeys(self.parameters))
+        answer_set = list(OrderedDict.fromkeys(self.answers))
+        param_set = list(OrderedDict.fromkeys(self.parameters))
 
         for node in self.str_.split(self.sep):
             # add whitespace only after first node

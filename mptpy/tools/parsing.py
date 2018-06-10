@@ -10,8 +10,8 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 import re
 import string
 from node import Node
-import tools.joint_tree as joint_tree
-from tools import transformations as trans
+from . import joint_tree as joint_tree
+from . import transformations as trans
 
 
 def parse_file(file_path, form=None, sep=' '):
@@ -30,7 +30,7 @@ def parse_file(file_path, form=None, sep=' '):
     str
         MPT in the BMPT format
     """
-    lines = get_lines(file_path)
+    lines, leaves = get_lines(file_path)
 
     # Infer the format of the source file
     if form is None:
@@ -40,8 +40,12 @@ def parse_file(file_path, form=None, sep=' '):
 
     lines = split_subtrees(lines)
 
+    leaf_test = lambda node: all([ch in string.digits for ch in node])
+    if leaves:
+        leaf_test = lambda node: node in leaves
+    
     if len(lines) > 1 and form == "BMPT":
-        leaf_test = lambda node: all([ch in string.digits for ch in node])
+
         lines = bmpt_to_easy(lines, ' ', leaf_test)
         form = "easy"
 
@@ -54,7 +58,8 @@ def parse_file(file_path, form=None, sep=' '):
     else:
         lines = lines[0]
 
-    return lines, prefix_tree
+
+    return lines, prefix_tree, leaf_test
 
 
 def get_lines(file_path):
@@ -71,10 +76,23 @@ def get_lines(file_path):
         Formula lines of the source model.
 
     """
+    leaves = []
+    
     with open(file_path, 'r') as file:
+        
         lines = file.readlines()
-        lines = [line.split("#")[0].strip() for line in lines]
-        return lines
+
+        leaves = list(filter(lambda x: x[0] == "[", lines))
+        if leaves:
+            # TODO
+            leaves = leaves[0].strip().replace("[", "").replace("]", "").split(", ")
+
+        lines = list(filter(lambda x: x[0] != "[", lines))
+
+        lines = filter(lambda x: x[0] != "#", lines) # get rid of commentary liens
+        lines = [line.split("#")[0].strip() for line in lines] # and in-line comments
+        
+        return lines, leaves
 
 
 def bmpt_to_easy(lines, sep, leaf_test):

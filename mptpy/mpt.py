@@ -28,9 +28,9 @@ def build_from_file(file_path, form=None):
     MPT
         MPT object constructed from the file
     """
-    word, prefix_tree = parse_file(file_path, form=form)
+    word, prefix_tree, leaf_test = parse_file(file_path, form=form)
 
-    mpt = MPT(word)
+    mpt = MPT(word, leaf_test=leaf_test)
     mpt.prefix_tree = prefix_tree
     return mpt
 
@@ -157,6 +157,8 @@ class MPT(object):
         cmd_draw(self.word)
 
     def __eq__(self, other):
+        print(self.word.abstract())
+        print(other.word.abstract())
         return self.word.abstract() == other.word.abstract()
 
     def __ne__(self, other):

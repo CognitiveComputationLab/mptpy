@@ -8,7 +8,9 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 """
 
 from itertools import filterfalse
-from tools.parsing import create_from_nested
+from collections import OrderedDict
+
+from .parsing import create_from_nested
 #from mptpy.mpt_word import MPTWord
 
 
@@ -73,11 +75,14 @@ def to_easy(mpt, sep=' ', leaf_test=None):
 
     elif isinstance(mpt, str):
         nested = _parse_tree(mpt.split(sep), leaf_test)[0]
-        lines = _get_lines(nested, dict())
+        answers = filter(leaf_test, mpt.split(sep))
+        answer_set = list(OrderedDict.fromkeys(answers))
+        lines = _get_lines(nested, dict(), answer_set)
 
 
     if type(mpt).__name__ == "MPTWord":
-        lines = _get_lines(nested_list(mpt), dict())
+        answer_set = list(OrderedDict.fromkeys(mpt.answers))
+        lines = _get_lines(nested_list(mpt), dict(), answer_set)
 
     easy = ""
     for key in sorted(lines.keys()):
@@ -101,7 +106,8 @@ def word_to_easy(word):
         tree in the easy format
 
     """
-    lines = _get_lines(nested_list(word), dict())
+    answer_set = list(OrderedDict.fromkeys(word.answers))
+    lines = _get_lines(nested_list(word), dict(), answer_set)
 
     easy = ""
     for key in sorted(lines.keys()):
@@ -110,7 +116,7 @@ def word_to_easy(word):
     return easy
 
 
-def _get_lines(subtree, lines, temp=""):
+def _get_lines(subtree, lines, answer_set, temp=""):
     """ Builds a dictionary of the answers and the
     respective branch formulas
 
@@ -121,6 +127,9 @@ def _get_lines(subtree, lines, temp=""):
 
     lines : dict
         empty dictionary to be filled
+
+    answer_set : list
+        list of all answers without replications
 
     Returns
     -------
@@ -136,14 +145,17 @@ def _get_lines(subtree, lines, temp=""):
         left_mult = " * " if isinstance(pos, list) else ""
         right_mult = " * " if isinstance(neg, list) else ""
 
-        _get_lines(pos, lines, temp + subtree[0] + left_mult)
-        _get_lines(neg, lines, temp + "(1-" + subtree[0] + ")" + right_mult)
+        _get_lines(pos, lines, answer_set, temp + subtree[0] + left_mult)
+        _get_lines(neg, lines, answer_set, temp + "(1-" + subtree[0] + ")" + right_mult)
 
         return lines
 
     else:
         # we reached the leaf
-        key = int(subtree)
+
+        print(subtree)
+        key = answer_set.index(subtree)
+        #key = int(subtree)
         if key not in lines:
             lines[key] = []
         lines[key] += [temp]
@@ -163,6 +175,7 @@ def nested_list(word):
     """
 
     str_ = word.str_.split(word.sep)
+
 
     # if only leaf
     if len(str_) == 1:
@@ -205,6 +218,7 @@ def _parse_tree(str_, is_leaf):
     """
     num_params = len(list(filterfalse(is_leaf, str_)))
     num_children = []
+
 
     # initialize num_children to -1 for all inner nodes
     for _ in range(num_params):

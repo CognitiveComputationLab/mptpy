@@ -1,0 +1,2 @@
+[albert, ega, tante, 3, 4, 5]
+a b c albert ega a tante e tante 3 def 4 5
