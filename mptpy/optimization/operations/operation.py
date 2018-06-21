@@ -23,3 +23,7 @@ class Operation(object):
             mpt that is to be modified
         """
         pass
+
+    @abstractmethod
+    def apply(self, mpt):
+        pass

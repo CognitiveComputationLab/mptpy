@@ -8,165 +8,83 @@ Nicolas Riesterer <riestern@tf.uni-freiburg.de>
 """
 
 import numpy as np
+from mptpy.node import Node
+import mptpy.mpt
 
 
-class PrefixNode(object):
-    def __init__(self, left=None, right=None, content='.'):
-        self.left = left
-        self.right = right
-        self.content = content
-        self.subtrees = None
+def split_half(args):
+    """ Split the given list into two parts (equal if possible, if not 
+    the right one gets one more)
 
-    def to_string(self):
-        left = self.left.to_string() if self.left is not None else '.'
-        right = self.right.to_string() if self.right is not None else '.'
-        return '({}) - ({})'.format(left, right)
+    Arguments
+    ---------
+    args : list
+        list to split
 
-    def to_formulae(self):
-        left_formulae = self.left.to_formulae() if self.left else None
-        right_formulae = self.right.to_formulae() if self.right else None
+    Returns
+    -------
+    list, list
+        Args split in two parts
+    """
+    split = len(args) / 2
 
-        # Combine the formulae
-        left = [str(self.content)]
-        if left_formulae:
-            left = ['{} * {}'.format(self.content, f) for f in left_formulae]
+    left = args[:int(np.floor(split))]
+    right = args[int(np.floor(split)):]
 
-        right = ['(1 - {})'.format(self.content)]
-        if right_formulae:
-            right = ['(1 - {}) * {}'.format(self.content, f) for f in right_formulae]
-
-        return left + right
-
-    def get_max_free_params(self):
-        max_params = 0
-
-        for subtree in self.subtrees:
-            max_params += len(subtree) - 1
-        return max_params
-
-    def set_parameters(self, param_list):
-        if not param_list:
-            return
-
-        self.content = param_list[0]
-
-        remaining_params = param_list[1:]
-        left_slice = int(np.ceil(len(remaining_params) / 2))
-        if self.left:
-            self.left.set_parameters(remaining_params[left_slice:])
-        if self.right:
-            self.right.set_parameters(remaining_params[:left_slice])
-
-    def static_parameters(self):
-        params = {self.content : 0}
-
-        left = self.left.static_parameters() if self.left else {}
-        right = self.right.static_parameters() if self.right else {}
-
-        # merge the subtrees
-        params.update(left)
-        params.update(right)
-
-        return params
-
-    def compute_ratios(self, data):
-        n_subtrees = len(self.subtrees)
-        subtree_observations = []
-        idx = 0
-        for subtree_idx in range(n_subtrees):
-            n_cats = len(self.subtrees[subtree_idx])
-            subtree_observations.append(data[idx:(idx + n_cats)].sum())
-            idx += n_cats
-        subtree_observations = np.array(subtree_observations)
-
-        ratios = self.comp_param_ratios(subtree_observations)
-        return ratios
-
-    def comp_param_ratios(self, observations):
-        n_left = len(self.left.to_formulae()) if self.left else 1
-        n_right = len(self.right.to_formulae()) if self.right else 1
-
-        param_ratio = np.sum(observations[:n_left]) / np.sum(observations)
-
-        result_dict = {self.content: param_ratio}
-        if n_left > 1:
-            result_dict.update(self.left.comp_param_ratios(observations[:n_left]))
-        if n_right > 1:
-            result_dict.update(self.right.comp_param_ratios(observations[n_left:]))
-        return result_dict
-
-    def join_subtrees(self, subtrees):
-
-        if len(subtrees) == 1:
-            return subtrees[0]
-
-        prefix_formulae = self.to_formulae()
-
-        # Merge the trees
-        merged_subtrees = merge_trees(prefix_formulae, subtrees)
-        merged_tree = [f for sub in merged_subtrees for f in sub]
-
-        return merged_tree
-
-    def __str__(self):
-        return self.content + self.left.__str__() + self.right.__str__()
+    return left, right
 
 
-def generate_prefix_tree(n_subtrees):
-    if n_subtrees <= 1:
-        return None
+def join(args, prefix_no=0):
+    """ Join two MPTs with dummy nodes
 
-    left_child = generate_prefix_tree(np.floor(n_subtrees / 2))
-    right_child = generate_prefix_tree(np.ceil(n_subtrees / 2))
+    Arguments
+    ---------
+    args : list
+        list of mpts
 
-    return PrefixNode(left_child, right_child)
+    Returns
+    -------
+    MPT
+        joint mpt
+    """
 
-def merge_trees(prefix_formulae, subtrees):
-    n_subtrees = len(subtrees)
-    merged = []
-    for subtree_idx in range(n_subtrees):
-        prefix = prefix_formulae[subtree_idx]
-        cat_formulae = subtrees[subtree_idx]
-        merged_subtree = []
+    if len(args) <= 1:
+        return args[0]
 
-        for cat_formula in cat_formulae:
-            merged_cat_formulae = []
-            branch_formulae = cat_formula.split('+')
+    left, right = split_half(args)
 
-            for branch_formula in branch_formulae:
-                merged_branch_formula = '{} * {}'.format(prefix.strip(), branch_formula.strip())
-                merged_cat_formulae.append(merged_branch_formula)
+    left_child = join(left, prefix_no + int(np.ceil(len(args) / 2))).root
+    right_child = join(right, prefix_no + 1).root
 
-            merged_subtree.append(' + '.join(merged_cat_formulae))
-
-        merged.append(merged_subtree)
-
-    return merged
+    return mptpy.mpt.MPT(Node("y" + str(prefix_no), left_child, right_child))
 
 
-def generate_prefix_parameters(n_subtrees):
-    n_prefix_params = n_subtrees - 1
-    n_leading_zeros = int(np.ceil(np.log10(n_prefix_params)))
-    param_numbers = [str(x).zfill(n_leading_zeros) for x in np.arange(n_prefix_params)]
-    prefix_params = ['{}{}'.format(x, y) for x, y in zip(['y'] * n_prefix_params, param_numbers)]
-    return prefix_params
+def comp_param_ratios(observations, prefix_no=0):
+    if len(observations) <= 1:
+        return {}
+
+    left, right = split_half(observations)
+
+    param_ratio = np.sum(left) / np.sum(observations)
+
+    result_dict = {"{}{}".format("y", prefix_no): param_ratio}
+
+    left_prefix = prefix_no + int(np.ceil(len(observations) / 2))
+    result_dict.update(comp_param_ratios(left, left_prefix))
+
+    result_dict.update(comp_param_ratios(right, prefix_no + 1))
+
+    return result_dict
 
 
-def get_prefix_tree(subtrees):
+def compute_ratios(data, subtrees):
+    subtree_observations = []
+    idx = 0
+    for subtree in subtrees:
+        n_cats = len(subtree)
+        subtree_observations.append(data[idx:(idx + n_cats)].sum())
+        idx += n_cats
+    subtree_observations = np.array(subtree_observations)
 
-    n_subtrees = len(subtrees)
-
-    if n_subtrees > 1:
-        # Generate the prefix tree
-        prefix_tree = generate_prefix_tree(n_subtrees)
-
-        # Assign the parameters
-    
-        prefix_params = generate_prefix_parameters(n_subtrees)
-        prefix_tree.set_parameters(prefix_params)
-    else:
-        prefix_tree = PrefixNode()
-    
-    prefix_tree.subtrees = subtrees
-
-    return prefix_tree
+    ratios = comp_param_ratios(subtree_observations)
+    return ratios

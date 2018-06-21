@@ -21,7 +21,8 @@ class MPTWord(object):
 
         # defines what characterizes a leaf node
         if leaf_test is None:
-            self.is_leaf = lambda node: all([ch in string.digits for ch in node])
+            self.is_leaf = lambda node: all(
+                [ch in string.digits for ch in node])
         else:
             self.is_leaf = leaf_test
 
@@ -71,8 +72,7 @@ class MPTWord(object):
                 abst += "a" + str(answer_set.index(node))
             elif node in param_set:
                 abst += "p" + str(param_set.index(node))
-            else:
-                raise KeyError
+
         return abst
 
     def split_pos_neg(self):
@@ -92,15 +92,15 @@ class MPTWord(object):
         pos = []
         split_string = self.str_.split()
         for idx, item in enumerate(split_string[1:]):
+            pos.append(item)
             if not self.is_leaf(item):
-                pos.append(item)
                 expected_outcomes += 1
-            elif self.is_leaf(item):
-                pos.append(item)
+            else:
                 expected_outcomes -= 1
 
             if expected_outcomes == 0:
-                return self.sep.join(pos), self.sep.join(split_string[idx + 2:])
+                return self.sep.join(pos), self.sep.join(
+                    split_string[idx + 2:])
 
     def __eq__(self, other):
         return self.str_ == other.str_
@@ -112,7 +112,6 @@ class MPTWord(object):
         return self.str_
 
     def __add__(self, other):
-
         new = MPTWord(self.str_ + self.sep.join(list(other)), self.sep)
         new.is_leaf = self.is_leaf
         return new

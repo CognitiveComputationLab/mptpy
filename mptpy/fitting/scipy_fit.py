@@ -16,7 +16,7 @@ from . import optimize as optim
 from . import likelihood as lh
 
 
-FUNCS = {"rmse" : optim.optim_rmse, "llik" : optim.optim_llik}
+FUNCS = {"rmse": optim.optim_rmse, "llik": optim.optim_llik}
 
 
 class ScipyFitter(Fitter):
@@ -50,7 +50,8 @@ class ScipyFitter(Fitter):
         # read the file
         easy = open(easy_file_path, 'r')
         cat_formulae = easy.readlines()
-        cat_formulae = [formula.strip().split(" #")[0] for formula in cat_formulae]
+        cat_formulae = [formula.strip().split(" #")[0]
+                        for formula in cat_formulae]
         easy.close()
 
         # find all parameters
@@ -62,8 +63,7 @@ class ScipyFitter(Fitter):
 
         # setup kwargs and fit
         kwargs = self._setup_args(cat_formulae, params)
-        return self._fit(kwargs, n_optim=n_optim)      
-
+        return self._fit(kwargs, n_optim=n_optim)
 
     def fit_mpt(self, mpt, n_optim=10, use_fia=False):
         """ Fit the given tree using SciPy
@@ -72,7 +72,7 @@ class ScipyFitter(Fitter):
         ----------
         mpt : MPT
             mpt model
-        
+
         n_optim : int, optional
             number of optimization steps
 
@@ -99,8 +99,6 @@ class ScipyFitter(Fitter):
         kwargs = self._setup_args(cat_formulae, params)
         return self._fit(kwargs, n_optim=n_optim)
 
-
-
     def _fit(self, kwargs, n_optim=10):
         """ Fit the model
 
@@ -108,7 +106,7 @@ class ScipyFitter(Fitter):
         ----------
         kwargs : dict
             func, data, cat_formulae, param_names
-        
+
         """
         res, errs = optim.fit_classical(**kwargs, n_optim=n_optim)
 
@@ -140,9 +138,11 @@ class ScipyFitter(Fitter):
         params = kwargs['param_names']
         measures = {}
         measures['ass'] = dict(zip(params, res.x))
-        measures['llik'] = lh.log_likelihood(formulae, measures['ass'], data, ignore_factorials=False)
+        measures['llik'] = lh.log_likelihood(
+            formulae, measures['ass'], data, ignore_factorials=False)
         measures['aic'] = -2 * measures['llik'] + 2 * len(params)
-        measures['bic'] = -2 * measures['llik'] + np.log(data.sum()) * len(params)
+        measures['bic'] = -2 * measures['llik'] + \
+            np.log(data.sum()) * len(params)
         return measures
 
     def _rmse(self, ass, kwargs):
@@ -152,11 +152,12 @@ class ScipyFitter(Fitter):
         ----------
         ass : dict
             Parameter Assignment
-        
+
         kwargs : dict
 
         """
-        probs = np.array([lh.eval_formula(f, ass) for f in kwargs['cat_formulae']])
+        probs = np.array([lh.eval_formula(f, ass)
+                          for f in kwargs['cat_formulae']])
         preds = probs * kwargs['data']
         rmse = np.sqrt(np.mean((preds - kwargs['data']) ** 2))
         return rmse
@@ -168,7 +169,7 @@ class ScipyFitter(Fitter):
         ----------
         mpt : MPT
             model
-        
+
         """
         formulae, classes = mpt.get_formulae()
         cat_formulae = {}
@@ -181,7 +182,6 @@ class ScipyFitter(Fitter):
         ordered = OrderedDict(sorted(cat_formulae.items())).values()
         cat_formulae = list(ordered)
         return cat_formulae
-
 
     def _setup_args(self, cat_formulae, params):
         """ Compute the arguments needed for the fitting

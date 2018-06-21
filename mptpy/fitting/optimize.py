@@ -101,6 +101,7 @@ def optim_rmse(param_values, cat_formulae, param_names, data):
     preds = data.sum() * cat_probs
     return np.sqrt(np.mean((preds - data) ** 2))
 
+
 def fit_classical(fun, cat_formulae, param_names, data, n_optim=10):
     """ Fits an MPT model using classical function-based optimization routines
     implemented in the Scipy module.

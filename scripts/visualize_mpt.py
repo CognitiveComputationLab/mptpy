@@ -15,7 +15,7 @@ import os
 PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '../mptpy'))
 sys.path.insert(0, PATH)
 
-from mpt import build_from_file
+from mptpy.tools.parsing import EasyParser
 
 
 def run(file):
@@ -26,8 +26,8 @@ def run(file):
     file : str
         path to the model file
     """
-
-    mpt = build_from_file(file)
+    parser = EasyParser()
+    mpt = parser.parse(file)
     mpt.draw()
     print(mpt)
 

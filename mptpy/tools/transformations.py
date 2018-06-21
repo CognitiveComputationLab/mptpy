@@ -7,14 +7,13 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
 
+import re
 from itertools import filterfalse
 from collections import OrderedDict
-
-from .parsing import create_from_nested
-#from mptpy.mpt_word import MPTWord
+from mptpy.node import Node
 
 
-def word_to_tree(word):
+def word_to_nodes(word, idx=0):
     """ Translate an MPT in the BMPT language (see Purdy & Batchelder 2009) to
     a binary tree
 
@@ -29,31 +28,14 @@ def word_to_tree(word):
         root node of the MPT
 
     """
-    nested = nested_list(word)
-    root = create_from_nested(nested, word.is_leaf)
-    return root
+    node = Node(word[idx])
+    
+    if not word.is_leaf(word[idx]):
+        node.pos = word_to_nodes(word, idx=idx + 1)
+        node.neg = word_to_nodes(word, idx=idx + 1 + len(node.pos))
 
+    return node
 
-def tree_to_str(node, sep=" "):
-    """ Translate a multinomial processing tree (MPT) to a string.
-
-    Parameters
-    ----------
-    node : Node
-        root node of the MPT
-
-    Returns
-    -------
-    str
-        MPT as a string
-
-    """
-    if node.leaf:
-        return str(node.content)
-
-    pos = tree_to_str(node.pos)
-    neg = tree_to_str(node.neg)
-    return node.content + sep + pos + sep + neg
 
 
 def to_easy(mpt, sep=' ', leaf_test=None):
@@ -79,7 +61,6 @@ def to_easy(mpt, sep=' ', leaf_test=None):
         answer_set = list(OrderedDict.fromkeys(answers))
         lines = _get_lines(nested, dict(), answer_set)
 
-
     if type(mpt).__name__ == "MPTWord":
         answer_set = list(OrderedDict.fromkeys(mpt.answers))
         lines = _get_lines(nested_list(mpt), dict(), answer_set)
@@ -91,29 +72,92 @@ def to_easy(mpt, sep=' ', leaf_test=None):
     return easy
 
 
-
-def word_to_easy(word):
-    """ Transforms a word to the easy format
+def easy_to_bmpt(lines, sep=' ', leaf_step=0):
+    """ Turns the lines of a tree in the easy file format
+    to a tree in the formal language
 
     Parameters
     ----------
-    word : MPTWord
-        MPT model word
+    lines : list
+        list of lines of the file in the easy format
+    sep : str
+        separator
+    leaf_step : int
 
     Returns
     -------
     str
-        tree in the easy format
+        Tree in Formal language form, with sep as separator
 
     """
-    answer_set = list(OrderedDict.fromkeys(word.answers))
-    lines = _get_lines(nested_list(word), dict(), answer_set)
 
-    easy = ""
-    for key in sorted(lines.keys()):
-        line = " + ".join(lines[key]) + "\n"
-        easy += line
-    return easy
+    tree = dict()
+    for i, line in enumerate(lines):
+        leaf_name = i + leaf_step
+        line = line.replace(" ", "").strip()
+        tree[leaf_name] = line.split("+")
+
+    for answer in tree.items():
+        for i, branch in enumerate(answer[1]):
+            answer[1][i] = branch.split("*")
+
+    tree_str = dict_to_bmpt(tree, sep=sep)
+    return tree_str
+
+
+def dict_to_bmpt(tree, sep=" "):
+    """ Turns a dictionary of answers and corresponding branches
+    to a tree in the formal language
+
+    Parameters
+    ----------
+    tree : dict
+        answers and corresponding branches
+
+    Returns
+    -------
+    str
+        Tree in Formal language form, with " " as separator
+
+    """
+
+    if len(tree.keys()) == 1:
+        return str(list(tree.keys())[0])
+
+    # match the parameters : letter(s) + optional number
+    root = re.search(r"[A-z_]+\d*", list(tree.values())[0][0][0]).group()
+
+    pos_tree, neg_tree = split_tree(tree)
+
+    return root + sep + dict_to_bmpt(pos_tree) + sep + dict_to_bmpt(neg_tree)
+
+
+def split_tree(tree):
+    """ Splits the dictionary of answers and corresponding branches
+    to the positive and the negative subtrees
+
+    Parameters
+    ----------
+    tree : dict
+        answers and corresponding branches
+
+    Returns
+    -------
+    tuple
+        positive subtree, negative subtree
+    """
+    neg_tree = dict()
+    pos_tree = dict()
+
+    for answer in tree.items():
+        for branch in answer[1]:
+            subtree = pos_tree if '1-' not in branch[0] else neg_tree
+
+            if answer[0] not in subtree.keys():
+                subtree[answer[0]] = []
+            subtree[answer[0]].append(branch[1:])
+
+    return pos_tree, neg_tree
 
 
 def _get_lines(subtree, lines, answer_set, temp=""):
@@ -146,21 +190,20 @@ def _get_lines(subtree, lines, answer_set, temp=""):
         right_mult = " * " if isinstance(neg, list) else ""
 
         _get_lines(pos, lines, answer_set, temp + subtree[0] + left_mult)
-        _get_lines(neg, lines, answer_set, temp + "(1-" + subtree[0] + ")" + right_mult)
+        _get_lines(neg, lines, answer_set, temp +
+                   "(1-" + subtree[0] + ")" + right_mult)
 
         return lines
 
     else:
         # we reached the leaf
 
-        print(subtree)
         key = answer_set.index(subtree)
-        #key = int(subtree)
         if key not in lines:
             lines[key] = []
         lines[key] += [temp]
 
-# TODO
+
 def nested_list(word):
     """Turns a word for a subtree into a nested list
     Parameters
@@ -175,7 +218,6 @@ def nested_list(word):
     """
 
     str_ = word.str_.split(word.sep)
-
 
     # if only leaf
     if len(str_) == 1:
@@ -218,7 +260,6 @@ def _parse_tree(str_, is_leaf):
     """
     num_params = len(list(filterfalse(is_leaf, str_)))
     num_children = []
-
 
     # initialize num_children to -1 for all inner nodes
     for _ in range(num_params):

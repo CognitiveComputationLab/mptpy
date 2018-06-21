@@ -16,7 +16,7 @@ class EMFitter(Fitter):
     def __init__(self, data_path, sep=',', header=None):
         super().__init__(data_path, sep=sep, header=header)
 
-    def fit_mpt(self, mpt, use_fia=False):
+    def fit_mpt(self, mpt, n_optim, use_fia=False):
         """ Fit the given tree with the EM algorithm
 
         Parameters

@@ -10,6 +10,7 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 import os
 from abc import ABCMeta, abstractmethod
 import numpy as np
+import mptpy.tools.joint_tree as jt
 
 
 class Fitter(object):
@@ -28,7 +29,7 @@ class Fitter(object):
 
     def read_data(self):
         """ Read out the data and remove the header
-        
+
         Returns
         -------
         list
@@ -72,10 +73,7 @@ class Fitter(object):
             Dictionary of static parameters and their values
         """
         static_params = {}
-        if mpt.prefix_tree is not None:
-            static_params = mpt.prefix_tree.compute_ratios(data)
-
-        return static_params
+        return jt.compute_ratios(data, mpt.subtrees)
 
     def _save_parameter_ratios(self, static_params, temp_dir):
         """ Save the restrictions for the static parameters to a file
@@ -89,7 +87,6 @@ class Fitter(object):
             for param, value in static_params.items():
                 print(param, value)
                 file_.write("{} = {}\n".format(param, value))
-
 
     def _clear_temp_dir(self, path):
         """ Recreate the temporary files and create the dir if not existant

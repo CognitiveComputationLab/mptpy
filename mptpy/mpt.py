@@ -9,30 +9,8 @@
 
 import os
 from mpt_word import MPTWord
-from node import Node
-import tools.transformations as trans
-from tools.parsing import parse_file
-from visualization.visualize_mpt import cmd_draw
-
-
-def build_from_file(file_path, form=None):
-    """ Build MPT object from a file (.model or .txt)
-
-    Parameters
-    ----------
-    file_path : str
-        path to the MPT model (.model or .txt)
-
-    Returns
-    -------
-    MPT
-        MPT object constructed from the file
-    """
-    word, prefix_tree, leaf_test = parse_file(file_path, form=form)
-
-    mpt = MPT(word, leaf_test=leaf_test)
-    mpt.prefix_tree = prefix_tree
-    return mpt
+import tools.transformations as trans # pylint: disable=import-error
+from visualization.visualize_mpt import cmd_draw # pylint: disable=import-error
 
 
 class MPT(object):
@@ -45,33 +23,21 @@ class MPT(object):
 
         Parameters
         ----------
-        obj : str
-            String object.
+        mpt : [str, Node]
+            either tree in bmpt or as root object.
 
         """
-        self.prefix_tree = None
-
-        # mpt given as root node
-        if isinstance(mpt, Node):
-            print(mpt)
-            self.root = mpt
-            self.word = MPTWord(trans.tree_to_str(self.root, sep=sep))
+        self.subtrees = []
 
         # mpt given as word
-        elif isinstance(mpt, str):
+        if isinstance(mpt, str):
             self.word = MPTWord(mpt, sep=sep, leaf_test=leaf_test)
-            self.root = trans.word_to_tree(self.word)
-
-    @property
-    def string(self):
-        """ Convenience function to retrieve the string representation
-
-        Returns
-        -------
-        str
-            string representation
-        """
-        return self.word.str_
+            self.root = trans.word_to_nodes(self.word)
+        
+        # mpt given as root node
+        else:
+            self.root = mpt
+            self.word = MPTWord(str(self))
 
     def max_parameters(self):
         """ The maximal number of free parameters in the model
@@ -81,7 +47,7 @@ class MPT(object):
         int
             max number of free parameters
         """
-        return self.prefix_tree.max_parameters()
+        return sum([len(subtree) - 1 for subtree in self.subtrees])
 
     def get_formulae(self):
         """ Extracts the branch formulae underlying the represented MPT.
@@ -96,15 +62,21 @@ class MPT(object):
             Outcome category identifiers corresponding the the branch formulae.
         """
         if len(list(self.word)) == 1:
-            return [''], [self.string]
+            return [''], [str(self)]
 
         # Obtain this trees information
         param = self.word[0]
         subtrees = self.word.split_pos_neg()
 
         # Obtain the subtree branch formulae
-        pos_sub_branches = MPT(subtrees[0], self.word.sep, self.word.is_leaf).get_formulae()
-        neg_sub_branches = MPT(subtrees[1], self.word.sep, self.word.is_leaf).get_formulae()
+        pos_sub_branches = MPT(
+            subtrees[0],
+            self.word.sep,
+            self.word.is_leaf).get_formulae()
+        neg_sub_branches = MPT(
+            subtrees[1],
+            self.word.sep,
+            self.word.is_leaf).get_formulae()
 
         # Update the subtree formulae with current parameter
         pos_branches = [
@@ -122,17 +94,6 @@ class MPT(object):
         classes = pos_sub_branches[1] + neg_sub_branches[1]
 
         return formulae, classes
-
-    def to_easy(self):
-        """ Transforms the MPT to the easy format
-
-        Returns
-        -------
-        str
-            tree in the easy format
-
-        """
-        return trans.to_easy(self)
 
     def save(self, path, form="easy"):
         """ Saves the tree to a file
@@ -157,12 +118,21 @@ class MPT(object):
         cmd_draw(self.word)
 
     def __eq__(self, other):
-        print(self.word.abstract())
-        print(other.word.abstract())
+        print("hello")
+        print(str(self))
+        print(str(other))
         return self.word.abstract() == other.word.abstract()
 
     def __ne__(self, other):
         return not self.__eq__(other)
 
     def __str__(self):
-        return "MPT: " + self.word.str_
+        sep = " "
+        def fos(node):
+            if node.leaf:
+                return str(node.content)
+
+            pos = fos(node.pos)
+            neg = fos(node.neg)
+            return node.content + sep + pos + sep + neg
+        return fos(self.root)

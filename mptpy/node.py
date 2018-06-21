@@ -15,13 +15,31 @@ class Node(object):
             self,
             content,
             pos=None,
-            neg=None,
-            leaf=False
+            neg=None
     ):
         self.content = content
-        self.leaf = leaf
         self.pos = pos
         self.neg = neg
+
+    @property
+    def leaf(self):
+        return self.pos is None 
+
+    def __len__(self):
+        """ Number of nodes in the subtree where the
+        current node is the root (including this node itself)
+        
+        Returns
+        -------
+        int
+            number of nodes
+        """
+        if self.leaf:
+            return 1
+        else:
+            return 1 + len(self.pos) + len(self.neg)
+
+
 
     def __str__(self):
         return "Node({})".format(self.content)

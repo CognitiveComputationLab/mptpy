@@ -6,8 +6,7 @@ Paulina Friemann <friemanp@cs.uni-freiburg.de>
 Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
-import json
-import tools.transformations as transformations
+import tools.transformations as transformations # pylint: disable=import-error
 
 
 def to_tikz(mpt):
@@ -21,7 +20,8 @@ def to_tikz(mpt):
         specify where to save the tikz code
     """
 
-    def recursive_translation(subtree, temp=""):
+    def recursive_translation(subtree):
+        """ Recursively turn list to str """
         if not isinstance(subtree, list):
             return subtree
         pos = recursive_translation(subtree[1][0])
@@ -30,7 +30,6 @@ def to_tikz(mpt):
 
     nested = transformations.nested_list(mpt.word)
     return r"\Tree " + recursive_translation(nested)
-
 
 
 def cmd_draw(mpt):
@@ -58,7 +57,7 @@ def _dfs_print(subtree, is_leaf, depth=0):
     """
     to_print = '\t' * depth
 
-    if not isinstance(subtree, list): # leaf
+    if not isinstance(subtree, list):  # leaf
         to_print += subtree
         print(to_print)
         return
@@ -67,6 +66,6 @@ def _dfs_print(subtree, is_leaf, depth=0):
     pos = subtree[1][0]  # positive subtree
 
     _dfs_print(neg, is_leaf, depth + 1)
-    to_print += subtree[0] # current node
+    to_print += subtree[0]  # current node
     print(to_print)
     _dfs_print(pos, is_leaf, depth + 1)

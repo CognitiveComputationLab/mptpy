@@ -15,7 +15,7 @@ import os
 PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '../mptpy'))
 sys.path.insert(0, PATH)
 
-from mpt import build_from_file
+from mptpy.tools.parsing import EasyParser
 from fitting.scipy_fit import ScipyFitter
 
 
@@ -91,8 +91,8 @@ def run(model_path, data_path, sep=',', header=None, n_optim=10, llik=False):
     data : str
         path to the data file
     """
-
-    mpt = build_from_file(model_path)
+    parser = EasyParser()
+    mpt = parser.parse(model_path)
     mpt.draw()
     func = "llik" if llik else "rmse"
     fitter = ScipyFitter(data_path, sep=sep, header=header, func=func)

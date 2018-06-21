@@ -8,6 +8,7 @@
 
 import numpy as np
 
+
 def eval_formula(formula, assignment):
     """ Evaluates a formula represented as a string.
 
@@ -39,9 +40,10 @@ def eval_formula(formula, assignment):
     for param, value in sorted(assignment.items(), reverse=True):
         expression = expression.replace(param, str(value))
 
-    #pylint: disable=eval-used
+    # pylint: disable=eval-used
     return eval(expression)
-    #pylint: enable=eval-used
+    # pylint: enable=eval-used
+
 
 def likelihood(cat_formulae, assignment, observations):
     """ Computes the likelihood for an MPT model with given category formulae
@@ -89,6 +91,7 @@ def likelihood(cat_formulae, assignment, observations):
     return np.math.factorial(n_observations) * np.prod(
         cat_probs ** observations / factorials)
 
+
 def log_factorial(val):
     """ Computes the logarithmic factorial log(val!).
 
@@ -109,9 +112,10 @@ def log_factorial(val):
 
     """
 
-    #pylint: disable=no-member
+    # pylint: disable=no-member
     return np.log(np.arange(1, val + 1)).sum()
-    #pylint: enable=no-member
+    # pylint: enable=no-member
+
 
 def log_likelihood(
         cat_formulae, assignment, observations, ignore_factorials=False):
@@ -156,13 +160,13 @@ def log_likelihood(
 
     observations = np.array(observations)
 
-    #pylint: disable=no-member
+    # pylint: disable=no-member
     llik = np.sum(observations * np.log(cat_probs))
     if not ignore_factorials:
         # Compute the log factorials for the observations
         obs_factorials = np.sum([log_factorial(x) for x in observations])
         n_factorial = log_factorial(observations.sum())
         llik += n_factorial - obs_factorials
-    #pylint: enable=no-member
+    # pylint: enable=no-member
 
     return llik

@@ -14,7 +14,7 @@ import os
 PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '../mptpy'))
 sys.path.insert(0, PATH)
 
-from mpt import build_from_file
+from mptpy.tools.parsing import EasyParser
 from visualization.visualize_mpt import to_tikz
 
 
@@ -26,8 +26,8 @@ def run(model_file, save_file):
     file : str
         path to the model file
     """
-
-    mpt = build_from_file(model_file, "BMPT")
+    parser = EasyParser()
+    mpt = parser.parse(model_file)
     tikz = to_tikz(mpt)
     with open(save_file, 'w') as output:
         output.write(tikz)
