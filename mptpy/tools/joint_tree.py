@@ -56,7 +56,9 @@ def join(args, prefix_no=0):
     left_child = join(left, prefix_no + int(np.ceil(len(args) / 2))).root
     right_child = join(right, prefix_no + 1).root
 
-    return mptpy.mpt.MPT(Node("y" + str(prefix_no), left_child, right_child))
+    dummy = Node("y" + str(prefix_no), left_child, right_child)
+    new_is_leaf = lambda x : any([mpt.word.is_leaf(x) for mpt in args])
+    return mptpy.mpt.MPT(dummy, leaf_test=new_is_leaf)
 
 
 def comp_param_ratios(observations, prefix_no=0):

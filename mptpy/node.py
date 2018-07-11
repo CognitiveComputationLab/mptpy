@@ -23,7 +23,20 @@ class Node(object):
 
     @property
     def leaf(self):
-        return self.pos is None 
+        return self.pos is None
+
+    def answers(self):
+        """ Reachable answer categories from this node
+        
+        Returns
+        -------
+        list
+            Answer categories in subtree
+        """
+        if self.leaf:
+            return [self.content]
+        
+        return self.pos.answers() + self.neg.answers()
 
     def __len__(self):
         """ Number of nodes in the subtree where the
@@ -39,10 +52,10 @@ class Node(object):
         else:
             return 1 + len(self.pos) + len(self.neg)
 
-
-
     def __str__(self):
-        return "Node({})".format(self.content)
+        if self.leaf:
+            return self.content
+        return self.content + " " + str(self.pos) + str(self.neg)
 
     def __eq__(self, other):
         pos_subtree = self.pos == other.pos

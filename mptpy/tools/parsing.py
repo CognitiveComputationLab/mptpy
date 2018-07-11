@@ -7,7 +7,7 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
 
-
+import string
 from itertools import groupby
 import mptpy.tools.transformations as trans
 
@@ -15,7 +15,40 @@ from mptpy.mpt import MPT
 from . import joint_tree
 
 
-class AbstractParser():
+class Parser():
+
+    def parse(self, file_path):
+        """ Parse the mpt from the file
+
+        Parameters
+        ----------
+        file_path : str
+            path to the model file
+
+        Returns
+        -------
+        """
+        lines = self.open(file_path)
+        parser = self.instantiate(lines)
+        built = parser.build(lines)
+        return built
+    
+    def build(self, lines):
+        subtrees = [
+            list(g) for k,
+            g in groupby(
+                lines,
+                key=lambda x: x != '') if k]
+        joint = self.build_mpt(subtrees)
+
+        return joint
+
+    def instantiate(self, lines):
+        if any(["*" in line or "+" in line for line in lines]):
+            parser = EasyParser()
+        else:
+            parser = BmptParser()
+        return parser
     
     def open(self, file_path):
         """ Opens the file and return its contents
@@ -50,27 +83,46 @@ class AbstractParser():
         return lines
 
 
-class EasyParser(AbstractParser):
+class EasyParser(Parser):
 
-    def parse(self, file_path):
-        """ Parse the mpt from the file
+    def build_mpt(self, subtrees):
+        """ Build MPTs from the given subtrees
 
         Parameters
         ----------
-        file_path : str
-            path to the model file
+        subtrees : [str]
+            List of subtrees
 
         Returns
         -------
-        """
-        lines = self.open(file_path)
 
-        subtrees = [
-            list(g) for k,
-            g in groupby(
-                lines,
-                key=lambda x: x != '') if k]
-        return self.build_mpt(subtrees)
+        """
+        
+        mpts = []
+        leaf_step = 0
+
+        for subtree in subtrees:
+            # transform each subtree to bmpt
+            bmpt = trans.easy_to_bmpt(subtree, leaf_step=leaf_step)
+            mpts.append(MPT(bmpt))
+            leaf_step += len(subtree)
+
+        joint = joint_tree.join(mpts)
+        joint.subtrees = subtrees #TODO to easy?
+        
+        return joint
+
+
+class BmptParser(Parser):
+
+    def __init__(self):
+        self.leaf_test = None
+
+    def build(self, lines):
+        leaves = self.get_leaf_info(lines)  # retrieve leaf information
+        words = self.get_words(lines)  # retrieve the mpt word
+        self.leaf_test = self.construct_leaf_test(leaves)
+        return super().build(words)
 
     def build_mpt(self, subtrees):
         """ Build MPTs from the given subtrees
@@ -85,52 +137,15 @@ class EasyParser(AbstractParser):
 
         """
         mpts = []
-        leaf_step = 0
-
         for subtree in subtrees:
-            # transform each subtree to bmpt
-            bmpt = trans.easy_to_bmpt(subtree, leaf_step=leaf_step)
-            mpts.append(MPT(bmpt))
-            leaf_step += len(subtree)
+
+            bmpt = subtree[0]
+            mpts.append(MPT(bmpt, leaf_test=self.leaf_test))
 
         joint = joint_tree.join(mpts)
-        joint.subtrees = subtrees
-
+        joint.subtrees = subtrees #TODO to easy?
+        
         return joint
-
-
-class BmptParser(AbstractParser):
-
-    def __init__(self):
-        self.leaves = []
-        self.word = ""
-        self.leaf_test = None
-
-    def parse(self, file_path):
-        """ Parse the mpt from the file
-
-        Parameters
-        ----------
-        file_path : str
-            path to the model file
-
-        Returns
-        -------
-        """
-        pass
-
-    def open(self, file_path):
-        """ Opens the file and stores its contents
-
-        Parameters
-        ----------
-        file_path : str
-            path to the mpt file
-        """
-        lines = super().open(file_path)
-        self.leaves = self.get_leaf_info(lines)  # retrieve leaf information
-        self.word = self.get_word(lines)  # retrieve the mpt word
-        self.leaf_test = self.construct_leaf_test(self.leaves)
 
     def get_leaf_info(self, lines):
         """ If there is information about the leaves in the file,
@@ -146,7 +161,7 @@ class BmptParser(AbstractParser):
         [str]
             list with leaf names
         """
-        leaves = list(filter(lambda x: x[0] == "[", lines))
+        leaves = list(filter(lambda x: x.startswith("["), lines))
         if leaves:
             leaves = leaves[0].strip()
             leaves = leaves.replace("[", "").replace("]", "").split(",")
@@ -166,10 +181,14 @@ class BmptParser(AbstractParser):
         func
             leaf test
         """
-        def func(ch): return ch in leaves
+        if leaves:
+            func = lambda node: node in leaves
+        else:
+            func = lambda node: all(
+                [ch in string.digits for ch in node])
         return func
 
-    def get_word(self, lines):
+    def get_words(self, lines):
         """ Retrieve the mpt from the file content
 
         Parameters
@@ -182,6 +201,5 @@ class BmptParser(AbstractParser):
         str
             mpt word
         """
-        lines = list(filter(lambda x: x[0] != "[", lines))
-        word = lines[0]
-        return word
+        lines = list(filter(lambda x: not x.startswith("["), lines))
+        return lines

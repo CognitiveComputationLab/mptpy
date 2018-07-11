@@ -118,9 +118,6 @@ class MPT(object):
         cmd_draw(self.word)
 
     def __eq__(self, other):
-        print("hello")
-        print(str(self))
-        print(str(other))
         return self.word.abstract() == other.word.abstract()
 
     def __ne__(self, other):
@@ -135,4 +132,5 @@ class MPT(object):
             pos = fos(node.pos)
             neg = fos(node.neg)
             return node.content + sep + pos + sep + neg
+
         return fos(self.root)

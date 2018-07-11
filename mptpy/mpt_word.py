@@ -102,6 +102,9 @@ class MPTWord(object):
                 return self.sep.join(pos), self.sep.join(
                     split_string[idx + 2:])
 
+    def __len__(self):
+        return len(self.str_.split(sep=self.sep))
+
     def __eq__(self, other):
         return self.str_ == other.str_
 

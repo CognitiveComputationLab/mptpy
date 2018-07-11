@@ -11,7 +11,7 @@ import os
 from nose.tools import assert_equals
 from tests.context import mptpy
 
-from mptpy.tools.parsing import EasyParser, BmptParser
+from mptpy.tools.parsing import EasyParser, BmptParser, Parser
 from mptpy.mpt import MPT
 
 
@@ -28,12 +28,12 @@ def test_custom_leaves():
     assert_equals(mpt1, mpt2)
 """
 def test_easy_parsing():
-    parser = EasyParser()
+    parser = Parser()
     mpt1 = parser.parse(MODEL_DIR + "/test1.model")
     assert_equals(str(mpt1), "a bc c 0 1 a 2 e 2 3 d 4 5")
 
 def test_easy_parsing_w_joining():
-    parser = EasyParser()
+    parser = Parser()
     mpt1 = parser.parse(MODEL_DIR + "/2htms_small.txt")
     print("Built one:: ")
     mpt1.draw()
@@ -44,15 +44,16 @@ def test_easy_parsing_w_joining():
     assert_equals(str(mpt1), "y0 Do 0 G1 0 1 y1 Dn 3 G1 2 3 Do 4 G2 4 5") # maybe
 
 def test_bmpt_parsing():
-    parser = BmptParser()
-    word = parser.open(MODEL_DIR + "/testBMPT.model")
-    print(parser.word)
-    assert_equals(parser.word, "a b c 0 1 a 2 e 2 3 def 4 5")
+    parser = Parser()
 
-    word = parser.open(MODEL_DIR + "/testcustomleaves.txt")
-    #assert_equals(parser.word, "a b c albert ega a tante e tante 3 def 4 5")
+    mpt = parser.parse(MODEL_DIR + "/testBMPT.model")
+    assert_equals(str(mpt), "a b c 0 1 a 2 e 2 3 def 4 5")
+
+    mpt = parser.parse(MODEL_DIR + "/testcustomleaves.txt")
+    mpt.draw()
+    assert_equals(str(mpt), "a b c albert ega a tante e tante 3 def 4 5")
 
 def test_bmpt_parsing_w_joining():
-    parser = BmptParser()
-    word = parser.parse(MODEL_DIR + "/testBMPT2.model")
-    #assert_equals(parser.word, "y0 a c 0 1 1 b 2 3")
+    parser = Parser()
+    mpt = parser.parse(MODEL_DIR + "/testBMPT2.model")
+    assert_equals(str(mpt), "y0 a c 0 1 1 b 2 3")
