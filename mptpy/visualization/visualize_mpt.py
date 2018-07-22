@@ -6,7 +6,7 @@ Paulina Friemann <friemanp@cs.uni-freiburg.de>
 Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
-import tools.transformations as transformations # pylint: disable=import-error
+import mptpy.tools.transformations as transformations # pylint: disable=import-error
 
 
 def to_tikz(mpt):

@@ -8,9 +8,9 @@
 """
 
 import os
-from mpt_word import MPTWord
-import tools.transformations as trans # pylint: disable=import-error
-from visualization.visualize_mpt import cmd_draw # pylint: disable=import-error
+from mptpy.mpt_word import MPTWord
+import mptpy.tools.transformations as trans # pylint: disable=import-error
+from mptpy.visualization.visualize_mpt import cmd_draw # pylint: disable=import-error
 
 
 class MPT(object):

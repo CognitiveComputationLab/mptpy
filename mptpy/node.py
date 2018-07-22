@@ -55,7 +55,7 @@ class Node(object):
     def __str__(self):
         if self.leaf:
             return self.content
-        return self.content + " " + str(self.pos) + str(self.neg)
+        return self.content + " " + str(self.pos) + " " + str(self.neg)
 
     def __eq__(self, other):
         pos_subtree = self.pos == other.pos
