@@ -9,13 +9,9 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 """
 
 import sys
-import os
-
-PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '../mptpy'))
-sys.path.insert(0, PATH)
 
 from mptpy.tools.parsing import EasyParser
-from visualization.visualize_mpt import to_tikz
+from mptpy.visualization.visualize_mpt import to_tikz
 
 
 def run(model_file, save_file):

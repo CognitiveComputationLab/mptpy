@@ -11,11 +11,11 @@ import os
 import numpy as np
 from nose.tools import assert_equals, assert_true
 from tests.context import mptpy
-from mptpy.tools.parsing import EasyParser
-from mptpy.fitting.scipy_fit import ScipyFitter
+from mptpy.tools.parsing import Parser
+from mptpy.fitting import fitter, scipy_fit
 from mptpy.mpt import MPT
 
-parser = EasyParser()
+parser = Parser()
 
 MODEL_DIR = os.path.abspath("tests/test_models/")
 
@@ -23,7 +23,6 @@ MODEL_DIR = os.path.abspath("tests/test_models/")
 def test_remove_header():
     """ Test if the removal of the header works """
     data_file = MODEL_DIR + "/broeder-agg.csv"
-    fitter = ScipyFitter(data_file)
 
     data = np.genfromtxt(data_file, delimiter=',', dtype='int')
 
@@ -49,9 +48,8 @@ def test_comp_parameter_ratios():
 
     thtm = parser.parse(MODEL_DIR + "/test_build/2htms.txt")
 
-    fitter = ScipyFitter(MODEL_DIR + "/broeder.csv")
-
-    ratios = fitter._compute_parameter_ratios(thtm, fitter.read_data())
+    data = fitter.read_data(MODEL_DIR + "/broeder.csv")
+    ratios = fitter._compute_parameter_ratios(thtm, data)
     for key, value in ratios.items():
         ratios[key] = round(value, 1)
 

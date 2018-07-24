@@ -7,7 +7,7 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
 
-from nose.tools import assert_equals, assert_false
+from nose.tools import assert_equals, assert_false, assert_true
 from tests.context import mptpy
 from mptpy.tools import transformations, parsing
 from mptpy.node import Node
@@ -49,7 +49,7 @@ def test_word_to_tree():
 
     assert_equals(MPT(root), MPT(root2))
 
-    parser = parsing.EasyParser()
+    parser = parsing.Parser()
     mpt = parser.parse("tests/test_models/test_build/2htms.txt")
 
     word = MPTWord(
@@ -59,3 +59,15 @@ def test_word_to_tree():
     print(type(mpt))
     print(type(mpt2))
     assert_equals(mpt, mpt2)
+
+
+def test_get_lines():
+    mpt1 = MPT("a bef a 6 8 2 13")
+    nested = transformations.nested_list(mpt1.word)
+    res = transformations._get_lines(
+        nested, list(set(mpt1.word.answers)), lines=dict())
+
+    assert_true({'2': ['a * (1-bef)'],
+                 '6': ['a * bef * a'],
+                 '8': ['a * bef * (1-a)'],
+                 '13': ['(1-a)']} == res)

@@ -10,10 +10,6 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 
 import sys
-import os
-
-PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '../mptpy'))
-sys.path.insert(0, PATH)
 
 from mptpy.tools.parsing import EasyParser
 

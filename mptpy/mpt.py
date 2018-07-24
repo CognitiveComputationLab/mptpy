@@ -7,7 +7,6 @@
 
 """
 
-import os
 from mptpy.mpt_word import MPTWord
 import mptpy.tools.transformations as trans  # pylint: disable=import-error
 from mptpy.visualization.visualize_mpt import cmd_draw  # pylint: disable=import-error
@@ -29,6 +28,8 @@ class MPT(object):
 
         """
         self.subtrees = []
+        self.word = None
+        self.root = None
 
         # mpt given as word
         if isinstance(mpt, str):
@@ -141,14 +142,18 @@ class MPT(object):
         return not self.__eq__(other)
 
     def __str__(self):
+        if self.word:
+            return self.word.str_
+
         sep = " "
 
-        def fos(node):
+        def dfs(node):
+            """ depth first search """
             if node.leaf:
                 return str(node.content)
 
-            pos = fos(node.pos)
-            neg = fos(node.neg)
+            pos = dfs(node.pos)
+            neg = dfs(node.neg)
             return node.content + sep + pos + sep + neg
 
-        return fos(self.root)
+        return dfs(self.root)

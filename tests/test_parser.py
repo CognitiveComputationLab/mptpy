@@ -11,12 +11,12 @@ import os
 from nose.tools import assert_equals
 from tests.context import mptpy
 
-from mptpy.tools.parsing import EasyParser, BmptParser, Parser
+from mptpy.tools.parsing import BmptParser, Parser
 from mptpy.mpt import MPT
 
 
 MODEL_DIR = os.path.abspath("tests/test_models/test_build")
-easy = EasyParser()
+easy = Parser()
 bmpt = BmptParser()
 
 

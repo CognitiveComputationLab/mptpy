@@ -11,200 +11,211 @@ import re
 from collections import OrderedDict
 import numpy as np
 
-from .fitter import Fitter
-from . import optimize as optim
+from mptpy.fitting import fitter
+
 from . import likelihood as lh
+from . import optimize as optim
 
 
 FUNCS = {"rmse": optim.optim_rmse, "llik": optim.optim_llik}
 
 
-class ScipyFitter(Fitter):
-    """ Tree fitting using SciPy """
+# def __init__(self, data_path, sep=',', func="rmse", header=None):
+#    super().__init__(data_path, sep=sep, header=header)
+#    self.func = func
 
-    def __init__(self, data_path, sep=',', func="rmse", header=None):
-        super().__init__(data_path, sep=sep, header=header)
-        self.func = func
 
-    def fit_easy(self, easy_file_path, n_optim=10, use_fia=False):
-        """ Fit the given tree using SciPy
+def fit_easy(
+        easy_file_path,
+        data_path,
+        func,
+        sep=',',
+        n_optim=10,
+        use_fia=False):
+    """ Fit the given tree using SciPy
 
-        Parameters
-        ----------
-        easy_file_path : str
-            Path to the tree file in the easy format
+    Parameters
+    ----------
+    easy_file_path : str
+        Path to the tree file in the easy format
 
-        n_optim : int, optional
-            number of optimization steps
+    n_optim : int, optional
+        number of optimization steps
 
-        use_fia : boolean, optional
-            wether FIA is wished to be used.
-            Default: False.
+    use_fia : boolean, optional
+        wether FIA is wished to be used.
+        Default: False.
 
-        Returns
-        -------
-        dict
-            BIC, GSQ, Likelihood (and optionally FIA)
+    Returns
+    -------
+    dict
+        BIC, GSQ, Likelihood (and optionally FIA)
 
-        """
-        # read the file
-        easy = open(easy_file_path, 'r')
-        cat_formulae = easy.readlines()
-        cat_formulae = [formula.strip().split(" #")[0]
-                        for formula in cat_formulae]
-        easy.close()
+    """
+    # read the file
+    easy = open(easy_file_path, 'r')
+    cat_formulae = easy.readlines()
+    cat_formulae = [formula.strip().split(" #")[0]
+                    for formula in cat_formulae]
+    easy.close()
 
-        # find all parameters
-        p = re.compile("[A-z_]+\d*")
-        params = []
-        for line in cat_formulae:
-            params.extend(p.findall(line))
-        params = list(set(params))
+    # find all parameters
+    pattern = re.compile(r"[A-z_]+\d*")
+    params = []
+    for line in cat_formulae:
+        params.extend(pattern.findall(line))
+    params = list(set(params))
 
-        # setup kwargs and fit
-        kwargs = self._setup_args(cat_formulae, params)
-        return self._fit(kwargs, n_optim=n_optim)
+    # setup kwargs and fit
+    kwargs = _setup_args(cat_formulae, params, func, data_path, sep)
+    return _fit(kwargs, n_optim=n_optim)
 
-    def fit_mpt(self, mpt, n_optim=10, use_fia=False):
-        """ Fit the given tree using SciPy
 
-        Parameters
-        ----------
-        mpt : MPT
-            mpt model
+def fit_mpt(mpt, func, data_path, n_optim=10, use_fia=False):
+    """ Fit the given tree using SciPy
 
-        n_optim : int, optional
-            number of optimization steps
+    Parameters
+    ----------
+    mpt : MPT
+        mpt model
 
-        use_fia : boolean, optional
-            wether FIA is wished to be used.
-            Default: False.
+    n_optim : int, optional
+        number of optimization steps
 
-        Returns
-        -------
-        dict
-            BIC, GSQ, Likelihood (and optionally FIA)
+    use_fia : boolean, optional
+        wether FIA is wished to be used.
+        Default: False.
 
-        """
-        # TODO what to do with restricted parameters?
+    Returns
+    -------
+    dict
+        BIC, GSQ, Likelihood (and optionally FIA)
 
-        """
-        if mpt.prefix_tree is not None:
-            # the model consists of several subtrees, create restriction files
-            self._clear_temp_dir("temp/")
-            self._compute_parameter_ratios(mpt, "temp/")
-        """
-        cat_formulae = self._get_cat_formulae(mpt)
-        params = list(set(mpt.word.parameters))
-        kwargs = self._setup_args(cat_formulae, params)
-        return self._fit(kwargs, n_optim=n_optim)
+    """
+    # TODO what to do with restricted parameters?
 
-    def _fit(self, kwargs, n_optim=10):
-        """ Fit the model
+    """
+    if mpt.prefix_tree is not None:
+        # the model consists of several subtrees, create restriction files
+        self._clear_temp_dir("temp/")
+        self._compute_parameter_ratios(mpt, "temp/")
+    """
+    cat_formulae = _get_cat_formulae(mpt)
+    params = list(set(mpt.word.parameters))
+    kwargs = _setup_args(cat_formulae, params, func, data_path)
+    return _fit(kwargs, n_optim=n_optim)
 
-        Parameters
-        ----------
-        kwargs : dict
-            func, data, cat_formulae, param_names
 
-        """
-        res, errs = optim.fit_classical(**kwargs, n_optim=n_optim)
+def _fit(kwargs, n_optim=10):
+    """ Fit the model
 
-        # Compute the correct criteria (without ignoring factorials)
-        measures = self._compute_measures(res, kwargs)
+    Parameters
+    ----------
+    kwargs : dict
+        func, data, cat_formulae, param_names
 
-        # Compute the RMSE
-        rmse = self._rmse(measures['ass'], kwargs)
+    """
+    res, errs = optim.fit_classical(**kwargs, n_optim=n_optim)
 
-        result = {
-            'n_params': len(kwargs['param_names']),
-            'n_datasets': len(kwargs['data']),
-            'func_min': res.fun,
-            'LogLik': measures['llik'],
-            'AIC': measures['aic'],
-            'BIC': measures['bic'],
-            'RMSE': rmse,
-            'OptimErrorRatio': errs * 100,
-            'ParamAssignment': measures['ass']
-        }
+    # Compute the correct criteria (without ignoring factorials)
+    measures = _compute_measures(res, kwargs)
 
-        return result
+    # Compute the RMSE
+    rmse = _rmse(measures['ass'], kwargs)
 
-    def _compute_measures(self, res, kwargs):
-        """ Compute the correct criteria (without ignoring factorials)
-        """
-        data = kwargs['data']
-        formulae = kwargs['cat_formulae']
-        params = kwargs['param_names']
-        measures = {}
-        measures['ass'] = dict(zip(params, res.x))
-        measures['llik'] = lh.log_likelihood(
-            formulae, measures['ass'], data, ignore_factorials=False)
-        measures['aic'] = -2 * measures['llik'] + 2 * len(params)
-        measures['bic'] = -2 * measures['llik'] + \
-            np.log(data.sum()) * len(params)
-        return measures
+    result = {
+        'n_params': len(kwargs['param_names']),
+        'n_datasets': len(kwargs['data']),
+        'func_min': res.fun,
+        'LogLik': measures['llik'],
+        'AIC': measures['aic'],
+        'BIC': measures['bic'],
+        'RMSE': rmse,
+        'OptimErrorRatio': errs * 100,
+        'ParamAssignment': measures['ass']
+    }
 
-    def _rmse(self, ass, kwargs):
-        """ Compute the RMSE
+    return result
 
-        Parameters
-        ----------
-        ass : dict
-            Parameter Assignment
 
-        kwargs : dict
+def _compute_measures(res, kwargs):
+    """ Compute the correct criteria (without ignoring factorials)
+    """
+    data = kwargs['data']
+    formulae = kwargs['cat_formulae']
+    params = kwargs['param_names']
+    measures = {}
+    measures['ass'] = dict(zip(params, res.x))
+    measures['llik'] = lh.log_likelihood(
+        formulae, measures['ass'], data, ignore_factorials=False)
+    measures['aic'] = -2 * measures['llik'] + 2 * len(params)
+    measures['bic'] = -2 * measures['llik'] + \
+        np.log(data.sum()) * len(params)
+    return measures
 
-        """
-        probs = np.array([lh.eval_formula(f, ass)
-                          for f in kwargs['cat_formulae']])
-        preds = probs * kwargs['data']
-        rmse = np.sqrt(np.mean((preds - kwargs['data']) ** 2))
-        return rmse
 
-    def _get_cat_formulae(self, mpt):
-        """ Retrieve categories and respective formulae
+def _rmse(ass, kwargs):
+    """ Compute the RMSE
 
-        Parameters
-        ----------
-        mpt : MPT
-            model
+    Parameters
+    ----------
+    ass : dict
+        Parameter Assignment
 
-        """
-        formulae, classes = mpt.get_formulae()
-        cat_formulae = {}
-        for idx, cl in enumerate(classes):
-            if cl not in cat_formulae.keys():
-                cat_formulae[cl] = formulae[idx]
-            else:
-                cat_formulae[cl] += " + " + formulae[idx]
+    kwargs : dict
 
-        ordered = OrderedDict(sorted(cat_formulae.items())).values()
-        cat_formulae = list(ordered)
-        return cat_formulae
+    """
+    probs = np.array([lh.eval_formula(f, ass)
+                      for f in kwargs['cat_formulae']])
+    preds = probs * kwargs['data']
+    rmse = np.sqrt(np.mean((preds - kwargs['data']) ** 2))
+    return rmse
 
-    def _setup_args(self, cat_formulae, params):
-        """ Compute the arguments needed for the fitting
 
-        Parameters
-        ----------
-        mpt : MPT
-            MPT to be fitted
+def _get_cat_formulae(mpt):
+    """ Retrieve categories and respective formulae
 
-        Returns
-        -------
-        dict
-        """
-        kwargs = {}
-        kwargs['fun'] = FUNCS[self.func]
+    Parameters
+    ----------
+    mpt : MPT
+        model
 
-        data = np.array(self.read_data()[0])
-        kwargs['data'] = data
+    """
+    formulae, classes = mpt.get_formulae()
+    cat_formulae = {}
+    for idx, class_ in enumerate(classes):
+        if class_ not in cat_formulae.keys():
+            cat_formulae[class_] = formulae[idx]
+        else:
+            cat_formulae[class_] += " + " + formulae[idx]
 
-        #restricted = self._compute_parameter_ratios(mpt, data)
+    ordered = OrderedDict(sorted(cat_formulae.items())).values()
+    cat_formulae = list(ordered)
+    return cat_formulae
 
-        kwargs['cat_formulae'] = cat_formulae
 
-        kwargs['param_names'] = params
+def _setup_args(cat_formulae, params, func, data_path, sep=','):
+    """ Compute the arguments needed for the fitting
 
-        return kwargs
+    Parameters
+    ----------
+    mpt : MPT
+        MPT to be fitted
+
+    Returns
+    -------
+    dict
+    """
+    kwargs = {}
+    kwargs['fun'] = FUNCS[func]
+
+    data = np.array(fitter.read_data(data_path, sep)[0])
+    kwargs['data'] = data
+
+    #restricted = self._compute_parameter_ratios(mpt, data)
+
+    kwargs['cat_formulae'] = cat_formulae
+
+    kwargs['param_names'] = params
+
+    return kwargs

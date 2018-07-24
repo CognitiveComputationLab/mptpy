@@ -11,7 +11,7 @@ import string
 from nose.tools import assert_equals, assert_false
 from tests.context import mptpy
 from mptpy.mpt_word import MPTWord
-from mptpy.tools.parsing import EasyParser
+from mptpy.tools.parsing import Parser
 
 MODEL_DIR = "tests/test_models/test_build"
 
@@ -58,7 +58,7 @@ def test_split():
     word3 = MPTWord('a b N O N', leaf_test=leaf)
     assert_equals(word3.split_pos_neg(), ('b N O', 'N'))
 
-    parser = EasyParser()
+    parser = Parser()
     word4 = parser.parse(MODEL_DIR + "/test1.model").word
     assert_equals(word4.split_pos_neg(), ('bc c 0 1 a 2 e 2 3', 'd 4 5'))
 

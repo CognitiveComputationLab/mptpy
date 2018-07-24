@@ -60,7 +60,6 @@ class Deletion(Operation):
 
                 bin_subtrees = self.generate_possible_subtrees(
                     node, bin_s[:2], DEBUG=DEBUG)
-                print("returned")
                 bin_s.append(bin_subtrees)
                 if not node.leaf:
                     # the first two are the left-most and deepest nodes
@@ -146,54 +145,6 @@ class Deletion(Operation):
         """
         with open(self.out, 'w') as save_file:
             save_file.writelines(it)
-
-    def help(self, it):
-        return any([self.deletion_flag not in li for li in it])
-
-    def loop_generation(self, check, left, right):
-        """ Loop variation of the generation process.
-        Parameters
-        ----------
-        check_func : func
-            (partial) function to check if the combination is possible
-        left : list
-            candidates for the left child
-        right : list
-            candidates for the right child
-        Returns
-        -------
-        list
-            all possible deletion candidates
-        """
-        possible = []
-        right_done = False
-
-        for bin_left in tqdm(left):
-
-            comb = bytearray([0]) + bin_left + bytearray([0] * len(right[0]))
-
-            # delete right side
-            if check(comb):
-                possible.append(comb)
-
-            for bin_right in right:
-                if not right_done:
-
-                    comb = bytearray([0]) + bytearray([0] *
-                                                      len(left[0])) + bin_right
-
-                    # delete left side
-                    if check(comb):
-                        possible.append(comb)
-
-                comb = bytearray([1]) + bin_left + bin_right
-
-                if check(comb):
-                    possible.append(comb)
-
-            right_done = True
-
-        return possible
 
     def lazy_generation(self, check_func, left, right):
         """ Itertools variation of the generation process.

@@ -12,10 +12,10 @@ from nose.tools import assert_equals, assert_false
 from tests.context import mptpy
 from mptpy.mpt import MPT
 from mptpy.properties import property
-from mptpy.tools.parsing import EasyParser
+from mptpy.tools.parsing import Parser
 from mptpy.tools.transformations import to_easy
 
-parser = EasyParser()
+parser = Parser()
 
 MODEL_DIR = "tests/test_models/test_build"
 

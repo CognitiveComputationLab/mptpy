@@ -23,6 +23,7 @@ class Node(object):
 
     @property
     def leaf(self):
+        """ Whether node is leaf """
         return self.pos is None
 
     def answers(self):
@@ -49,8 +50,8 @@ class Node(object):
         """
         if self.leaf:
             return 1
-        else:
-            return 1 + len(self.pos) + len(self.neg)
+
+        return 1 + len(self.pos) + len(self.neg)
 
     def __str__(self):
         if self.leaf:

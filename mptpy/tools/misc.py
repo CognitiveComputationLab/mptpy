@@ -11,6 +11,25 @@
 import os
 
 
+def split_half(args):
+    """ Split the given list into two parts (equal if possible, if not
+    the right one gets one more)
+
+    Arguments
+    ---------
+    args : list
+        list to split
+
+    Returns
+    -------
+    list, list
+        Args split in two parts
+    """
+    split = int(len(args) // 2)
+
+    return args[:split], args[split:]
+
+
 def merge_dicts(*dicts):
     """ Merge two dictionaries
     example: merge({1:'a', 2:'b'}, {1:'c'}) -> {1:['a','c'], 2:['c']}
@@ -22,9 +41,9 @@ def merge_dicts(*dicts):
     """
     temp = {}
 
-    for d in (dicts):
+    for dict_ in dicts:
 
-        for key, value in d.items():
+        for key, value in dict_.items():
             if key in temp.keys():
                 temp[key].extend(value)
             else:
@@ -32,7 +51,7 @@ def merge_dicts(*dicts):
     return temp
 
 
-def write_iterable_to_file(path, it, newline=True):
+def write_iterable_to_file(path, iterable_, newline=True):
     """ Writes an iterable to a file.
     creates new file if not existent.
 
@@ -53,7 +72,7 @@ def write_iterable_to_file(path, it, newline=True):
         os.makedirs(directory)
 
     with open(path, 'w') as file_:
-        for line in it:
+        for line in iterable_:
             file_.writelines(line)
             if newline:
                 file_.write('\n')

@@ -8,95 +8,115 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 """
 
 import os
-from abc import ABCMeta, abstractmethod
+
 import numpy as np
-import mptpy.tools.joint_tree as jt
+from mptpy.tools import misc
 
 
-class Fitter(object):
-    """ Interface class for a tree fitting module """
-    __metaclass__ = ABCMeta
+def read_data(data_path, sep=','):
+    """ Read out the data and remove the header
 
-    def __init__(self, data_path, sep=',', header=None):
-        self.data_path = data_path
-        self.sep = sep
-        self.header = header
+    Returns
+    -------
+    list
+        data without header
+    """
+    data = np.genfromtxt(data_path, delimiter=sep, dtype='int')
+    data = remove_header(data)
+    return data
 
-    @abstractmethod
-    def fit_mpt(self, mpt, n_optim, use_fia):
-        """ Fit the tree and return all metrics """
-        pass
 
-    def read_data(self):
-        """ Read out the data and remove the header
+def remove_header(data):
+    """ Remove the header from the data
 
-        Returns
-        -------
-        list
-            data without header
-        """
-        data = np.genfromtxt(self.data_path, delimiter=self.sep, dtype='int')
-        data = self.remove_header(data)
-        return data
+    Returns
+    -------
+    list
+        Data without header
+    """
+    skip = 0
+    for line in data:
+        if -1 in line:
+            skip += 1
+        else:
+            break
 
-    def remove_header(self, data):
-        """ Remove the header from the data
+    return data[skip:]
 
-        Returns
-        -------
-        list
-            Data without header
-        """
-        skip = 0
-        for line in data:
-            if -1 in line:
-                skip += 1
-            else:
-                break
 
-        return data[skip:]
+def _compute_parameter_ratios(mpt, data):
+    """ Compute the ratios of the static parameters of an MPT model
 
-    def _compute_parameter_ratios(self, mpt, data):
-        """ Compute the ratios of the static parameters of an MPT model
+    Parameters
+    ----------
+    mpt : MPT
+        MPT to be fitted
 
-        Parameters
-        ----------
-        mpt : MPT
-            MPT to be fitted
+    data : list
+        Observation Data
 
-        data : list
-            Observation Data
+    Returns
+    -------
+    dict
+        Dictionary of static parameters and their values
+    """
+    observations = compute_observations(data, mpt.subtrees)
 
-        Returns
-        -------
-        dict
-            Dictionary of static parameters and their values
-        """
-        static_params = {}
-        return jt.compute_ratios(data, mpt.subtrees)
+    ratios = comp_param_ratios(observations)
+    return ratios
 
-    def _save_parameter_ratios(self, static_params, temp_dir):
-        """ Save the restrictions for the static parameters to a file
 
-        Parameters
-        ----------
-        temp_dir : str
-            directory to the restriction files
-        """
-        with open(temp_dir + "model.restr", "w") as file_:
-            for param, value in static_params.items():
-                print(param, value)
-                file_.write("{} = {}\n".format(param, value))
+def compute_observations(data, subtrees):
+    subtree_observations = []
+    idx = 0
+    for subtree in subtrees:
+        n_cats = len(subtree)
+        subtree_observations.append(data[idx:(idx + n_cats)].sum())
+        idx += n_cats
 
-    def _clear_temp_dir(self, path):
-        """ Recreate the temporary files and create the dir if not existant
+    return np.array(subtree_observations)
 
-        Parameters
-        ----------
-        path : str
-            Path to the temporary files
-        """
-        if os.path.exists(path + "model.restr"):
-            os.remove(path + "model.restr")
-        if not os.path.exists(path):
-            os.makedirs(path)
+
+def comp_param_ratios(observations, prefix_no=0):
+    if len(observations) <= 1:
+        return {}
+
+    left, right = misc.split_half(observations)
+
+    param_ratio = np.sum(left) / np.sum(observations)
+
+    result_dict = {"{}{}".format("y", prefix_no): param_ratio}
+
+    left_prefix = prefix_no + int(np.ceil(len(observations) / 2))
+    result_dict.update(comp_param_ratios(left, left_prefix))
+
+    result_dict.update(comp_param_ratios(right, prefix_no + 1))
+
+    return result_dict
+
+
+def _save_parameter_ratios(static_params, temp_dir):
+    """ Save the restrictions for the static parameters to a file
+
+    Parameters
+    ----------
+    temp_dir : str
+        directory to the restriction files
+    """
+    with open(temp_dir + "model.restr", "w") as file_:
+        for param, value in static_params.items():
+            file_.write("{} = {}\n".format(param, value))
+
+
+def _clear_temp_dir(path):
+    """ Recreate the temporary files and create the dir if not existant
+
+    Parameters
+    ----------
+    path : str
+        Path to the temporary files
+    """
+    if os.path.exists(path + "model.restr"):
+        os.remove(path + "model.restr")
+    if not os.path.exists(path):
+        os.makedirs(path)

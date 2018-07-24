@@ -58,11 +58,11 @@ def to_easy(mpt, sep=' ', leaf_test=None):
         nested = _parse_tree(mpt.split(sep), leaf_test)[0]
         answers = filter(leaf_test, mpt.split(sep))
         answer_set = list(OrderedDict.fromkeys(answers))
-        lines = _get_lines(nested, dict(), answer_set)
+        lines = _get_lines(nested, answer_set)
 
     if type(mpt).__name__ == "MPTWord":
         answer_set = list(OrderedDict.fromkeys(mpt.answers))
-        lines = _get_lines(nested_list(mpt), dict(), answer_set)
+        lines = _get_lines(nested_list(mpt), answer_set)
 
     easy = ""
     for key in sorted(lines.keys()):
@@ -159,7 +159,7 @@ def split_tree(tree):
     return pos_tree, neg_tree
 
 
-def _get_lines(subtree, lines, answer_set, temp=""):
+def _get_lines(subtree, answer_set, lines=None, temp=""):
     """ Builds a dictionary of the answers and the
     respective branch formulas
 
@@ -168,11 +168,11 @@ def _get_lines(subtree, lines, answer_set, temp=""):
     subtree : list
         tree as a nested list
 
-    lines : dict
-        empty dictionary to be filled
-
     answer_set : list
         list of all answers without replications
+
+    lines : dict, optional
+        empty dictionary to be filled
 
     Returns
     -------
@@ -180,27 +180,27 @@ def _get_lines(subtree, lines, answer_set, temp=""):
         Dictionary of the answer categories of the tree and the branch formulas
 
     """
+    if lines is None:
+        lines = dict()
 
     if isinstance(subtree, list):
-        neg = subtree[1][1]  # right subtree
-        pos = subtree[1][0]  # left subtree
+        pos, neg = subtree[1]  # left and right subtree
 
         left_mult = " * " if isinstance(pos, list) else ""
         right_mult = " * " if isinstance(neg, list) else ""
 
-        _get_lines(pos, lines, answer_set, temp + subtree[0] + left_mult)
-        _get_lines(neg, lines, answer_set, temp +
+        _get_lines(pos, answer_set, lines, temp + subtree[0] + left_mult)
+        _get_lines(neg, answer_set, lines, temp +
                    "(1-" + subtree[0] + ")" + right_mult)
 
         return lines
 
-    else:
-        # we reached the leaf
-
-        key = answer_set.index(subtree)
-        if key not in lines:
-            lines[key] = []
-        lines[key] += [temp]
+    # we reached the leaf
+    key = subtree
+    if key not in lines:
+        lines[key] = []
+    lines[key] += [temp]
+    return None
 
 
 def nested_list(word):

@@ -15,7 +15,83 @@ from mptpy.mpt import MPT
 from . import joint_tree
 
 
+def construct_leaf_test(leaves):
+    """ Constructs the test for leaves
+
+    Parameters
+    ----------
+    leaves : [str]
+        list of leaf names
+
+    Returns
+    -------
+    func
+        leaf test
+    """
+    if leaves:
+        return lambda node: node in leaves
+
+    return lambda node: all([ch in string.digits for ch in node])
+
+
+def get_leaf_info(lines):
+    """ If there is information about the leaves in the file,
+    retrieve and return it
+
+    Parameters
+    ----------
+    lines : [str]
+        file content without comments
+
+    Returns
+    -------
+    [str]
+        list with leaf names
+    """
+    leaves = list(filter(lambda x: x.startswith("["), lines))
+    if leaves:
+        leaves = leaves[0].strip()
+        leaves = leaves.replace("[", "").replace("]", "").split(",")
+        leaves = [leaf.lstrip() for leaf in leaves]
+    return leaves
+
+
+def strip(lines):
+    """ Removes comments, new lines and empty lines from the file content
+
+    Parameters
+    ----------
+    lines : [str]
+        file content
+
+    Returns
+    -------
+    [str]
+        file content without comments
+    """
+    criteria = lambda line: line[0] != "#"
+    lines = filter(criteria, lines)  # commentary and empty lines
+    lines = [line.split("#")[0].strip() for line in lines]  # in-line
+
+    return lines
+
+
+def open_model(file_path):
+    """ Opens the file and return its contents
+
+    Parameters
+    ----------
+    file_path : str
+        path to the mpt file
+    """
+    with open(file_path, 'r') as mpt_file:
+        lines = strip(mpt_file.readlines())  # remove comments
+
+    return lines
+
+
 class Parser():
+    """ Parsing for easy format """
 
     def parse(self, file_path):
         """ Parse the mpt from the file
@@ -28,64 +104,24 @@ class Parser():
         Returns
         -------
         """
-        lines = self.open(file_path)
+        lines = open_model(file_path)
         parser = self.instantiate(lines)
         built = parser.build(lines)
         return built
 
     def build(self, lines):
+        """ Build MPT from lines. Can have multiple subtrees.
+        """
         subtrees = [
             list(g) for k,
             g in groupby(
                 lines,
                 key=lambda x: x != '') if k]
-        joint = self.build_mpt(subtrees)
+        joint = self.build_mpt_from_subtrees(subtrees)
 
         return joint
 
-    def instantiate(self, lines):
-        if any(["*" in line or "+" in line for line in lines]):
-            parser = EasyParser()
-        else:
-            parser = BmptParser()
-        return parser
-
-    def open(self, file_path):
-        """ Opens the file and return its contents
-
-        Parameters
-        ----------
-        file_path : str
-            path to the mpt file
-        """
-        mpt_file = open(file_path, 'r')
-        lines = self.strip(mpt_file.readlines())  # remove comments
-        mpt_file.close()
-        return lines
-
-    def strip(self, lines):
-        """ Removes comments, new lines and empty lines from the file content
-
-        Parameters
-        ----------
-        lines : [str]
-            file content
-
-        Returns
-        -------
-        [str]
-            file content without comments
-        """
-        def criteria(line): return line[0] != "#"
-        lines = filter(criteria, lines)  # commentary and empty lines
-        lines = [line.split("#")[0].strip() for line in lines]  # in-line
-
-        return lines
-
-
-class EasyParser(Parser):
-
-    def build_mpt(self, subtrees):
+    def build_mpt_from_subtrees(self, subtrees):
         """ Build MPTs from the given subtrees
 
         Parameters
@@ -97,7 +133,6 @@ class EasyParser(Parser):
         -------
 
         """
-
         mpts = []
         leaf_step = 0
 
@@ -112,19 +147,40 @@ class EasyParser(Parser):
 
         return joint
 
+    def instantiate(self, lines):
+        """ Checks if we have a '*' or '+' in the file.
+        If yes, assumes the file is in easy. else bmpt
+
+        Parameters
+        ----------
+        lines : [str]
+            lines in the file
+        """
+        if any(["*" in line or "+" in line for line in lines]):
+            return self
+
+        return BmptParser()
+
 
 class BmptParser(Parser):
+    """ Parsing for BMPT format """
 
     def __init__(self):
         self.leaf_test = None
+        print("lol")
 
     def build(self, lines):
-        leaves = self.get_leaf_info(lines)  # retrieve leaf information
-        words = self.get_words(lines)  # retrieve the mpt word
-        self.leaf_test = self.construct_leaf_test(leaves)
+        """ Build MPT from lines. Can have multiple subtrees.
+        """
+        leaves = get_leaf_info(lines)  # retrieve leaf information
+        words = list(
+            filter(
+                lambda x: not x.startswith("["),
+                lines))  # retrieve the mpt word
+        self.leaf_test = construct_leaf_test(leaves)
         return super().build(words)
 
-    def build_mpt(self, subtrees):
+    def build_mpt_from_subtrees(self, subtrees):
         """ Build MPTs from the given subtrees
 
         Parameters
@@ -146,60 +202,3 @@ class BmptParser(Parser):
         joint.subtrees = subtrees  # TODO to easy?
 
         return joint
-
-    def get_leaf_info(self, lines):
-        """ If there is information about the leaves in the file,
-        retrieve and return it
-
-        Parameters
-        ----------
-        lines : [str]
-            file content without comments
-
-        Returns
-        -------
-        [str]
-            list with leaf names
-        """
-        leaves = list(filter(lambda x: x.startswith("["), lines))
-        if leaves:
-            leaves = leaves[0].strip()
-            leaves = leaves.replace("[", "").replace("]", "").split(",")
-            leaves = [leaf.lstrip() for leaf in leaves]
-        return leaves
-
-    def construct_leaf_test(self, leaves):
-        """ Constructs the test for leaves
-
-        Parameters
-        ----------
-        leaves : [str]
-            list of leaf names
-
-        Returns
-        -------
-        func
-            leaf test
-        """
-        if leaves:
-            def func(node): return node in leaves
-        else:
-            def func(node): return all(
-                [ch in string.digits for ch in node])
-        return func
-
-    def get_words(self, lines):
-        """ Retrieve the mpt from the file content
-
-        Parameters
-        ----------
-        lines : [str]
-            file content without comments
-
-        Returns
-        -------
-        str
-            mpt word
-        """
-        lines = list(filter(lambda x: not x.startswith("["), lines))
-        return lines

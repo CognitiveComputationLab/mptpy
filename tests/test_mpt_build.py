@@ -11,12 +11,12 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 from nose.tools import assert_equals
 from tests.context import mptpy
 from mptpy.node import Node
-from mptpy.tools.parsing import EasyParser
+from mptpy.tools.parsing import Parser
 from mptpy.mpt import MPT
 
 
 MODEL_DIR = "tests/test_models/test_build/"
-parser = EasyParser()
+parser = Parser()
 
 
 def test_mpt_from_file():
