@@ -36,20 +36,15 @@ def test_deletion():
     print("candidates:", candidates)
     print()
 
-    assert_equals(sorted(candidates), sorted([s, "b c 2 1 a 2 0", "b c 2 1 d 1 0", "b c 2 1 0", 
-    "b 2 a 2 d 1 0", "b 2 d 1 0", "b 1 a 2 d 1 0", "b 1 a 2 0", "a 2 d 1 0"]))
-
-def test_get_levels():
-    s = "b c 2 1 a 2 d 1 0"
-
-    mpt = MPT(s)
-
-    deletion = Deletion(mpt)
-
-    levels = deletion.get_levels()
-    levels = {key: [node.content for node in value] for key, value in levels.items()}
-    print(levels)
-    assert_equals({0:["b"], 1:["c","a"], 2:["2", "1", "2", "d"], 3:["1","0"]}, levels)
+    assert_equals(sorted(candidates),
+                  sorted([s,
+                          "b c 2 1 a 2 0",
+                          "b c 2 1 d 1 0",
+                          "b c 2 1 0",
+                          "b 2 a 2 d 1 0",
+                          "b 2 d 1 0",
+                          "b 1 a 2 d 1 0",
+                          "b 1 a 2 0"]))
 
 
 def test_gen_possible_subtrees():
@@ -58,7 +53,8 @@ def test_gen_possible_subtrees():
     mpt = MPT(s)
 
     deletion = Deletion(mpt)
-    subtrees = deletion.generate_possible_subtrees(mpt.root.pos, [[[1]], [[1]]])
+    subtrees = deletion.generate_possible_subtrees(
+        mpt.root.pos, [[bytearray([1])], [bytearray([1])]])
     res = []
     for subtree in subtrees:
         res.append(" ".join((compress(str(mpt.root.pos).split(" "), subtree))))

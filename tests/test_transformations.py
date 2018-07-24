@@ -20,13 +20,31 @@ def test_tree_to_word():
     root = Node("a", Node("b", Node("1"), Node("2")), Node("3"))
     assert_equals(str(MPT(root)), "a b 1 2 3")
 
-    root = Node("a", Node("bef", Node("a", Node("6"), Node("8")), Node("2")), Node("13"))
+    root = Node(
+        "a",
+        Node(
+            "bef",
+            Node(
+                "a",
+                Node("6"),
+                Node("8")),
+            Node("2")),
+        Node("13"))
     assert_equals(str(MPT(root)), "a bef a 6 8 2 13")
 
 
 def test_word_to_tree():
     """ Test the transformation from a word to a tree (root node) """
-    root = Node("a", Node("bef", Node("a", Node("6"), Node("8")), Node("2")), Node("13"))
+    root = Node(
+        "a",
+        Node(
+            "bef",
+            Node(
+                "a",
+                Node("6"),
+                Node("8")),
+            Node("2")),
+        Node("13"))
     root2 = transformations.word_to_nodes(MPTWord("a bef a 6 8 2 13"))
 
     assert_equals(MPT(root), MPT(root2))

@@ -27,7 +27,7 @@ class Node(object):
 
     def answers(self):
         """ Reachable answer categories from this node
-        
+
         Returns
         -------
         list
@@ -35,13 +35,13 @@ class Node(object):
         """
         if self.leaf:
             return [self.content]
-        
+
         return self.pos.answers() + self.neg.answers()
 
     def __len__(self):
         """ Number of nodes in the subtree where the
         current node is the root (including this node itself)
-        
+
         Returns
         -------
         int

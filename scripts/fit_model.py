@@ -31,8 +31,8 @@ def parse_commandlineargs():
     """
 
     parser = argparse.ArgumentParser(
-        description='Perform generic fitting operations on Multinomial' + \
-            'Processing Trees (MPTs).')
+        description='Perform generic fitting operations on Multinomial' +
+        'Processing Trees (MPTs).')
 
     # Mandatory arguments
     parser.add_argument(
@@ -54,8 +54,7 @@ def parse_commandlineargs():
         metavar='N',
         type=int,
         default=n_default,
-        help=
-        'Number of fitting repetitions to evade local maxima. (Default={})'.
+        help='Number of fitting repetitions to evade local maxima. (Default={})'.
         format(n_default))
 
     s_default = ','
@@ -102,7 +101,6 @@ def run(model_path, data_path, sep=',', header=None, n_optim=10, llik=False):
     print()
     for key, value in evaluation.items():
         print("{}: {}".format(key, value))
-
 
 
 if __name__ == "__main__":

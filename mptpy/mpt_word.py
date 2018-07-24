@@ -56,20 +56,19 @@ class MPTWord(object):
         Returns
         -------
         str
-            a b 1 0 c 1 0 -> p0 p1 a0 a1 p2 a0 a1
+            a b 1 0 c 1 0 -> p0 p1 1 0 p2 1 0
         """
         abst = ""
 
         # this retains the order
-        answer_set = list(OrderedDict.fromkeys(self.answers))
         param_set = list(OrderedDict.fromkeys(self.parameters))
 
         for node in self.str_.split(self.sep):
             # add whitespace only after first node
             if abst:
                 abst += self.sep
-            if node in answer_set:
-                abst += "a" + str(answer_set.index(node))
+            if node in self.answers:
+                abst += node
             elif node in param_set:
                 abst += "p" + str(param_set.index(node))
 

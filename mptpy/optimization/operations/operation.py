@@ -9,6 +9,7 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 from abc import ABCMeta, abstractmethod
 
+
 class Operation(object):
     """ Base class for operations on MPTs """
     __metaclass__ = ABCMeta

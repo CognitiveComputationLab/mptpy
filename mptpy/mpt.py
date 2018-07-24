@@ -9,8 +9,9 @@
 
 import os
 from mptpy.mpt_word import MPTWord
-import mptpy.tools.transformations as trans # pylint: disable=import-error
-from mptpy.visualization.visualize_mpt import cmd_draw # pylint: disable=import-error
+import mptpy.tools.transformations as trans  # pylint: disable=import-error
+from mptpy.visualization.visualize_mpt import cmd_draw  # pylint: disable=import-error
+from mptpy.tools import misc
 
 
 class MPT(object):
@@ -33,7 +34,7 @@ class MPT(object):
         if isinstance(mpt, str):
             self.word = MPTWord(mpt, sep=sep, leaf_test=leaf_test)
             self.root = trans.word_to_nodes(self.word)
-        
+
         # mpt given as root node
         else:
             self.root = mpt
@@ -95,6 +96,29 @@ class MPT(object):
 
         return formulae, classes
 
+    def get_levels(self, node, level=0):
+        """ Generate a dict with all nodes and their respective level
+        0 is the root
+
+        Parameters
+        ----------
+        node : Node
+            starting node
+
+        level : int, optional
+            level from which to start counting
+        """
+        levels = {level: [node]}
+
+        if not node.leaf:
+            left_dict = self.get_levels(node.pos, level=level + 1)
+            right_dict = self.get_levels(node.neg, level=level + 1)
+
+            temp = misc.merge_dicts(left_dict, right_dict)
+            levels.update(temp)
+
+        return levels
+
     def save(self, path, form="easy"):
         """ Saves the tree to a file
 
@@ -103,15 +127,8 @@ class MPT(object):
         path : str
             where to save the tree
         """
-
-        directory = os.path.dirname(path)
-        if not os.path.exists(directory):
-            os.makedirs(directory)
-        file_ = open(path, "w")
-
         to_print = trans.to_easy(self) if form == "easy" else self.word.str_
-        file_.write(to_print)
-        file_.close()
+        misc.write_iterable_to_file(path, to_print, newline=False)
 
     def draw(self):
         """ Draw MPT to the command line """
@@ -125,6 +142,7 @@ class MPT(object):
 
     def __str__(self):
         sep = " "
+
         def fos(node):
             if node.leaf:
                 return str(node.content)

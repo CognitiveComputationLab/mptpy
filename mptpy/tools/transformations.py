@@ -29,13 +29,12 @@ def word_to_nodes(word, idx=0):
 
     """
     node = Node(word[idx])
-    
+
     if not word.is_leaf(word[idx]):
         node.pos = word_to_nodes(word, idx=idx + 1)
         node.neg = word_to_nodes(word, idx=idx + 1 + len(node.pos))
 
     return node
-
 
 
 def to_easy(mpt, sep=' ', leaf_test=None):

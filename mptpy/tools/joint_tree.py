@@ -13,7 +13,7 @@ import mptpy.mpt
 
 
 def split_half(args):
-    """ Split the given list into two parts (equal if possible, if not 
+    """ Split the given list into two parts (equal if possible, if not
     the right one gets one more)
 
     Arguments
@@ -57,7 +57,8 @@ def join(args, prefix_no=0):
     right_child = join(right, prefix_no + 1).root
 
     dummy = Node("y" + str(prefix_no), left_child, right_child)
-    new_is_leaf = lambda x : any([mpt.word.is_leaf(x) for mpt in args])
+
+    def new_is_leaf(x): return any([mpt.word.is_leaf(x) for mpt in args])
     return mptpy.mpt.MPT(dummy, leaf_test=new_is_leaf)
 
 

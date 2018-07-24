@@ -26,7 +26,13 @@ def test_mpt_from_file():
     assert_equals(mpt_obj.word.str_, "a bc c 0 1 a 2 e 2 3 d 4 5")
     assert_equals(mpt_obj.root.content, "a")
 
-    root = Node("a", Node("bc", Node("c", Node("0"), Node("1")), Node("a", Node("2"), Node("e", Node("2"), Node("3")))), Node("d", Node("4"), Node("5")))
+    root = Node(
+        "a", Node(
+            "bc", Node(
+                "c", Node("0"), Node("1")), Node(
+                "a", Node("2"), Node(
+                    "e", Node("2"), Node("3")))), Node(
+                        "d", Node("4"), Node("5")))
     mpt_obj.draw()
     assert_equals(root, mpt_obj.root)
 

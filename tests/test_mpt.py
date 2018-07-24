@@ -25,10 +25,12 @@ def test_equals():
     mpt1 = MPT("a b c 1 2 a 4 e 4 5 d 6 7")
     mpt2 = MPT("pq b c 1 2 pq 4 e 4 5 z 6 7")
     mpt3 = MPT("a b c 1 2 a 4 e 4 5 6")
+    mpt4 = MPT("pq b c 1 2 pq 4 e 4 5 d 6 8")
 
     assert_equals(mpt1, mpt2)
     assert_false(mpt1 == mpt3)
     assert_false(mpt1 != mpt2)
+    assert_false(mpt4 == mpt1)
 
 
 def test_tree_length():
@@ -44,7 +46,10 @@ def test_to_easy():
     mpt = parser.parse(MODEL_DIR + "/test1.model")
     easy = to_easy(mpt)
     print(easy)
-    assert_equals(easy, "a * bc * c\na * bc * (1-c)\na * (1-bc) * a + a * (1-bc) * (1-a) * e\na * (1-bc) * (1-a) * (1-e)\n(1-a) * d\n(1-a) * (1-d)\n")
+    assert_equals(
+        easy,
+        "a * bc * c\na * bc * (1-c)\na * (1-bc) * a + a * (1-bc) * (1-a) * e\na * (1-bc) * (1-a) * (1-e)\n(1-a) * d\n(1-a) * (1-d)\n")
+
 
 def test_save():
     mpt = parser.parse(MODEL_DIR + "/test1.model")
@@ -53,14 +58,28 @@ def test_save():
     mpt.save(MODEL_DIR + "/testsavebmpt.model", form="BMPT")
 
 
+def test_get_levels():
+    s = "b c 2 1 a 2 d 1 0"
+
+    mpt = MPT(s)
+
+    levels = mpt.get_levels(mpt.root)
+    levels = {key: [node.content for node in value]
+              for key, value in levels.items()}
+    print(levels)
+    assert_equals({0: ["b"], 1: ["c", "a"], 2: [
+                  "2", "1", "2", "d"], 3: ["1", "0"]}, levels)
+
+
 def test_branch_formulae():
-    leaf = lambda x: all([ch in string.ascii_uppercase for ch in x])
+    def leaf(x): return all([ch in string.ascii_uppercase for ch in x])
     mpt1 = MPT('p A B', leaf_test=leaf)
 
     assert_equals(mpt1.get_formulae(), (['p', '(1 - p)'], ['A', 'B']))
 
     mpt2 = MPT('r N g N O', leaf_test=leaf)
-    assert_equals(mpt2.get_formulae(), (['r', '(1 - r) * g', '(1 - r) * (1 - g)'], ['N', 'N', 'O']))
+    assert_equals(mpt2.get_formulae(),
+                  (['r', '(1 - r) * g', '(1 - r) * (1 - g)'], ['N', 'N', 'O']))
 
     mpt3 = parser.parse(MODEL_DIR + "/test1.model")
     print(mpt3.get_formulae())
@@ -69,6 +88,7 @@ def test_branch_formulae():
         'a * (1 - bc) * (1 - a) * e', 'a * (1 - bc) * (1 - a) * (1 - e)',
         '(1 - a) * d', '(1 - a) * (1 - d)'
     ], ['0', '1', '2', '2', '3', '4', '5']))
+
 
 def test_identifiable():
     mpt = parser.parse(MODEL_DIR + "/test1.model")

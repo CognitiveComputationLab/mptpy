@@ -32,7 +32,7 @@ class Parser():
         parser = self.instantiate(lines)
         built = parser.build(lines)
         return built
-    
+
     def build(self, lines):
         subtrees = [
             list(g) for k,
@@ -49,7 +49,7 @@ class Parser():
         else:
             parser = BmptParser()
         return parser
-    
+
     def open(self, file_path):
         """ Opens the file and return its contents
 
@@ -76,7 +76,7 @@ class Parser():
         [str]
             file content without comments
         """
-        criteria = lambda line: line[0] != "#"
+        def criteria(line): return line[0] != "#"
         lines = filter(criteria, lines)  # commentary and empty lines
         lines = [line.split("#")[0].strip() for line in lines]  # in-line
 
@@ -97,7 +97,7 @@ class EasyParser(Parser):
         -------
 
         """
-        
+
         mpts = []
         leaf_step = 0
 
@@ -108,8 +108,8 @@ class EasyParser(Parser):
             leaf_step += len(subtree)
 
         joint = joint_tree.join(mpts)
-        joint.subtrees = subtrees #TODO to easy?
-        
+        joint.subtrees = subtrees  # TODO to easy?
+
         return joint
 
 
@@ -143,8 +143,8 @@ class BmptParser(Parser):
             mpts.append(MPT(bmpt, leaf_test=self.leaf_test))
 
         joint = joint_tree.join(mpts)
-        joint.subtrees = subtrees #TODO to easy?
-        
+        joint.subtrees = subtrees  # TODO to easy?
+
         return joint
 
     def get_leaf_info(self, lines):
@@ -182,9 +182,9 @@ class BmptParser(Parser):
             leaf test
         """
         if leaves:
-            func = lambda node: node in leaves
+            def func(node): return node in leaves
         else:
-            func = lambda node: all(
+            def func(node): return all(
                 [ch in string.digits for ch in node])
         return func
 

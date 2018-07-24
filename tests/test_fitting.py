@@ -33,7 +33,16 @@ def test_remove_header():
 
 def test_comp_parameter_ratios():
     """ Test the computing of ratios of static parameters """
-    params = {"y0" : 0.5, "y5" : 0.4, "y8" : 0.5, "y6" : 0.333333333333, "y7" : 0.5, "y1" : 0.4, "y4" : 0.5, "y2" : 0.333333333333, "y3" : 0.5}
+    params = {
+        "y0": 0.5,
+        "y5": 0.4,
+        "y8": 0.5,
+        "y6": 0.333333333333,
+        "y7": 0.5,
+        "y1": 0.4,
+        "y4": 0.5,
+        "y2": 0.333333333333,
+        "y3": 0.5}
 
     for key, value in params.items():
         params[key] = round(value, 1)
