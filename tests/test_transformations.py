@@ -8,11 +8,15 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 """
 
 from nose.tools import assert_equals, assert_false, assert_true
+import string
 from tests.context import mptpy
 from mptpy.tools import transformations, parsing
 from mptpy.node import Node
 from mptpy.mpt_word import MPTWord
 from mptpy.mpt import MPT
+
+parser = parsing.Parser()
+MODEL_DIR = "tests/test_models/test_build"
 
 
 def test_tree_to_word():
@@ -61,13 +65,37 @@ def test_word_to_tree():
     assert_equals(mpt, mpt2)
 
 
-def test_get_lines():
+def test():
     mpt1 = MPT("a bef a 6 8 2 13")
-    nested = transformations.nested_list(mpt1.word)
-    res = transformations._get_lines(
-        nested, list(set(mpt1.word.answers)), lines=dict())
+    res = transformations.get_formulae(mpt1)
+
+    print(res)
 
     assert_true({'2': ['a * (1-bef)'],
                  '6': ['a * bef * a'],
                  '8': ['a * bef * (1-a)'],
                  '13': ['(1-a)']} == res)
+
+    
+
+    def leaf(x): return all([ch in string.ascii_uppercase for ch in x])
+    mpt1 = MPT('p A B', leaf_test=leaf)
+
+    assert_equals(
+        transformations.get_formulae(
+            mpt1), {
+            'A': ['p'], 'B': ['(1-p)']})
+
+    mpt2 = MPT('r N g N O', leaf_test=leaf)
+    assert_equals(transformations.get_formulae(mpt2),
+                  {'N': ['r', '(1-r) * g'], 'O': ['(1-r) * (1-g)']})
+
+    mpt3 = parser.parse(MODEL_DIR + "/test1.model")
+
+    assert_equals(transformations.get_formulae(mpt3), {
+        '0': ['a * bc * c'],
+        '1': ['a * bc * (1-c)'],
+        '2': ['a * (1-bc) * a', 'a * (1-bc) * (1-a) * e'],
+        '3': ['a * (1-bc) * (1-a) * (1-e)'],
+        '4': ['(1-a) * d'],
+        '5': ['(1-a) * (1-d)']})

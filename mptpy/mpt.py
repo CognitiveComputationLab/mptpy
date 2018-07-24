@@ -41,6 +41,16 @@ class MPT(object):
             self.root = mpt
             self.word = MPTWord(str(self))
 
+    def formulae(self):
+        """ Calculate the branch formulae for the categories in the tree
+
+        Returns
+        -------
+        dict
+            {category : formulae}
+        """
+        return trans.get_formulae(self)
+
     def max_parameters(self):
         """ The maximal number of free parameters in the model
 
@@ -50,52 +60,6 @@ class MPT(object):
             max number of free parameters
         """
         return sum([len(subtree) - 1 for subtree in self.subtrees])
-
-    def get_formulae(self):
-        """ Extracts the branch formulae underlying the represented MPT.
-
-        Returns
-        -------
-        formulae : list(str)
-            List of strings representing the branch formulae of the represented
-            MPT.
-
-        classes : list(str)
-            Outcome category identifiers corresponding the the branch formulae.
-        """
-        if len(list(self.word)) == 1:
-            return [''], [str(self)]
-
-        # Obtain this trees information
-        param = self.word[0]
-        subtrees = self.word.split_pos_neg()
-
-        # Obtain the subtree branch formulae
-        pos_sub_branches = MPT(
-            subtrees[0],
-            self.word.sep,
-            self.word.is_leaf).get_formulae()
-        neg_sub_branches = MPT(
-            subtrees[1],
-            self.word.sep,
-            self.word.is_leaf).get_formulae()
-
-        # Update the subtree formulae with current parameter
-        pos_branches = [
-            "{} * {}".format(param, x) for x in pos_sub_branches[0]
-        ]
-        neg_branches = [
-            "(1 - {}) * {}".format(param, x) for x in neg_sub_branches[0]
-        ]
-        comb_branches = pos_branches + neg_branches
-
-        # Combine the subtrees to construct formulae and classes.
-        # Simultaneously remove the trailing multiplication operators which are
-        # added in the computation of positive and negative branches above.
-        formulae = [x[:-3] if x.endswith(' * ') else x for x in comb_branches]
-        classes = pos_sub_branches[1] + neg_sub_branches[1]
-
-        return formulae, classes
 
     def get_levels(self, node, level=0):
         """ Generate a dict with all nodes and their respective level
@@ -133,7 +97,7 @@ class MPT(object):
 
     def draw(self):
         """ Draw MPT to the command line """
-        cmd_draw(self.word)
+        cmd_draw(self)
 
     def __eq__(self, other):
         return self.word.abstract() == other.word.abstract()

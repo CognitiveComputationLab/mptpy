@@ -53,7 +53,7 @@ def test_gen_possible_subtrees():
     mpt = MPT(s)
 
     deletion = Deletion(mpt)
-    subtrees = deletion.generate_possible_subtrees(
+    subtrees = deletion.possible_subtrees(
         mpt.root.pos, [[bytearray([1])], [bytearray([1])]])
     res = []
     for subtree in subtrees:

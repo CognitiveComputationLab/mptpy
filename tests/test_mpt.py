@@ -71,25 +71,6 @@ def test_get_levels():
                   "2", "1", "2", "d"], 3: ["1", "0"]}, levels)
 
 
-def test_branch_formulae():
-    def leaf(x): return all([ch in string.ascii_uppercase for ch in x])
-    mpt1 = MPT('p A B', leaf_test=leaf)
-
-    assert_equals(mpt1.get_formulae(), (['p', '(1 - p)'], ['A', 'B']))
-
-    mpt2 = MPT('r N g N O', leaf_test=leaf)
-    assert_equals(mpt2.get_formulae(),
-                  (['r', '(1 - r) * g', '(1 - r) * (1 - g)'], ['N', 'N', 'O']))
-
-    mpt3 = parser.parse(MODEL_DIR + "/test1.model")
-    print(mpt3.get_formulae())
-    assert_equals(mpt3.get_formulae(), ([
-        'a * bc * c', 'a * bc * (1 - c)', 'a * (1 - bc) * a',
-        'a * (1 - bc) * (1 - a) * e', 'a * (1 - bc) * (1 - a) * (1 - e)',
-        '(1 - a) * d', '(1 - a) * (1 - d)'
-    ], ['0', '1', '2', '2', '3', '4', '5']))
-
-
 def test_identifiable():
     mpt = parser.parse(MODEL_DIR + "/test1.model")
     ident = property.check(mpt, "identifiable")

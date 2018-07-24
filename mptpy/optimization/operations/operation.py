@@ -15,7 +15,7 @@ class Operation(object):
     __metaclass__ = ABCMeta
 
     @abstractmethod
-    def generate_candidates(self, mpt):
+    def generate_candidates(self):
         """ Generate all trees possible with this operation
 
         Parameters
@@ -23,8 +23,4 @@ class Operation(object):
         mpt : MPT
             mpt that is to be modified
         """
-        pass
-
-    @abstractmethod
-    def apply(self, mpt):
         pass

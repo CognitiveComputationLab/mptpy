@@ -38,5 +38,5 @@ def join(args, prefix_no=0):
 
     dummy = Node("y" + str(prefix_no), left_child, right_child)
 
-    new_is_leaf = lambda x: any([mpt.word.is_leaf(x) for mpt in args])
-    return mptpy.mpt.MPT(dummy, leaf_test=new_is_leaf)
+    return mptpy.mpt.MPT(dummy,
+                         leaf_test=args[0].word.is_leaf)

@@ -90,9 +90,7 @@ class MPTWord(object):
         expected_outcomes = 1
         pos = []
         split_string = self.str_.split()
-        idx = 0
-        for item in split_string[1:]:
-            idx += 1
+        for idx, item in enumerate(split_string[1:]):
             pos.append(item)
             if not self.is_leaf(item):
                 expected_outcomes += 1
@@ -100,8 +98,8 @@ class MPTWord(object):
                 expected_outcomes -= 1
 
             if expected_outcomes == 0:
-                break
-        return self.sep.join(pos), self.sep.join(split_string[idx + 2:])
+                return self.sep.join(pos), self.sep.join(
+                    split_string[idx + 2:])
 
     def __len__(self):
         return len(self.str_.split(sep=self.sep))

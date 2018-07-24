@@ -69,8 +69,7 @@ def strip(lines):
     [str]
         file content without comments
     """
-    criteria = lambda line: line[0] != "#"
-    lines = filter(criteria, lines)  # commentary and empty lines
+    lines = filter(lambda line: line[0] != "#", lines)  # commentary and empty lines
     lines = [line.split("#")[0].strip() for line in lines]  # in-line
 
     return lines
@@ -190,7 +189,7 @@ class BmptParser(Parser):
 
         Returns
         -------
-
+        joint tree
         """
         mpts = []
         for subtree in subtrees:

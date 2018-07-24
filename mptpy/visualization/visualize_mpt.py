@@ -6,7 +6,6 @@ Paulina Friemann <friemanp@cs.uni-freiburg.de>
 Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
-import mptpy.tools.transformations as transformations  # pylint: disable=import-error
 
 
 def to_tikz(mpt):
@@ -20,16 +19,15 @@ def to_tikz(mpt):
         specify where to save the tikz code
     """
 
-    def recursive_translation(subtree):
+    def recursive_translation(node):
         """ Recursively turn list to str """
-        if not isinstance(subtree, list):
-            return subtree
-        pos = recursive_translation(subtree[1][0])
-        neg = recursive_translation(subtree[1][1])
-        return "[." + subtree[0] + " " + pos + " " + neg + " ]"
+        if node.leaf:
+            return node.content
+        pos = recursive_translation(node.pos)
+        neg = recursive_translation(node.neg)
+        return "[.{} {} {} ]".format(node.content, pos, neg)
 
-    nested = transformations.nested_list(mpt.word)
-    return r"\Tree " + recursive_translation(nested)
+    return r"\Tree " + recursive_translation(mpt.root)
 
 
 def cmd_draw(mpt):
@@ -37,16 +35,16 @@ def cmd_draw(mpt):
 
     Parameters
     ----------
-    mpt : MPTWord
+    mpt : MPT
         MPT to be drawn
     """
-    word = mpt
+    #word = mpt
 
-    subtree = transformations.nested_list(word)
-    _dfs_print(subtree, word.is_leaf)
+    #subtree = transformations.nested_list(word)
+    _dfs_print(mpt.root)
 
 
-def _dfs_print(subtree, is_leaf, depth=0):
+def _dfs_print(node, depth=0):
     """ Prints a tree recursively via depth first search
 
     Parameters
@@ -57,15 +55,12 @@ def _dfs_print(subtree, is_leaf, depth=0):
     """
     to_print = '\t' * depth
 
-    if not isinstance(subtree, list):  # leaf
-        to_print += subtree
+    if node.leaf:  # leaf
+        to_print += node.content
         print(to_print)
         return
 
-    neg = subtree[1][1]  # negative subtree
-    pos = subtree[1][0]  # positive subtree
-
-    _dfs_print(neg, is_leaf, depth + 1)
-    to_print += subtree[0]  # current node
+    _dfs_print(node.neg, depth + 1)
+    to_print += node.content  # current node
     print(to_print)
-    _dfs_print(pos, is_leaf, depth + 1)
+    _dfs_print(node.pos, depth + 1)

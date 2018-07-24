@@ -8,8 +8,6 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 """
 
 import re
-from itertools import filterfalse
-from collections import OrderedDict
 from mptpy.node import Node
 
 
@@ -37,13 +35,13 @@ def word_to_nodes(word, idx=0):
     return node
 
 
-def to_easy(mpt, sep=' ', leaf_test=None):
+def to_easy(mpt):
     """ Transforms the MPT to the easy format
 
     Parameters
     ----------
-    mpt : [MPT, MPTWord, str]
-        MPT model as either MPT or MPTWord object or str
+    mpt : MPT
+        MPT model
 
     Returns
     -------
@@ -51,18 +49,8 @@ def to_easy(mpt, sep=' ', leaf_test=None):
         tree in the easy format
 
     """
-    if type(mpt).__name__ == "MPT":
-        mpt = mpt.word
 
-    elif isinstance(mpt, str):
-        nested = _parse_tree(mpt.split(sep), leaf_test)[0]
-        answers = filter(leaf_test, mpt.split(sep))
-        answer_set = list(OrderedDict.fromkeys(answers))
-        lines = _get_lines(nested, answer_set)
-
-    if type(mpt).__name__ == "MPTWord":
-        answer_set = list(OrderedDict.fromkeys(mpt.answers))
-        lines = _get_lines(nested_list(mpt), answer_set)
+    lines = get_formulae(mpt)
 
     easy = ""
     for key in sorted(lines.keys()):
@@ -128,7 +116,7 @@ def dict_to_bmpt(tree, sep=" "):
 
     pos_tree, neg_tree = split_tree(tree)
 
-    return root + sep + dict_to_bmpt(pos_tree) + sep + dict_to_bmpt(neg_tree)
+    return sep.join([root, dict_to_bmpt(pos_tree), dict_to_bmpt(neg_tree)])
 
 
 def split_tree(tree):
@@ -159,20 +147,13 @@ def split_tree(tree):
     return pos_tree, neg_tree
 
 
-def _get_lines(subtree, answer_set, lines=None, temp=""):
+def get_formulae(mpt):
     """ Builds a dictionary of the answers and the
     respective branch formulas
 
     Parameters
     ----------
-    subtree : list
-        tree as a nested list
-
-    answer_set : list
-        list of all answers without replications
-
-    lines : dict, optional
-        empty dictionary to be filled
+    mpt : MPT
 
     Returns
     -------
@@ -180,112 +161,21 @@ def _get_lines(subtree, answer_set, lines=None, temp=""):
         Dictionary of the answer categories of the tree and the branch formulas
 
     """
-    if lines is None:
-        lines = dict()
+    lines = {answer : [] for answer in mpt.word.answers}
+    def recursive_to_formulae(node, temp=""):
+        """ Recursively compute the branch formulae """
+        if node.leaf:
+            lines[node.content] += [temp]
+            return None
 
-    if isinstance(subtree, list):
-        pos, neg = subtree[1]  # left and right subtree
+        left_mult = "" if node.pos.leaf else " * "
+        right_mult = "" if node.neg.leaf else " * "
 
-        left_mult = " * " if isinstance(pos, list) else ""
-        right_mult = " * " if isinstance(neg, list) else ""
-
-        _get_lines(pos, answer_set, lines, temp + subtree[0] + left_mult)
-        _get_lines(neg, answer_set, lines, temp +
-                   "(1-" + subtree[0] + ")" + right_mult)
+        recursive_to_formulae(node.pos, temp +
+                              node.content + left_mult)
+        recursive_to_formulae(node.neg, temp +
+                              "(1-" + node.content + ")" + right_mult)
 
         return lines
 
-    # we reached the leaf
-    key = subtree
-    if key not in lines:
-        lines[key] = []
-    lines[key] += [temp]
-    return None
-
-
-def nested_list(word):
-    """Turns a word for a subtree into a nested list
-    Parameters
-    ----------
-    word : MPTWord
-        tree in string form
-
-    Returns
-    -------
-    list
-        nested list of nodes and leaves in subtree
-    """
-
-    str_ = word.str_.split(word.sep)
-
-    # if only leaf
-    if len(str_) == 1:
-        return str_
-
-    subtrees = _parse_tree(str_, word.is_leaf)
-    return subtrees[0]
-
-
-def _pop_down(stack):
-    """Appends the last element on the stack to the one below
-
-    Parameters
-    ----------
-    stack : list
-
-    Returns
-    -------
-    list
-        stack with the "full" elements on top merged down
-    """
-    temp = stack.pop()
-    if len(stack[-1]) == 2:
-        stack[-1][1].append(temp)
-    else:
-        stack[-1].append([temp])
-
-
-def _parse_tree(str_, is_leaf):
-    """ Parse the mpt word and translate it to a nested list
-    Parameters
-    ----------
-    str_ : str
-        tree in str form
-
-    Returns
-    -------
-    list
-        mpt as a nested list
-    """
-    num_params = len(list(filterfalse(is_leaf, str_)))
-    num_children = []
-
-    # initialize num_children to -1 for all inner nodes
-    for _ in range(num_params):
-        num_children.append(-1)
-
-    stack = []
-
-    for char in str_:
-
-        if not is_leaf(char):
-            # if char is a parameter, add it to the stack
-            stack.append([char])
-
-        else:
-            # else if answer, add it to the last parameter in the stack
-            if len(stack[-1]) > 1:
-                stack[-1][1].append(char)
-            else:
-                stack[-1].append([char])
-
-        if len(stack[-1]) > 1:
-            # if last thing on stack is "full", append downwards
-            while len(stack[-1][1]) == 2 and len(stack) > 1:
-                _pop_down(stack)
-
-    # cleanup
-    while len(stack) > 1:
-        _pop_down(stack)
-
-    return stack
+    return recursive_to_formulae(mpt.root)

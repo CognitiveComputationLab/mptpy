@@ -10,27 +10,29 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 import itertools as it
 from functools import partial
-from queue import Queue
 from collections import Counter
-from collections import OrderedDict
-
+from tqdm import tqdm
 
 from mptpy.optimization.operations.operation import Operation
 from mptpy import mpt_word
-from tqdm import tqdm
+from mptpy.tools import misc
+
+
+DELETION_FLAG = 2
 
 
 class Deletion(Operation):
     """ Parameter deletion operation on MPTs """
 
-    def __init__(self, mpt, ignore_params=[], out='out.txt'):
+    def __init__(self, mpt, ignore_params=None, out='out.txt'):
+        if ignore_params is None:
+            ignore_params = []
         self.mpt = mpt
         self.all_cats = Counter(mpt.word.answers)
         self.is_leaf = mpt.word.is_leaf
         self.ignore_params = ignore_params
         self.out = out
         self.sep = self.mpt.word.sep
-        self.deletion_flag = 2
 
     def generate_candidates(self):
         """ Generate all trees possible with this operation
@@ -46,46 +48,39 @@ class Deletion(Operation):
         levels = self.mpt.get_levels(self.mpt.root)
 
         bin_s = []
-
-        DEBUG = True
-
         for level in reversed(sorted(levels.keys())):
-            print()
-            print('-------------------')
-            print()
-            print("Level {}".format(level))
-            print(type(bin_s))
+            print('\n-------------------\nLevel {}'.format(level))
 
             for node in levels[level]:
 
-                bin_subtrees = self.generate_possible_subtrees(
-                    node, bin_s[:2], DEBUG=DEBUG)
-                bin_s.append(bin_subtrees)
+                bin_s.append(self.possible_subtrees(node, bin_s[:2]))
                 if not node.leaf:
                     # the first two are the left-most and deepest nodes
                     bin_s = bin_s[2:]
         print("Done!")
 
-        res = sorted(self.compressed(bin_s[0]), key=self.abstract)
+        candidates = sorted(self.compressed(bin_s[0]), key=self.abstract)
 
         unique = []
-        for _, g in it.groupby(res, key=self.abstract):
-            unique.append(list(g)[0])
-
-        self.check_for_false(unique)
+        for _, group in it.groupby(candidates, key=self.abstract):
+            unique.append(list(group)[0])
 
         return unique
 
-    def check_for_false(self, li):
-        for candidate in li:
-            cats = Counter(candidate.split(" "))
-            if not all([key in cats for key in self.all_cats.keys()]):
-                print("ouch")
-                print(cats)
-                exit()
-        print("done checking for false")
-
     def abstract(self, candidate):
+        """ Calls the abstraction function of the mpt word class
+        a 1 0 -> p0 1 0
+
+        Parameters
+        ----------
+        candidate : str
+            str of the candidate for deletion
+
+        Returns
+        -------
+        str
+            abstraction
+        """
         word = mpt_word.MPTWord(candidate, leaf_test=self.is_leaf)
         return word.abstract()
 
@@ -97,7 +92,7 @@ class Deletion(Operation):
             res.append(candidate)
         return res
 
-    def check_combination(self, cats_wo_node, subtree, comb, DEBUG=False):
+    def check_combination(self, cats_wo_node, subtree, comb):
         """ Check if the given combination for the node is okay
 
         Parameters
@@ -129,22 +124,12 @@ class Deletion(Operation):
             iterable without the d and with a 0 or 1 at [0]
         """
         comb = list(comb)
-        if self.deletion_flag in comb:
-            comb.remove(self.deletion_flag)
+        if DELETION_FLAG in comb:
+            comb.remove(DELETION_FLAG)
             comb.insert(0, 0)
         else:
             comb.insert(0, 1)
         return comb
-
-    def save(self, it):
-        """ Write iterator to file
-
-        Parameters
-        ----------
-        it : iterable
-        """
-        with open(self.out, 'w') as save_file:
-            save_file.writelines(it)
 
     def lazy_generation(self, check_func, left, right):
         """ Itertools variation of the generation process.
@@ -172,12 +157,9 @@ class Deletion(Operation):
         candidates = it.product(left_candidates, right_candidates)
 
         possible = []
-        i = 0
-        for combination in tqdm(
-                candidates,
-                total=len(left_candidates) *
-                len(right_candidates)):
-            i += 1
+        total = len(left_candidates) * len(right_candidates)
+
+        for combination in tqdm(candidates, total=total):
 
             combination = self.substitute_flag(
                 it.chain.from_iterable(combination))
@@ -188,11 +170,10 @@ class Deletion(Operation):
 
         return possible
 
-    def generate_possible_subtrees(
+    def possible_subtrees(
             self,
             node,
-            arr_bin,
-            DEBUG=True):
+            arr_bin):
         """ Generates all possible subtrees for node.
 
         Parameters
@@ -208,8 +189,7 @@ class Deletion(Operation):
             all possible subtrees
         """
 
-        if DEBUG:
-            print("Generate subtrees for {}".format(node.content))
+        print("Generate subtrees for {}".format(node.content))
 
         if node.leaf or node.content in self.ignore_params:
             return [bytearray([1] * len(str(node).split(self.mpt.word.sep)))]

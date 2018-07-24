@@ -13,7 +13,7 @@ from operation import Operation
 class Substitution(Operation):
     """ Parameter deletion operation on MPTs """
 
-    def generate_candidates(self, mpt):
+    def generate_candidates(self):
         """ Generate all trees possible with this operation
 
         Parameters
@@ -22,4 +22,4 @@ class Substitution(Operation):
             mpt that is to be modified
         """
 
-        pass
+        return NotImplementedError
