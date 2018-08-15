@@ -21,27 +21,29 @@ import mptpy.properties.properties as props
 
 
 class Optimizer():
-    def __init__(self, mpt, data_path, sep=',', func='rmse',
-                 ignore_params=None, out='out/evals.txt'):
+    def __init__(self, mpt, data_path, name, sep=',', func='rmse',
+                 ignore_params=None):
         if ignore_params is None:
             ignore_params = []
         self.mpt = mpt
-        self.deletion_file = '/home/paulina/Documents/workspace/python/mptpy/out/inf_g_delete.txt'
+        self.deletion_file = '../out/delete_{}.txt'.format(name)
         self.deletion = Deletion(
             mpt,
             ignore_params=ignore_params,
             out=self.deletion_file)
         self.ignore_params = ignore_params
-        self.eval_file = out
+        self.eval_file = '../out/evals_{}.txt'.format(name)
         self.data_path = data_path
         self.no_del_trees = 0
         self.func = func
         self.sep = sep
 
     def init_deletion(self):
-        #deletion_trees = self.deletion.generate_candidates()
-        #self.no_del_trees = len(deletion_trees) - 1
-        self.no_del_trees = sum(1 for line in open(self.deletion_file))
+        if not os.path.exists(self.deletion_file):
+            deletion_trees = self.deletion.generate_candidates()
+            self.no_del_trees = len(deletion_trees) - 1
+        else:
+            self.no_del_trees = sum(1 for line in open(self.deletion_file))
 
     def random_search(self):
 

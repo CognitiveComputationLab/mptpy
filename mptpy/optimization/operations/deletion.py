@@ -7,7 +7,7 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
 
-
+import os
 import itertools as it
 from functools import partial
 from collections import Counter
@@ -24,7 +24,7 @@ DELETION_FLAG = 2
 class Deletion():
     """ Parameter deletion operation on MPTs """
 
-    def __init__(self, mpt, ignore_params=None, out='out.txt'):
+    def __init__(self, mpt, ignore_params=None, out='../out/out.txt'):
         if ignore_params is None:
             ignore_params = []
         self.mpt = mpt
@@ -70,10 +70,11 @@ class Deletion():
         for _, group in it.groupby(candidates, key=self.abstract):
             unique.append(list(group)[0])
 
-        with open(self.out, 'w') as f:
-            for cand in unique:
-                f.write(cand)
-                f.write("\n")
+        f = open(self.out, 'w')
+        for cand in unique:
+            f.write(cand)
+            f.write("\n")
+        f.close()
 
         return unique
 
