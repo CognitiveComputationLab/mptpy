@@ -1,0 +1,9 @@
+# Prinzmetal Henderson Ivry 1995
+# S. 1366, Fig 4: two-parameter model that does not assume true illusory conjunctions
+#
+TL * TC + TL * (1 - TC) * 1/3 +	(1 - TL) * TC * 1/3 + (1 - TL) * (1 - TC) * 1/3 * 1/3	# C
+TL * (1 - TC) * 1/3	+ (1 - TL) * (1 - TC) * 1/3 * 1/3		# CR
+TL * (1 - TC) * 1/3 + (1 - TL) * (1 - TC) * 1/3 * 1/3		# CF
+(1 - TL) *  TC * 2/3 + (1 - TL) * (1 - TC) * 2/3 * 1/3		#LF
+(1 - TL) * (1 - TC) * 2/3 * 1/3		#LFCR
+(1 - TL) * (1 - TC) * 2/3 * 1/3		#CLF

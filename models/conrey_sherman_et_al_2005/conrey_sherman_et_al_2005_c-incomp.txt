@@ -1,0 +1,5 @@
+# Conrey_Sherman_et al_2005
+# S. 472 - incompatible
+# 
+C  + (1 - C) * (1 - A) #plus
+(1 - C) * A  #minus

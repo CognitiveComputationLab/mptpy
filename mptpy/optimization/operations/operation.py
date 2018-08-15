@@ -7,20 +7,15 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
 
-from abc import ABCMeta, abstractmethod
+
+def apply_operations(mpt, operations):
+    for operation in operations:
+        mpt = operation.apply(mpt)
+
+    return operation
 
 
 class Operation(object):
-    """ Base class for operations on MPTs """
-    __metaclass__ = ABCMeta
 
-    @abstractmethod
-    def generate_candidates(self):
-        """ Generate all trees possible with this operation
-
-        Parameters
-        ----------
-        mpt : MPT
-            mpt that is to be modified
-        """
+    def apply(self):
         pass

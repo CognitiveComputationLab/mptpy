@@ -1,0 +1,524 @@
+noef@noef:~/smac-v2.10.03-master-778$ ./smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk.py" --run-objective QUALITY
+[INFO ] Logging to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/log-run973649784.txt
+[INFO ] Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2), running on Java HotSpot(TM) 64-Bit Server VM (1.8.0_111) and Linux 4.4.0-53-generic (amd64) 
+[INFO ] Call String: smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk.py" --run-objective QUALITY 
+[INFO ] SMAC started at: Dec 22, 2016 3:48:39 PM. Minimizing mean quality.
+[INFO ] First incumbent: config 1 (internal ID: 0x0009), with mean quality: 8.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 1 (internal ID: 0x0009): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5' -x2 '0.2' -x3 '0.1'  
+[INFO ] Incumbent changed to: config 92 (internal ID: 0x3B5AA), with mean quality: 2.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 92 (internal ID: 0x3B5AA): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5388610018424159' -x2 '0.20934384125070407' -x3 '0.13444275880793582'  
+[INFO ] 
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (1000 runs) has been reached.   
+Total number of runs performed: 1000, total configurations tried: 1000.
+Total CPU time used: 114 s, total wallclock time used: 639 s.
+SMAC's final incumbent: config 92 (internal ID: 0x3B5AA), with estimated mean quality: 2.0, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5388610018424159' -x2 '0.20934384125070407' -x3 '0.13444275880793582'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Dec 22, 2016 3:59:18 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-973649784-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-973649784-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-973649784-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-973649784-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-973649784-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 92 (internal ID: 0x3B5AA) on test set: 2.0, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5388610018424159' -x2 '0.20934384125070407' -x3 '0.13444275880793582' 
+Additional information about run 973649784 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+noef@noef:~/smac-v2.10.03-master-778$ ./smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk1.py" --run-objective QUALITY
+[INFO ] Logging to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/log-run559495158.txt
+[INFO ] Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2), running on Java HotSpot(TM) 64-Bit Server VM (1.8.0_111) and Linux 4.4.0-53-generic (amd64) 
+[INFO ] Call String: smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk1.py" --run-objective QUALITY 
+[INFO ] SMAC started at: Dec 22, 2016 3:49:02 PM. Minimizing mean quality.
+[INFO ] First incumbent: config 1 (internal ID: 0x0009), with mean quality: 18.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 1 (internal ID: 0x0009): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk1.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5' -x2 '0.2' -x3 '0.1'  
+[INFO ] Incumbent changed to: config 2 (internal ID: 0x4630), with mean quality: 4.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 2 (internal ID: 0x4630): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk1.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.9273948001148814' -x2 '0.19268157837328748' -x3 '0.5750333827092496'  
+[INFO ] Incumbent changed to: config 44 (internal ID: 0x21CC7), with mean quality: 2.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 44 (internal ID: 0x21CC7): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk1.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.9207800868656993' -x2 '0.10936369952560443' -x3 '0.21745413164548255'  
+[INFO ] Incumbent changed to: config 52 (internal ID: 0x20371), with mean quality: 0.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 52 (internal ID: 0x20371): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk1.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.9249421060386396' -x2 '0.094275393402942' -x3 '0.4765041832120662'  
+[INFO ] 
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (1000 runs) has been reached.   
+Total number of runs performed: 1000, total configurations tried: 1000.
+Total CPU time used: 114 s, total wallclock time used: 635 s.
+SMAC's final incumbent: config 52 (internal ID: 0x20371), with estimated mean quality: 0.0, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk1.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.9249421060386396' -x2 '0.094275393402942' -x3 '0.4765041832120662'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Dec 22, 2016 3:59:37 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-559495158-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-559495158-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-559495158-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-559495158-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-559495158-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 52 (internal ID: 0x20371) on test set: 0.0, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk1.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.9249421060386396' -x2 '0.094275393402942' -x3 '0.4765041832120662' 
+Additional information about run 559495158 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+noef@noef:~/smac-v2.10.03-master-778$ 
+
+
+
+noef@noef:~/smac-v2.10.03-master-778$ ./smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk2.py" --run-objective QUALITY
+[INFO ] Logging to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/log-run308803895.txt
+[INFO ] Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2), running on Java HotSpot(TM) 64-Bit Server VM (1.8.0_111) and Linux 4.4.0-53-generic (amd64) 
+[INFO ] Call String: smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk2.py" --run-objective QUALITY 
+[INFO ] SMAC started at: Dec 22, 2016 4:02:24 PM. Minimizing mean quality.
+[INFO ] First incumbent: config 1 (internal ID: 0x0009), with mean quality: 20.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 1 (internal ID: 0x0009): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk2.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5' -x2 '0.2' -x3 '0.1'  
+[INFO ] Incumbent changed to: config 2 (internal ID: 0x3503), with mean quality: 14.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 2 (internal ID: 0x3503): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk2.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5709921114044141' -x2 '0.06829793869797485' -x3 '0.7871713687521285'  
+[INFO ] Incumbent changed to: config 3 (internal ID: 0x754D), with mean quality: 10.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 3 (internal ID: 0x754D): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk2.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.45787512814425535' -x2 '0.4026473155003084' -x3 '0.2260239699296548'  
+[INFO ] Incumbent changed to: config 5 (internal ID: 0x7552), with mean quality: 8.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 5 (internal ID: 0x7552): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk2.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.06482785177573647' -x2 '0.7799593429375566' -x3 '0.029669156124747853'  
+[INFO ] Incumbent changed to: config 11 (internal ID: 0x7561), with mean quality: 6.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 11 (internal ID: 0x7561): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk2.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.35263341372448476' -x2 '0.4522470850523479' -x3 '0.005446292223427296'  
+[INFO ] Incumbent changed to: config 51 (internal ID: 0x24ED9), with mean quality: 4.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 51 (internal ID: 0x24ED9): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk2.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5268734235616921' -x2 '0.6698614962933643' -x3 '0.4308080834625544'  
+[INFO ] Incumbent changed to: config 81 (internal ID: 0x36AD5), with mean quality: 2.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 81 (internal ID: 0x36AD5): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk2.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.27450844215178516' -x2 '0.6703537106600312' -x3 '0.47170805226903134'  
+[INFO ] Incumbent changed to: config 301 (internal ID: 0xD35C2), with mean quality: 0.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 301 (internal ID: 0xD35C2): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk2.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.048007237634036914' -x2 '0.8001745036892141' -x3 '0.4524242062643822'  
+[INFO ] 
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (1000 runs) has been reached.   
+Total number of runs performed: 1000, total configurations tried: 1000.
+Total CPU time used: 114 s, total wallclock time used: 636 s.
+SMAC's final incumbent: config 301 (internal ID: 0xD35C2), with estimated mean quality: 0.0, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk2.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.048007237634036914' -x2 '0.8001745036892141' -x3 '0.4524242062643822'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Dec 22, 2016 4:13:00 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-308803895-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-308803895-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-308803895-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-308803895-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-308803895-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 301 (internal ID: 0xD35C2) on test set: 0.0, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk2.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.048007237634036914' -x2 '0.8001745036892141' -x3 '0.4524242062643822' 
+Additional information about run 308803895 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+noef@noef:~/smac-v2.10.03-master-778$ 
+
+
+
+
+noef@noef:~/smac-v2.10.03-master-778$ ./smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk3.py" --run-objective QUALITY
+[INFO ] Logging to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/log-run134770803.txt
+[INFO ] Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2), running on Java HotSpot(TM) 64-Bit Server VM (1.8.0_111) and Linux 4.4.0-53-generic (amd64) 
+[INFO ] Call String: smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk3.py" --run-objective QUALITY 
+[INFO ] SMAC started at: Dec 22, 2016 4:02:31 PM. Minimizing mean quality.
+[INFO ] First incumbent: config 1 (internal ID: 0x0009), with mean quality: 14.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 1 (internal ID: 0x0009): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk3.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5' -x2 '0.2' -x3 '0.1'  
+[INFO ] Incumbent changed to: config 9 (internal ID: 0x755C), with mean quality: 8.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 9 (internal ID: 0x755C): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk3.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.2942685644959192' -x2 '0.4595850447679988' -x3 '0.37714264314863455'  
+[INFO ] Incumbent changed to: config 36 (internal ID: 0x1D83E), with mean quality: 6.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 36 (internal ID: 0x1D83E): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk3.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.506888723146892' -x2 '0.4338615414813948' -x3 '0.25067085622606655'  
+[INFO ] Incumbent changed to: config 84 (internal ID: 0x3B41F), with mean quality: 4.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 84 (internal ID: 0x3B41F): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk3.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.6562866594604914' -x2 '0.16130525398568984' -x3 '0.4570601837762528'  
+[INFO ] Incumbent changed to: config 99 (internal ID: 0x476F1), with mean quality: 2.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 99 (internal ID: 0x476F1): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk3.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.20999324925226825' -x2 '0.592274274846926' -x3 '0.07390392027329773'  
+[INFO ] Incumbent changed to: config 603 (internal ID: 0x1ADB54), with mean quality: 0.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 603 (internal ID: 0x1ADB54): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk3.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.12354148366320986' -x2 '0.635047371361093' -x3 '0.16648648707167935'  
+[INFO ] 
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (1000 runs) has been reached.   
+Total number of runs performed: 1000, total configurations tried: 1000.
+Total CPU time used: 114 s, total wallclock time used: 635 s.
+SMAC's final incumbent: config 603 (internal ID: 0x1ADB54), with estimated mean quality: 0.0, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk3.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.12354148366320986' -x2 '0.635047371361093' -x3 '0.16648648707167935'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Dec 22, 2016 4:13:06 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-134770803-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-134770803-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-134770803-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-134770803-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-134770803-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 603 (internal ID: 0x1ADB54) on test set: 0.0, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk3.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.12354148366320986' -x2 '0.635047371361093' -x3 '0.16648648707167935' 
+Additional information about run 134770803 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+noef@noef:~/smac-v2.10.03-master-778$ 
+
+
+
+
+noef@noef:~/smac-v2.10.03-master-778$ ./smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk4.py" --run-objective QUALITY
+[INFO ] Logging to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/log-run502323085.txt
+[INFO ] Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2), running on Java HotSpot(TM) 64-Bit Server VM (1.8.0_111) and Linux 4.4.0-53-generic (amd64) 
+[INFO ] Call String: smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk4.py" --run-objective QUALITY 
+[INFO ] SMAC started at: Dec 22, 2016 4:13:56 PM. Minimizing mean quality.
+[INFO ] First incumbent: config 1 (internal ID: 0x0009), with mean quality: 42.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 1 (internal ID: 0x0009): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5' -x2 '0.2' -x3 '0.1'  
+[INFO ] Incumbent changed to: config 5 (internal ID: 0x7552), with mean quality: 38.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 5 (internal ID: 0x7552): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5424452007320012' -x2 '0.6673316372513518' -x3 '0.10839001270360626'  
+[INFO ] Incumbent changed to: config 6 (internal ID: 0x3EA9), with mean quality: 26.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 6 (internal ID: 0x3EA9): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.7298220937731211' -x2 '0.18888705486542334' -x3 '0.6251882273479695'  
+[INFO ] Incumbent changed to: config 44 (internal ID: 0x20FBA), with mean quality: 20.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 44 (internal ID: 0x20FBA): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.7297558366879235' -x2 '0.023213292229404603' -x3 '0.5936677966463837'  
+[INFO ] Incumbent changed to: config 47 (internal ID: 0x24F78), with mean quality: 18.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 47 (internal ID: 0x24F78): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.9749051423050031' -x2 '0.0029876855418937698' -x3 '0.21668936900963898'  
+[INFO ] Incumbent changed to: config 58 (internal ID: 0x2C630), with mean quality: 12.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 58 (internal ID: 0x2C630): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.9536391212028003' -x2 '0.14834619905316582' -x3 '0.19209260424302899'  
+[INFO ] Incumbent changed to: config 66 (internal ID: 0x30745), with mean quality: 4.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 66 (internal ID: 0x30745): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.8867649468659717' -x2 '0.0011462107208330963' -x3 '0.1780418244603308'  
+[INFO ] Incumbent changed to: config 219 (internal ID: 0x979D8), with mean quality: 2.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 219 (internal ID: 0x979D8): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.8891261363867248' -x2 '0.004092700524697568' -x3 '0.7522243407033664'  
+[INFO ] Incumbent changed to: config 838 (internal ID: 0x2505DE), with mean quality: 0.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 838 (internal ID: 0x2505DE): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.9005288609013081' -x2 '0.016882557311393508' -x3 '0.9695556235198131'  
+[INFO ] 
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (1000 runs) has been reached.   
+Total number of runs performed: 1000, total configurations tried: 1000.
+Total CPU time used: 114 s, total wallclock time used: 639 s.
+SMAC's final incumbent: config 838 (internal ID: 0x2505DE), with estimated mean quality: 0.0, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.9005288609013081' -x2 '0.016882557311393508' -x3 '0.9695556235198131'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Dec 22, 2016 4:24:34 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-502323085-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-502323085-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-502323085-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-502323085-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-502323085-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 838 (internal ID: 0x2505DE) on test set: 0.0, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.9005288609013081' -x2 '0.016882557311393508' -x3 '0.9695556235198131' 
+Additional information about run 502323085 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+noef@noef:~/smac-v2.10.03-master-778$ 
+
+
+
+
+noef@noef:~/smac-v2.10.03-master-778$ ./smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk5.py" --run-objective QUALITY
+[INFO ] Logging to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/log-run386932109.txt
+[INFO ] Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2), running on Java HotSpot(TM) 64-Bit Server VM (1.8.0_111) and Linux 4.4.0-53-generic (amd64) 
+[INFO ] Call String: smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk5.py" --run-objective QUALITY 
+[INFO ] SMAC started at: Dec 22, 2016 4:14:13 PM. Minimizing mean quality.
+[INFO ] First incumbent: config 1 (internal ID: 0x0009), with mean quality: 12.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 1 (internal ID: 0x0009): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk5.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5' -x2 '0.2' -x3 '0.1'  
+[INFO ] Incumbent changed to: config 14 (internal ID: 0xEB9D), with mean quality: 6.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 14 (internal ID: 0xEB9D): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk5.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.29841446067856514' -x2 '0.5462994036437535' -x3 '0.978327270595416'  
+[INFO ] Incumbent changed to: config 39 (internal ID: 0x19DDD), with mean quality: 4.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 39 (internal ID: 0x19DDD): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk5.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.2849316015206931' -x2 '0.5505474317191166' -x3 '0.6781503388514605'  
+[INFO ] Incumbent changed to: config 124 (internal ID: 0x58DE4), with mean quality: 2.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 124 (internal ID: 0x58DE4): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk5.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.3424448046638878' -x2 '0.42112534719165895' -x3 '0.8752435263925297'  
+[INFO ] 
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (1000 runs) has been reached.   
+Total number of runs performed: 1000, total configurations tried: 1000.
+Total CPU time used: 114 s, total wallclock time used: 636 s.
+SMAC's final incumbent: config 124 (internal ID: 0x58DE4), with estimated mean quality: 2.0, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk5.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.3424448046638878' -x2 '0.42112534719165895' -x3 '0.8752435263925297'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Dec 22, 2016 4:24:49 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-386932109-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-386932109-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-386932109-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-386932109-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-386932109-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 124 (internal ID: 0x58DE4) on test set: 2.0, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk5.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.3424448046638878' -x2 '0.42112534719165895' -x3 '0.8752435263925297' 
+Additional information about run 386932109 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+noef@noef:~/smac-v2.10.03-master-778$ 
+
+
+
+noef@noef:~/smac-v2.10.03-master-778$ ./smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk6.py" --run-objective QUALITY
+[INFO ] Logging to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/log-run735184891.txt
+[INFO ] Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2), running on Java HotSpot(TM) 64-Bit Server VM (1.8.0_111) and Linux 4.4.0-53-generic (amd64) 
+[INFO ] Call String: smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk6.py" --run-objective QUALITY 
+[INFO ] SMAC started at: Dec 22, 2016 4:29:12 PM. Minimizing mean quality.
+[INFO ] First incumbent: config 1 (internal ID: 0x0009), with mean quality: 102.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 1 (internal ID: 0x0009): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk6.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5' -x2 '0.2' -x3 '0.1'  
+[INFO ] Incumbent changed to: config 5 (internal ID: 0x7552), with mean quality: 68.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 5 (internal ID: 0x7552): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk6.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.7487351624988019' -x2 '0.4606654138622791' -x3 '0.42076930886660346'  
+[INFO ] Incumbent changed to: config 18 (internal ID: 0xEB3F), with mean quality: 52.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 18 (internal ID: 0xEB3F): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk6.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.688958066548906' -x2 '0.4192825137285807' -x3 '0.6597605527899091'  
+[INFO ] Incumbent changed to: config 28 (internal ID: 0x161C1), with mean quality: 40.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 28 (internal ID: 0x161C1): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk6.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.8130860529905737' -x2 '0.2991321102053238' -x3 '0.4412926750280911'  
+[INFO ] Incumbent changed to: config 37 (internal ID: 0x19B88), with mean quality: 28.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 37 (internal ID: 0x19B88): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk6.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.8029712486040538' -x2 '0.28010360115965216' -x3 '0.6650150287790756'  
+[INFO ] Incumbent changed to: config 39 (internal ID: 0x1AA7A), with mean quality: 20.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 39 (internal ID: 0x1AA7A): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk6.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.7267104953529673' -x2 '0.20435720166665805' -x3 '0.6650884636421537'  
+[INFO ] Incumbent changed to: config 175 (internal ID: 0x793E4), with mean quality: 16.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 175 (internal ID: 0x793E4): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk6.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.7263979527484146' -x2 '0.2088891622143223' -x3 '0.7279386152992114'  
+[INFO ] Incumbent changed to: config 179 (internal ID: 0x792EE), with mean quality: 12.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 179 (internal ID: 0x792EE): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk6.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.7016257506748717' -x2 '0.3165712468367' -x3 '0.6873689340252289'  
+[INFO ] Incumbent changed to: config 387 (internal ID: 0x1125B3), with mean quality: 10.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 387 (internal ID: 0x1125B3): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk6.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.7016257506748717' -x2 '0.3165712468367' -x3 '0.48569744516675917'  
+[INFO ] Incumbent changed to: config 471 (internal ID: 0x14DAFA), with mean quality: 8.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 471 (internal ID: 0x14DAFA): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk6.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.7016832411590901' -x2 '0.3016168543916632' -x3 '0.5179869878862904'  
+[INFO ] Incumbent changed to: config 473 (internal ID: 0x14DA96), with mean quality: 6.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 473 (internal ID: 0x14DA96): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk6.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.7033760916439316' -x2 '0.2869277789030582' -x3 '0.5109907089143625'  
+[INFO ] 
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (1000 runs) has been reached.   
+Total number of runs performed: 1000, total configurations tried: 1000.
+Total CPU time used: 115 s, total wallclock time used: 660 s.
+SMAC's final incumbent: config 473 (internal ID: 0x14DA96), with estimated mean quality: 6.0, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk6.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.7033760916439316' -x2 '0.2869277789030582' -x3 '0.5109907089143625'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Dec 22, 2016 4:40:12 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-735184891-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-735184891-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-735184891-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-735184891-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-735184891-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 473 (internal ID: 0x14DA96) on test set: 6.0, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk6.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.7033760916439316' -x2 '0.2869277789030582' -x3 '0.5109907089143625' 
+Additional information about run 735184891 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+noef@noef:~/smac-v2.10.03-master-778$ 
+
+
+
+
+
+noef@noef:~/smac-v2.10.03-master-778$ ./smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk7.py" --run-objective QUALITY
+[INFO ] Logging to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/log-run605827902.txt
+[INFO ] Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2), running on Java HotSpot(TM) 64-Bit Server VM (1.8.0_111) and Linux 4.4.0-53-generic (amd64) 
+[INFO ] Call String: smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk7.py" --run-objective QUALITY 
+[INFO ] SMAC started at: Dec 22, 2016 4:29:18 PM. Minimizing mean quality.
+[INFO ] First incumbent: config 1 (internal ID: 0x0009), with mean quality: 14.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 1 (internal ID: 0x0009): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk7.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5' -x2 '0.2' -x3 '0.1'  
+[INFO ] Incumbent changed to: config 5 (internal ID: 0x7552), with mean quality: 6.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 5 (internal ID: 0x7552): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk7.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.12623416526334452' -x2 '0.501263422113036' -x3 '0.15789058085307184'  
+[INFO ] Incumbent changed to: config 44 (internal ID: 0x219EF), with mean quality: 2.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 44 (internal ID: 0x219EF): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk7.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.003755841814735983' -x2 '0.5035965342313351' -x3 '0.02842874812115881'  
+[INFO ] Incumbent changed to: config 76 (internal ID: 0x2F895), with mean quality: 0.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 76 (internal ID: 0x2F895): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk7.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.04385670821127641' -x2 '0.47338529133184226' -x3 '0.03610392302639687'  
+[INFO ] 
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (1000 runs) has been reached.   
+Total number of runs performed: 1000, total configurations tried: 1000.
+Total CPU time used: 114 s, total wallclock time used: 642 s.
+SMAC's final incumbent: config 76 (internal ID: 0x2F895), with estimated mean quality: 0.0, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk7.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.04385670821127641' -x2 '0.47338529133184226' -x3 '0.03610392302639687'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Dec 22, 2016 4:40:00 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-605827902-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-605827902-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-605827902-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-605827902-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-605827902-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 76 (internal ID: 0x2F895) on test set: 0.0, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk7.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.04385670821127641' -x2 '0.47338529133184226' -x3 '0.03610392302639687' 
+Additional information about run 605827902 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+noef@noef:~/smac-v2.10.03-master-778$ 
+
+
+
+
+
+noef@noef:~/smac-v2.10.03-master-778$ ./smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk8.py" --run-objective QUALITY
+[INFO ] Logging to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/log-run162431734.txt
+[INFO ] Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2), running on Java HotSpot(TM) 64-Bit Server VM (1.8.0_111) and Linux 4.4.0-53-generic (amd64) 
+[INFO ] Call String: smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk8.py" --run-objective QUALITY 
+[INFO ] SMAC started at: Dec 22, 2016 4:44:17 PM. Minimizing mean quality.
+[INFO ] First incumbent: config 1 (internal ID: 0x0009), with mean quality: 54.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 1 (internal ID: 0x0009): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk8.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5' -x2 '0.2' -x3 '0.1'  
+[INFO ] Incumbent changed to: config 11 (internal ID: 0x7561), with mean quality: 48.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 11 (internal ID: 0x7561): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk8.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.4030648473795516' -x2 '0.6192293647757304' -x3 '0.2722506518646127'  
+[INFO ] Incumbent changed to: config 18 (internal ID: 0xEC02), with mean quality: 38.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 18 (internal ID: 0xEC02): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk8.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.7775216406033807' -x2 '0.2997261201067568' -x3 '0.4916140790283785'  
+[INFO ] Incumbent changed to: config 22 (internal ID: 0xEC0C), with mean quality: 20.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 22 (internal ID: 0xEC0C): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk8.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.7415373589565228' -x2 '0.10941320773406804' -x3 '0.5725961847849222'  
+[INFO ] Incumbent changed to: config 33 (internal ID: 0x1ACB4), with mean quality: 8.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 33 (internal ID: 0x1ACB4): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk8.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.8481090836255565' -x2 '0.010285738071381223' -x3 '0.8902532151321897'  
+[INFO ] Incumbent changed to: config 101 (internal ID: 0x42A45), with mean quality: 6.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 101 (internal ID: 0x42A45): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk8.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.05518812568975304' -x2 '0.8861327250187443' -x3 '0.09785081971117426'  
+[INFO ] Incumbent changed to: config 188 (internal ID: 0x8185E), with mean quality: 4.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 188 (internal ID: 0x8185E): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk8.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.02591021981155206' -x2 '0.8860605587103234' -x3 '0.09453258302039913'  
+[INFO ] Incumbent changed to: config 605 (internal ID: 0x1B9D83), with mean quality: 2.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 605 (internal ID: 0x1B9D83): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk8.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.9014964133587589' -x2 '0.06871782738595877' -x3 '0.8154548876792206'  
+[INFO ] 
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (1000 runs) has been reached.   
+Total number of runs performed: 1000, total configurations tried: 1000.
+Total CPU time used: 114 s, total wallclock time used: 638 s.
+SMAC's final incumbent: config 605 (internal ID: 0x1B9D83), with estimated mean quality: 2.0, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk8.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.9014964133587589' -x2 '0.06871782738595877' -x3 '0.8154548876792206'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Dec 22, 2016 4:54:55 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-162431734-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-162431734-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-162431734-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-162431734-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-162431734-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 605 (internal ID: 0x1B9D83) on test set: 2.0, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk8.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.9014964133587589' -x2 '0.06871782738595877' -x3 '0.8154548876792206' 
+Additional information about run 162431734 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+noef@noef:~/smac-v2.10.03-master-778$ 
+
+
+
+
+
+noef@noef:~/smac-v2.10.03-master-778$ ./smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk9.py" --run-objective QUALITY
+[INFO ] Logging to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/log-run933647517.txt
+[INFO ] Version of SMAC is v2.10.03-master-778 (3ee628ef9bf2), running on Java HotSpot(TM) 64-Bit Server VM (1.8.0_111) and Linux 4.4.0-53-generic (amd64) 
+[INFO ] Call String: smac --use-instances false --numberOfRunsLimit 1000 --pcs-file ../lisp/params.pcs --algo "python ../lisp/sk9.py" --run-objective QUALITY 
+[INFO ] SMAC started at: Dec 22, 2016 4:44:31 PM. Minimizing mean quality.
+[INFO ] First incumbent: config 1 (internal ID: 0x0009), with mean quality: 192.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 1 (internal ID: 0x0009): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk9.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.5' -x2 '0.2' -x3 '0.1'  
+[INFO ] Incumbent changed to: config 5 (internal ID: 0x7552), with mean quality: 168.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 5 (internal ID: 0x7552): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk9.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.4827069799818936' -x2 '0.20361897650209115' -x3 '0.3374334199086477'  
+[INFO ] Incumbent changed to: config 8 (internal ID: 0x4DE2), with mean quality: 128.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 8 (internal ID: 0x4DE2): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk9.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.7313553250997981' -x2 '0.06762594326840188' -x3 '0.32564031427229023'  
+[INFO ] Incumbent changed to: config 16 (internal ID: 0xEB61), with mean quality: 28.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 16 (internal ID: 0xEB61): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk9.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.6955990721817856' -x2 '0.16327513121614123' -x3 '0.6047465488549407'  
+[INFO ] Incumbent changed to: config 563 (internal ID: 0x1933B8), with mean quality: 24.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 563 (internal ID: 0x1933B8): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk9.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.6888196019644951' -x2 '0.15920660342905146' -x3 '0.5890920616113533'  
+[INFO ] Incumbent changed to: config 894 (internal ID: 0x27664B), with mean quality: 22.0; estimate based on 1 runs.
+[INFO ] Sample call for new incumbent config 894 (internal ID: 0x27664B): 
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk9.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.6925223934774918' -x2 '0.15890990258573234' -x3 '0.6643502931404452'  
+[INFO ] 
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (1000 runs) has been reached.   
+Total number of runs performed: 1000, total configurations tried: 1000.
+Total CPU time used: 114 s, total wallclock time used: 677 s.
+SMAC's final incumbent: config 894 (internal ID: 0x27664B), with estimated mean quality: 22.0, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk9.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.6925223934774918' -x2 '0.15890990258573234' -x3 '0.6643502931404452'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Dec 22, 2016 4:55:48 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-933647517-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-933647517-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-933647517-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-933647517-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-933647517-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 894 (internal ID: 0x27664B) on test set: 22.0, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python ../lisp/sk9.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.6925223934774918' -x2 '0.15890990258573234' -x3 '0.6643502931404452' 
+Additional information about run 933647517 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+noef@noef:~/smac-v2.10.03-master-778$ 
+
+

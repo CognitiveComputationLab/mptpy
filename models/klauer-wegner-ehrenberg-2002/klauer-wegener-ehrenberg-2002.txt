@@ -1,0 +1,19 @@
+# Klauer_Wegener_Ehrenberg_2002
+# Fig. A1
+#
+# snA and snB are static parameters defined as 1/len(A) or 1/len(B)
+#
+
+(1 - DA) * b * a * snA + DA * (1 - CA) * (1 - dA) * a * snA + DA * (1 - CA) * dA * snA + DA * CA  # A-correct
+(1 - DA) * b * a * (1 - snA) + DA * (1 - CA) * (1 - dA) * a * (1 - snA) + DA * (1 - CA) * dA * (1 - snA) # A-wrong
+(1 - DA) * b * (1 - a) + DA * (1 - CA) * (1 - dA) * (1 - a)  # B-wrong
+(1 - DA) * (1 - b)    # New
+
+(1 - DB) * b * a + DB * (1 - CB) * (1 - dB) * a                                                                       # A-wrong
+(1 - DB) * b * (1 - a) * snB + DB * (1 - CB) * (1 - dB) * (1 - a) * snB + DB * (1 - CB) * dB * snB + DB * CB          # B-correct
+(1 - DB) * b * (1 - a) * (1 - snB) + DB * (1 - CB) * (1 - dB) * (1 - a) * (1 - snB) + DB * (1 - CB) * dB * (1 - snB)  # B-wrong
+(1 - DB) * (1 - b)                                                                                                    # New
+
+(1 - DN) * b * a         # A-wrong
+(1 - DN) * b * (1 - a)   # B-wrong
+(1 - DN) * (1 - b) + DN  # New

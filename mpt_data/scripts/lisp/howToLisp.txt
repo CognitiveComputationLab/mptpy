@@ -1,0 +1,17 @@
+Add packeges here: (if installes with quicklisp)
+~/.sbclrc
+
+requires:
+sbcl (apt-get)
+emacs????
+quicklisp (https://www.quicklisp.org/beta/#installation) follow instruktions
+cl-utilities (ql:quickload "cl-utilities") in sbcl then need to add to ~/.sbclrc
+
+
+To start lisp from terminal:
+sbcl --noinform --load lisp/sk.fasl --eval '(call-selection .5 .2 .1 20)' --eval '(exit)'
+
+Add packeges here: (if installes with quicklisp)
+~/.sbclrc
+Packages added:
+cl-utilities

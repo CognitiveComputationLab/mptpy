@@ -1,0 +1,17 @@
+# Inference-guessing tree in binary order
+(1-r) * (1-p) * (1-np) * (1-q) * (1-nq)
+(1-r) * (1-p) * (1-np) * (1-q) * nq + r * c * (1-d) * (1-s) * i
+(1-r) * (1-p) * (1-np) * q * (1-nq) + r * c * (1-d) * s * i
+(1-r) * (1-p) * (1-np) * q * nq + r * (1-c) * (1-x) * (1-d) * i
+(1-r) * (1-p) * np * (1-q) * (1-nq) + r * c * d * (1-s) * i
+(1-r) * (1-p) * np * (1-q) * nq + r * (1-c) * x * (1-s) * i
+(1-r) * (1-p) * np * q * (1-nq) + r * c * d * (1-s) * (1-i) + r * c * (1-d) * s * (1-i)
+(1-r) * (1-p) * np * q * nq
+(1-r) * p * (1-np) * (1-q) * (1-nq) + r * c * d * s * i
+(1-r) * p * (1-np) * (1-q) * nq + r * c * d * s * (1-i) + r * c * (1-d) * (1-s) * (1-i)
+(1-r) * p * (1-np) * q * (1-nq) + r * (1-c) * x * s * i
+(1-r) * p * (1-np) * q * nq
+(1-r) * p * np * (1-q) * (1-nq) + r * (1-c) * (1-x) * d * i
+(1-r) * p * np * (1-q) * nq
+(1-r) * p * np * q * (1-nq)
+(1-r) * p * np * q * nq + r * (1-c) * x * s * (1-i) + r * (1-c) * x * (1-s) * (1-i) + r * (1-c) * (1-x) * d * (1-i) +  r * (1-c) * (1-x) * (1-d) * (1-i)

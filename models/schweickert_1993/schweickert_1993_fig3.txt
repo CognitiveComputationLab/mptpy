@@ -1,0 +1,5 @@
+# Schweickert 1993
+# S. 172, Fig 3
+#
+I + (1 - I) * S * L 	#C
+(1 - I) * S * (1 - L) + (1 - I) * (1 - S)	#E

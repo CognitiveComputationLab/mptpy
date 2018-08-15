@@ -166,7 +166,6 @@ class BmptParser(Parser):
 
     def __init__(self):
         self.leaf_test = None
-        print("lol")
 
     def build(self, lines):
         """ Build MPT from lines. Can have multiple subtrees.

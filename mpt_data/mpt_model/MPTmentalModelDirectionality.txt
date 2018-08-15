@@ -1,0 +1,17 @@
+r * f * a * e + r * (1-f) * a * e + r * (1-f) * (1-a) * e * (1-d) +(1-r) * (1-p) * (1-np) * (1-q) * (1-nq)
+(1-r) * (1-p) * (1-np) * (1-q) * nq
+r * (1-f) * (1-a) * e * d + (1-r) * (1-p) * (1-np) * q * (1-nq)
+(1-r) * (1-p) * (1-np) * q * nq
+r * f * (1-a) * e * (1-d) +(1-r) * (1-p) * np * (1-q) * (1-nq)
+(1-r) * (1-p) * np * (1-q) * nq
+r * f * (1-a) * e * d + (1-r) * (1-p) * np * q * (1-nq)
+(1-r) * (1-p) * np * q * nq
+r * f * a * (1-e) * (1-d) + r * (1-f) * a * (1-e) + r * (1-f) * (1-a) * (1-e) * (1-d) + (1-r) * p * (1-np) * (1-q) * (1-nq)
+r * f * a * (1-e) * d + (1-r) * p * (1-np) * (1-q) * nq
+r * (1-f) * (1-a) * (1-e) * d + (1-r) * p * (1-np) * q * (1-nq)
+(1-r) * p * (1-np) * q * nq
+r * f * (1-a) * (1-e) * (1-d) +(1-r) * p * np * (1-q) * (1-nq)
+(1-r) * p * np * (1-q) * nq
+(1-r) * p * np * q * (1-nq)
+r * f * (1-a) * (1-e) * d + (1-r) * p * np * q * nq
+#mental model with directionality in binary order p-np-q-nq

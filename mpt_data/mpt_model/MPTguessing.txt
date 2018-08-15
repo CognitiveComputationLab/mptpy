@@ -1,0 +1,17 @@
+(1-p) * (1-np) * (1-q) * (1-nq)
+(1-p) * (1-np) * (1-q) * nq
+(1-p) * (1-np) * q * (1-nq)
+(1-p) * (1-np) * q * nq
+(1-p) * np * (1-q) * (1-nq)
+(1-p) * np * (1-q) * nq
+(1-p) * np * q * (1-nq)
+(1-p) * np * q * nq
+p * (1-np) * (1-q) * (1-nq)
+p * (1-np) * (1-q) * nq
+p * (1-np) * q * (1-nq)
+p * (1-np) * q * nq
+p * np * (1-q) * (1-nq)
+p * np * (1-q) * nq
+p * np * q * (1-nq)
+p * np * q * nq
+#guessing tree in binary order with (1-r) as not rational path

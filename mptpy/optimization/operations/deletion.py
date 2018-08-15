@@ -21,7 +21,7 @@ from mptpy.tools import misc
 DELETION_FLAG = 2
 
 
-class Deletion(Operation):
+class Deletion():
     """ Parameter deletion operation on MPTs """
 
     def __init__(self, mpt, ignore_params=None, out='out.txt'):
@@ -29,10 +29,15 @@ class Deletion(Operation):
             ignore_params = []
         self.mpt = mpt
         self.all_cats = Counter(mpt.word.answers)
-        self.is_leaf = mpt.word.is_leaf
         self.ignore_params = ignore_params
         self.out = out
         self.sep = self.mpt.word.sep
+
+    def read_number(self, idx):
+        with open(self.out) as trees:
+            for i, line in enumerate(trees):
+                if i == idx:
+                    return line.strip()
 
     def generate_candidates(self):
         """ Generate all trees possible with this operation
@@ -65,23 +70,18 @@ class Deletion(Operation):
         for _, group in it.groupby(candidates, key=self.abstract):
             unique.append(list(group)[0])
 
+        with open(self.out, 'w') as f:
+            for cand in unique:
+                f.write(cand)
+                f.write("\n")
+
         return unique
 
     def abstract(self, candidate):
         """ Calls the abstraction function of the mpt word class
         a 1 0 -> p0 1 0
-
-        Parameters
-        ----------
-        candidate : str
-            str of the candidate for deletion
-
-        Returns
-        -------
-        str
-            abstraction
         """
-        word = mpt_word.MPTWord(candidate, leaf_test=self.is_leaf)
+        word = mpt_word.MPTWord(candidate, leaf_test=self.mpt.word.is_leaf)
         return word.abstract()
 
     def compressed(self, binary):
@@ -100,12 +100,8 @@ class Deletion(Operation):
         rem_cats : Counter
             Counter of the remaining categories in the tree using this combinatio
         """
-        cats = Counter(
-            filter(
-                self.is_leaf,
-                it.compress(
-                    subtree.split(self.sep),
-                    comb)))
+        candidate = it.compress(subtree.split(self.sep), comb)
+        cats = Counter(filter(self.mpt.word.is_leaf, candidate))
         rem_cats = cats_wo_node + cats
 
         return all([key in rem_cats for key in self.all_cats.keys()])
@@ -170,10 +166,7 @@ class Deletion(Operation):
 
         return possible
 
-    def possible_subtrees(
-            self,
-            node,
-            arr_bin):
+    def possible_subtrees(self, node, arr_bin):
         """ Generates all possible subtrees for node.
 
         Parameters
@@ -188,8 +181,6 @@ class Deletion(Operation):
         list
             all possible subtrees
         """
-
-        print("Generate subtrees for {}".format(node.content))
 
         if node.leaf or node.content in self.ignore_params:
             return [bytearray([1] * len(str(node).split(self.mpt.word.sep)))]

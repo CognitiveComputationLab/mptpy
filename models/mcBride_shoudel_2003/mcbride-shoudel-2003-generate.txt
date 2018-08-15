@@ -1,0 +1,32 @@
+# McBride Shoudel 2003 Tree
+# Figure 2: Generate-Source model
+#
+# Inclusion tree for Semantic
+(1 - A_s) * G1 * (1 - C_s) + (1 - A_s) * G1 * C_s + A_s * (1 - C_s) + A_s * C_s  # target
+(1 - A_s) * (1 - G1) * W1  # alternate
+(1 - A_s) * (1 - G1) * (1 - W1)  # xxx
+
+# Inclusion tree for Graphemic
+(1 - A_g) * G1 * (1 - C_g) + (1 - A_g) * G1 * C_g + A_g * (1 - C_g) + A_g * C_g  # target
+(1 - A_g) * (1 - G1) * W1  # alternate
+(1 - A_g) * (1 - G1) * (1 - W1)  # xxx
+
+# Exclusion tree for Semantic
+(1 - A_s) * Ge * (1 - C_s) + A_s * (1 - C_s)  # target
+(1 - A_s) * (1 - Ge) * We + (1 - A_s) * Ge * C_s * We + A_s * C_s * We  # alternate
+(1 - A_s) * (1 - Ge) * (1 - We) + (1 - A_s) * Ge * C_s * (1 - We) + A_s * C_s * (1 - We)  # xxx
+
+# Exclusion tree for Graphemic
+(1 - A_g) * Ge * (1 - C_g) + A_g * (1 - C_g)  # target
+(1 - A_g) * (1 - Ge) * We + (1 - A_g) * Ge * C_g * We + A_g * C_g * We  # alternate
+(1 - A_g) * (1 - Ge) * (1 - We) + (1 - A_g) * Ge * C_g * (1 - We) + A_g * C_g * (1 - We)  # xxx
+
+# New unstudied for Inclusion
+Gi  # target
+(1 - Gi) * Wi  # alternate
+(1 - Gi) * (1 - Wi)  # xxx
+
+# New unstudied for Exclusion
+Ge  # target
+(1 - Ge) * We  # alternate
+(1 - Ge) * (1 - We)  # xxx

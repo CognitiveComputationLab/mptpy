@@ -1,0 +1,5 @@
+## Insight theory Johnson-Laird & Wason 1970
+(1 - c) * (1 - e)	  		  # p
+c * e * f + (1 - c) * e * f	  # p not-q
+c * (1 - e) + (1 - c) * e * (1 - f)	  # p q
+c * e * (1 - f)	      		  # p q not-q

@@ -41,6 +41,14 @@ class MPT(object):
             self.root = mpt
             self.word = MPTWord(str(self))
 
+    @property
+    def params(self):
+        return self.word.parameters
+
+    @property
+    def categories(self):
+        return self.word.answers
+
     def formulae(self):
         """ Calculate the branch formulae for the categories in the tree
 

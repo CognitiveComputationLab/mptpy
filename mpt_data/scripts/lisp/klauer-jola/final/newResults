@@ -1,0 +1,297 @@
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (10000 runs) has been reached.   
+Total number of runs performed: 10000, total configurations tried: 10000.
+Total CPU time used: 1466 s, total wallclock time used: 4743 s.
+SMAC's final incumbent: config 1173 (internal ID: 0x3380CF), with estimated mean quality: 1144.766307, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/klauerNoG.py no_instance 0 1.7976931348623157E308 2147483647 -1 -c '0.07716730352293283' -d '0.6126706561511327' -i '0.44903587533706635' -s '0.8522686597984686' -x '0.8427955625424043'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Jan 20, 2017 12:58:53 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-788989804-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-788989804-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-788989804-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-788989804-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-788989804-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 1173 (internal ID: 0x3380CF) on test set: 1144.766307, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/klauerNoG.py no_instance 0 1.7976931348623157E308 2147483647 -1 -c '0.07716730352293283' -d '0.6126706561511327' -i '0.44903587533706635' -s '0.8522686597984686' -x '0.8427955625424043' 
+Additional information about run 788989804 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (10000 runs) has been reached.   
+Total number of runs performed: 10000, total configurations tried: 10000.
+Total CPU time used: 1454 s, total wallclock time used: 4775 s.
+SMAC's final incumbent: config 8536 (internal ID: 0x17FF25C), with estimated mean quality: 2687.388489, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/klauerNoG4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -c '0.5069505454679764' -d '0.0963917218211982' -i '0.19746663551206706' -s '0.999903615193696' -x '0.9997916707766408'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Jan 20, 2017 12:59:47 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-80961503-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-80961503-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-80961503-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-80961503-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-80961503-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 8536 (internal ID: 0x17FF25C) on test set: 2687.388489, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/klauerNoG4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -c '0.5069505454679764' -d '0.0963917218211982' -i '0.19746663551206706' -s '0.999903615193696' -x '0.9997916707766408' 
+Additional information about run 80961503 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (10000 runs) has been reached.   
+Total number of runs performed: 10000, total configurations tried: 10000.
+Total CPU time used: 1459 s, total wallclock time used: 4770 s.
+SMAC's final incumbent: config 4552 (internal ID: 0xCE4291), with estimated mean quality: 50.056309, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/klauerStoG.py no_instance 0 1.7976931348623157E308 2147483647 -1 -c '0.7493545687605292' -d '0.6318460420757366' -i '0.7715010817319665' -r '0.008062451854973045' -s '0.9982581570504984' -x '0.9824872417228939'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Jan 20, 2017 1:00:11 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-330281340-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-330281340-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-330281340-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-330281340-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-330281340-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 4552 (internal ID: 0xCE4291) on test set: 50.056309, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/klauerStoG.py no_instance 0 1.7976931348623157E308 2147483647 -1 -c '0.7493545687605292' -d '0.6318460420757366' -i '0.7715010817319665' -r '0.008062451854973045' -s '0.9982581570504984' -x '0.9824872417228939' 
+Additional information about run 330281340 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (10000 runs) has been reached.   
+Total number of runs performed: 10000, total configurations tried: 10000.
+Total CPU time used: 1464 s, total wallclock time used: 4784 s.
+SMAC's final incumbent: config 8315 (internal ID: 0x17BDC7F), with estimated mean quality: 144.695058, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/klauerStoG4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -c '0.06047810514659868' -d '0.4690091024384603' -i '0.06711157676220614' -r '0.00969857418984576' -s '0.9993412379312613' -x '0.995544055176731'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Jan 20, 2017 1:00:54 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-444890395-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-444890395-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-444890395-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-444890395-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-444890395-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 8315 (internal ID: 0x17BDC7F) on test set: 144.695058, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/klauerStoG4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -c '0.06047810514659868' -d '0.4690091024384603' -i '0.06711157676220614' -r '0.00969857418984576' -s '0.9993412379312613' -x '0.995544055176731' 
+Additional information about run 444890395 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (10000 runs) has been reached.   
+Total number of runs performed: 10000, total configurations tried: 10000.
+Total CPU time used: 1535 s, total wallclock time used: 4807 s.
+SMAC's final incumbent: config 9596 (internal ID: 0x161D414), with estimated mean quality: 34.539888, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/klauerParG.py no_instance 0 1.7976931348623157E308 2147483647 -1 -c '0.8987983474231878' -d '0.0012067987718577533' -i '0.529052196169038' -np '0.04724275039552038' -nq '0.1859141248269676' -p '0.8401403095555948' -q '0.5371644259010044' -r '8.076146474605625E-5' -s '0.008204703217421623' -x '0.9787368497927006'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Jan 20, 2017 1:01:46 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-690502103-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-690502103-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-690502103-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-690502103-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-690502103-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 9596 (internal ID: 0x161D414) on test set: 34.539888, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/klauerParG.py no_instance 0 1.7976931348623157E308 2147483647 -1 -c '0.8987983474231878' -d '0.0012067987718577533' -i '0.529052196169038' -np '0.04724275039552038' -nq '0.1859141248269676' -p '0.8401403095555948' -q '0.5371644259010044' -r '8.076146474605625E-5' -s '0.008204703217421623' -x '0.9787368497927006' 
+Additional information about run 690502103 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (10000 runs) has been reached.   
+Total number of runs performed: 10000, total configurations tried: 10000.
+Total CPU time used: 1529 s, total wallclock time used: 4812 s.
+SMAC's final incumbent: config 9994 (internal ID: 0x17245BE), with estimated mean quality: 71.216952, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/klauerParG4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -c '0.9446618774040285' -d '0.9624767647385005' -i '0.20272543540993582' -np '0.003373600525019546' -nq '0.2151103494962462' -p '0.9994269324258951' -q '0.5583356799213123' -r '2.0941004059442337E-4' -s '0.9763440863593029' -x '0.9846854693979286'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Jan 20, 2017 1:02:21 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-111683715-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-111683715-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-111683715-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-111683715-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-111683715-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 9994 (internal ID: 0x17245BE) on test set: 71.216952, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/klauerParG4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -c '0.9446618774040285' -d '0.9624767647385005' -i '0.20272543540993582' -np '0.003373600525019546' -nq '0.2151103494962462' -p '0.9994269324258951' -q '0.5583356799213123' -r '2.0941004059442337E-4' -s '0.9763440863593029' -x '0.9846854693979286' 
+Additional information about run 111683715 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (10000 runs) has been reached.   
+Total number of runs performed: 10000, total configurations tried: 10000.
+Total CPU time used: 1474 s, total wallclock time used: 15444 s.
+SMAC's final incumbent: config 9802 (internal ID: 0x1A81DFD), with estimated mean quality: 33.216587, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/johnsonLaStoG.py no_instance 0 1.7976931348623157E308 2147483647 -1 -r '0.27597280498014565' -x1 '0.571413390745165' -x2 '0.16041973967841877' -x3 '0.8022810855981368'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Jan 21, 2017 8:29:05 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-935846565-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-935846565-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-935846565-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-935846565-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-935846565-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 9802 (internal ID: 0x1A81DFD) on test set: 33.216587, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/johnsonLaStoG.py no_instance 0 1.7976931348623157E308 2147483647 -1 -r '0.27597280498014565' -x1 '0.571413390745165' -x2 '0.16041973967841877' -x3 '0.8022810855981368' 
+Additional information about run 935846565 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (10000 runs) has been reached.   
+Total number of runs performed: 10000, total configurations tried: 10000.
+Total CPU time used: 1473 s, total wallclock time used: 15496 s.
+SMAC's final incumbent: config 7624 (internal ID: 0x1590BEC), with estimated mean quality: 64.164368, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/johnsonLaStoG4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -r '0.008406886699699467' -x1 '0.4492637046353679' -x2 '0.4319015631449376' -x3 '0.5742533816190863'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Jan 21, 2017 8:30:08 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-461939212-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-461939212-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-461939212-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-461939212-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-461939212-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 7624 (internal ID: 0x1590BEC) on test set: 64.164368, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/johnsonLaStoG4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -r '0.008406886699699467' -x1 '0.4492637046353679' -x2 '0.4319015631449376' -x3 '0.5742533816190863' 
+Additional information about run 461939212 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (10000 runs) has been reached.   
+Total number of runs performed: 10000, total configurations tried: 10000.
+Total CPU time used: 1451 s, total wallclock time used: 15534 s.
+SMAC's final incumbent: config 3812 (internal ID: 0xA784E0), with estimated mean quality: 64.164368, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/johnsonLaNoG.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.46979183319439444' -x2 '0.41405813838546784' -x3 '0.5773695650807125'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Jan 21, 2017 8:31:08 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-844185780-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-844185780-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-844185780-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-844185780-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-844185780-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 3812 (internal ID: 0xA784E0) on test set: 64.164368, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/johnsonLaNoG.py no_instance 0 1.7976931348623157E308 2147483647 -1 -x1 '0.46979183319439444' -x2 '0.41405813838546784' -x3 '0.5773695650807125' 
+Additional information about run 844185780 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (10000 runs) has been reached.   
+Total number of runs performed: 10000, total configurations tried: 10000.
+Total CPU time used: 1546 s, total wallclock time used: 15566 s.
+SMAC's final incumbent: config 8572 (internal ID: 0x155C3EE), with estimated mean quality: 64.08898, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/johnsonLaParG4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -np '0.6555761039684501' -nq '0.8707783546966411' -p '0.9947331632328724' -q '0.976384243321785' -r '0.1579592194134204' -x1 '0.6349311117311148' -x2 '0.16906428476290655' -x3 '0.9489137857184119'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Jan 21, 2017 8:32:26 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-33262470-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-33262470-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-33262470-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-33262470-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-33262470-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 8572 (internal ID: 0x155C3EE) on test set: 64.08898, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/johnsonLaParG4.py no_instance 0 1.7976931348623157E308 2147483647 -1 -np '0.6555761039684501' -nq '0.8707783546966411' -p '0.9947331632328724' -q '0.976384243321785' -r '0.1579592194134204' -x1 '0.6349311117311148' -x2 '0.16906428476290655' -x3 '0.9489137857184119' 
+Additional information about run 33262470 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+=======================================================================================
+SMAC has finished. Reason: algorithm run limit (10000 runs) has been reached.   
+Total number of runs performed: 10000, total configurations tried: 10000.
+Total CPU time used: 1555 s, total wallclock time used: 15541 s.
+SMAC's final incumbent: config 9848 (internal ID: 0x16FC084), with estimated mean quality: 32.806327, based on 1 run(s) on 1 training instance(s).
+Sample call for this final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/johnsonLaParG.py no_instance 0 1.7976931348623157E308 2147483647 -1 -np '0.2897303244334198' -nq '0.23292162424429613' -p '0.4213390562756982' -q '0.5992751649492788' -r '0.27359314822200975' -x1 '0.5778515458032214' -x2 '0.20326533308674832' -x3 '0.774186802647231'
+=======================================================================================
+[INFO ] Now starting offline validation.
+[INFO ] Validation needs 1 algorithm runs to validate 1 configurations found, each on 1 problem instance seed pairs
+[INFO ] Validation start time: Jan 21, 2017 8:31:40 PM. Approximate worst-case end time is unknown.
+[INFO ] Validation Call Strings written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationCallStrings-traj-run-178475384-walltime.csv
+[INFO ] Instance performance (for debug) written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationPerformanceDebug-traj-run-178475384-walltime.csv
+[INFO ] Main validation results file written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationResults-traj-run-178475384-walltime.csv
+[INFO ] Validation matrix of objectives for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationObjectiveMatrix-traj-run-178475384-walltime.csv
+[INFO ] Validation matrix of complete run result line for cross-product of configurations and (instance,seed) pairs written to: /home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile/validationRunResultLineMatrix-traj-run-178475384-walltime.csv
+[INFO ] 
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+Estimated mean quality of final incumbent config 9848 (internal ID: 0x16FC084) on test set: 32.806327, based on 1 run(s) on 1 test instance(s).
+Sample call for the final incumbent:
+cd /home/noef/smac-v2.10.03-master-778; python3 ../lisp/klauer-jola/johnsonLaParG.py no_instance 0 1.7976931348623157E308 2147483647 -1 -np '0.2897303244334198' -nq '0.23292162424429613' -p '0.4213390562756982' -q '0.5992751649492788' -r '0.27359314822200975' -x1 '0.5778515458032214' -x2 '0.20326533308674832' -x3 '0.774186802647231' 
+Additional information about run 178475384 in:/home/noef/smac-v2.10.03-master-778/smac-output/NoScenarioFile
+----------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+

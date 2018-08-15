@@ -1,0 +1,4 @@
+r * c * d * s 					    #p
+r * c * d * (1 - s) + r * c * (1 - d)	#p nq
+r * (1 - c)							#p q
+(1 - r)								#p q nq

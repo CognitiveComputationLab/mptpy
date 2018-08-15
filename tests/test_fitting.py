@@ -10,12 +10,11 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 import os
 import numpy as np
 from nose.tools import assert_equals, assert_true
-from tests.context import mptpy
-from mptpy.tools.parsing import Parser
-from mptpy.fitting import fitter, scipy_fit
-from mptpy.mpt import MPT
 
-parser = Parser()
+from mptpy.fitting import fitter, scipy_fit
+
+import context
+
 
 MODEL_DIR = os.path.abspath("tests/test_models/")
 
@@ -46,7 +45,7 @@ def test_comp_parameter_ratios():
     for key, value in params.items():
         params[key] = round(value, 1)
 
-    thtm = parser.parse(MODEL_DIR + "/test_build/2htms.txt")
+    thtm = context.MPTS["2htms"]
 
     data = fitter.read_data(MODEL_DIR + "/broeder.csv")
     ratios = fitter._compute_parameter_ratios(thtm, data)

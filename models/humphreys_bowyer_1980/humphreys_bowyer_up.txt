@@ -1,0 +1,5 @@
+#  Humphreys_Bowyer_1980
+# S.274 obere Abbildung
+#
+a * p * v + a * (1 - p) * w + (1 - a) * q * x + (1 - a) * (1 - q) * y  	#LR
+a * p * (1 - v) + a * (1 - p) * (1 - w) + (1 - a) * q * (1 - x) + (1 - a) * (1 - q) * (1 - y)		#UR

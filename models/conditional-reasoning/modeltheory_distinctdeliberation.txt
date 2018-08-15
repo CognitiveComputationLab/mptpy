@@ -1,0 +1,6 @@
+## Model theory Johnson-Laird
+## intuition = i, distinct deliberations on first level and after model
+i * s * (1 - d)  #p
+i * s * d + (1 - i)  #p nq
+i * (1 - s) * (1 - d) #p q
+i * (1 - s) * d #p q nq

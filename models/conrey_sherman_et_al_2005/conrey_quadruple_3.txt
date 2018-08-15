@@ -1,0 +1,5 @@
+# Conrey_Sherman_et al_2005
+# S. 474 - incompatible, left
+# 
+AC * D * OB + (1 - AC) * (1 - D) * (1 - G) +  (1 - AC) * (1 - D) * (1 - G) # plus
+AC * D * (1 - OB) + AC * (1 - D) + (1 - AC) * (1 - D) * G # minus

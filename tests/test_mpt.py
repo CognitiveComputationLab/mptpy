@@ -7,15 +7,14 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
 
-import string
 from nose.tools import assert_equals, assert_false
-from tests.context import mptpy
 from mptpy.mpt import MPT
-from mptpy.properties import property
-from mptpy.tools.parsing import Parser
+from mptpy.properties import properties
 from mptpy.tools.transformations import to_easy
 
-parser = Parser()
+import context
+
+PARSER = context.PARSER
 
 MODEL_DIR = "tests/test_models/test_build"
 
@@ -43,7 +42,7 @@ def test_tree_length():
 
 def test_to_easy():
     """ Test the translation to the easy format """
-    mpt = parser.parse(MODEL_DIR + "/test1.model")
+    mpt = PARSER.parse(MODEL_DIR + "/test1.model")
     easy = to_easy(mpt)
     print(easy)
     assert_equals(
@@ -52,26 +51,26 @@ def test_to_easy():
 
 
 def test_save():
-    mpt = parser.parse(MODEL_DIR + "/test1.model")
+    mpt = PARSER.parse(MODEL_DIR + "/test1.model")
     mpt.save(MODEL_DIR + "/testsave.model")
 
     mpt.save(MODEL_DIR + "/testsavebmpt.model", form="BMPT")
 
 
 def test_get_levels():
-    s = "b c 2 1 a 2 d 1 0"
+    str_ = "b c 2 1 a 2 d 1 0"
 
-    mpt = MPT(s)
+    mpt = MPT(str_)
 
     levels = mpt.get_levels(mpt.root)
     levels = {key: [node.content for node in value]
               for key, value in levels.items()}
     print(levels)
-    assert_equals({0: ["b"], 1: ["c", "a"], 2: [
-                  "2", "1", "2", "d"], 3: ["1", "0"]}, levels)
+    assert_equals({0: ["b"], 1: ["c", "a"],
+                   2: ["2", "1", "2", "d"], 3: ["1", "0"]}, levels)
 
 
 def test_identifiable():
-    mpt = parser.parse(MODEL_DIR + "/test1.model")
-    ident = property.check(mpt, "identifiable")
+    mpt = PARSER.parse(MODEL_DIR + "/test1.model")
+    ident = properties.check(mpt, "identifiable")
     assert_equals(ident, True)

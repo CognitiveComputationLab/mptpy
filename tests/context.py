@@ -1,9 +1,16 @@
 import os
-import sys
-PATH = os.path.abspath(os.path.join(os.path.dirname(__file__), '../mptpy'))
 
-sys.path.insert(0, PATH)
+from mptpy.tools.parsing import Parser
+from mptpy.mpt import MPT
 
-import mptpy
 
-import mptpy.mpt
+PARSER = Parser()
+MPTS = {}
+
+for entry in os.scandir('./tests/test_models/test_build'):
+    MPTS[entry.name.split(".")[0]] = PARSER.parse(entry.path)
+
+MPTS["testdeletion"] = MPT("b c 2 1 a 2 d 1 0")
+for mpt in MPTS:
+    print(mpt, MPTS[mpt])
+

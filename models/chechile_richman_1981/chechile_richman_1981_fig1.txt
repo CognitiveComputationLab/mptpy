@@ -1,0 +1,6 @@
+# Chechile Richman et al 1981
+# S. 252, Fig 1
+# 
+OS + (1 - OS) * Og * O1 + (1 - OS) * (1 - Og) * O3		# 3
+(1 - OS) * Og * O2 + (1 - OS) * (1 - Og) * O4 			# 2
+(1 - OS) * Og * (1 - O1 - O2) + (1 - OS) * (1 - Og) * (1 - O3 - O4)		# 1

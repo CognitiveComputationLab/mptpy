@@ -11,8 +11,8 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 import argparse
 import sys
 
-from mptpy.tools.parsing import EasyParser
-from mptpy.fitting.scipy_fit import ScipyFitter
+from mptpy.tools.parsing import Parser
+import mptpy.fitting.scipy_fit as fitting
 
 
 def parse_commandlineargs():
@@ -86,12 +86,12 @@ def run(model_path, data_path, sep=',', header=None, n_optim=10, llik=False):
     data : str
         path to the data file
     """
-    parser = EasyParser()
+    parser = Parser()
     mpt = parser.parse(model_path)
     mpt.draw()
     func = "llik" if llik else "rmse"
-    fitter = ScipyFitter(data_path, sep=sep, header=header, func=func)
-    evaluation = fitter.fit_mpt(mpt, n_optim)
+
+    evaluation = fitting.fit_mpt(mpt, func, data_path, sep=sep, n_optim=n_optim)
 
     # Print the result
     print()

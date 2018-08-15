@@ -7,19 +7,59 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
 
-from operation import Operation
+
+from collections import OrderedDict
+
+from sympy.combinatorics.partitions import RGS_enum, RGS_rank, RGS_unrank
+
+from mptpy.optimization.operations.operation import Operation
 
 
 class Substitution(Operation):
     """ Parameter deletion operation on MPTs """
 
-    def generate_candidates(self):
-        """ Generate all trees possible with this operation
+    def __init__(self, config):
+        self.config = config  # {param: rgs}
 
-        Parameters
-        ----------
-        mpt : MPT
-            mpt that is to be modified
-        """
+    def apply(self, word):
+        elements = list(word)
+        for param, rgs in self.config.items():
+            elements = apply_rgs(param, rgs, elements)
+        return word.sep.join(elements)
 
-        return NotImplementedError
+
+def apply_rgs(param, rgs, mpt_list):
+    rgs_idx = 0
+    for i, elem in enumerate(mpt_list):
+
+        if elem == param:
+            if rgs[rgs_idx] == 0:
+                pass
+            else:
+                mpt_list[i] += str(rgs[rgs_idx])
+            rgs_idx += 1
+
+    return mpt_list
+
+
+def get_RGS(rank, param_occurences):
+    rgs = RGS_unrank(rank, param_occurences)
+    return rgs
+
+
+def generate_all(mpt, ignore=None):
+    """ Generate all trees possible with this operation
+
+    Parameters
+    ----------
+    mpt : MPT
+        mpt that is to be modified
+    """
+    if ignore is None:
+        ignore = set()
+
+    for param in set(mpt.categories) - set(ignore):
+        num = mpt.parameters.count(param)
+        for i in range(RGS_enum(num)):
+            rgs = RGS_unrank(i, num)
+            # return get_parameterization(rgs, param)    # TODO

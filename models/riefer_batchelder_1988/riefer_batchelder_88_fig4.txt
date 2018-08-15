@@ -1,0 +1,12 @@
+# Riefer Batchelder 1988
+# S. 334, Fig 4: Tree diagram for the multinomial model for discrimination learning. 
+# 
+
+# Unique Items
+s + (1 - s) * g + (1 - s) * (1 - g)		# R
+
+
+# Paired Items
+s * c + (1 - s) * g			# CE
+s * (1 - c)	+ (1 - s) * g				# C
+(1 - s) * (1 - 2g)					#NCE

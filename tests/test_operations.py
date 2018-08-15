@@ -7,37 +7,33 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
 
-from nose.tools import assert_equals, assert_false
 from itertools import compress
-from tests.context import mptpy
-from mptpy.tools import transformations, parsing
-from mptpy.node import Node
-from mptpy.mpt_word import MPTWord
+
+from nose.tools import assert_equals
+
 from mptpy.mpt import MPT
 from mptpy.optimization.operations.deletion import Deletion
+import mptpy.optimization.operations.substitution as sub
+import context
+
+
+MPTdeletion = context.MPTS["testdeletion"]
 
 
 def test_deletion():
-    s = "b c 2 1 a 2 d 1 0"
-
-    '''
+    """
             b
       c           a
     2   1       2   d
                    1  0
-    '''
+    """
+    
 
-    mpt = MPT(s)
-
-    deletion = Deletion(mpt)
+    deletion = Deletion(MPTdeletion)
     candidates = deletion.generate_candidates()
-    print()
-
-    print("candidates:", candidates)
-    print()
 
     assert_equals(sorted(candidates),
-                  sorted([s,
+                  sorted([str(MPTdeletion),
                           "b c 2 1 a 2 0",
                           "b c 2 1 d 1 0",
                           "b c 2 1 0",
@@ -48,15 +44,46 @@ def test_deletion():
 
 
 def test_gen_possible_subtrees():
-    s = "b c 2 1 a 2 d 1 0"
 
-    mpt = MPT(s)
-
-    deletion = Deletion(mpt)
+    deletion = Deletion(MPTdeletion)
     subtrees = deletion.possible_subtrees(
-        mpt.root.pos, [[bytearray([1])], [bytearray([1])]])
+        MPTdeletion.root.pos, [[bytearray([1])], [bytearray([1])]])
     res = []
     for subtree in subtrees:
-        res.append(" ".join((compress(str(mpt.root.pos).split(" "), subtree))))
+        res.append(" ".join((compress(str(MPTdeletion.root.pos).split(" "), subtree))))
 
     assert_equals(sorted(res), sorted(['2', '1', 'c 2 1']))
+
+"""
+def test_substitution():
+    subst = sub.Substitution(MPT)
+    param = subst.get_parameterization([0,0,0], "a")
+    print(param)
+    assert_equals(param, ["a", "a", "a"])
+
+    param = subst.get_parameterization([0,1,1], "a")
+    print(param)
+    assert_equals(param, ["a", "a1", "a1"])
+
+    param = subst.get_parameterization([0,1,2], "a")
+    print(param)
+    assert_equals(param, ["a", "a1", "a2"])
+
+    param = subst.get_parameterization([2,1,2], "a")
+    print(param)
+    assert_equals(param, ["a2", "a1", "a2"])
+"""
+
+def test_apply_rgs():
+    mpt = "a a 0 1 b 2 3"
+    param = "a"
+    rgs = [1, 0]
+
+    res = sub.apply_rgs(param, rgs, mpt.split(" "))
+    assert_equals(res, ["a1", "a", "0", "1", "b", "2", "3"])
+
+    p2 = "b"
+    rgs2 = [12]
+    subst = sub.Substitution({param: rgs, p2: rgs2})
+    mpt = MPT(mpt)
+    assert_equals(subst.apply(mpt), "a1 a 0 1 b12 2 3")

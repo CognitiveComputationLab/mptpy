@@ -1,0 +1,7 @@
+Model, G2, LogLik, AIC, BIC
+conditional-reasoning-insight1970, NA, -13.4804969794, 32.9609939588, 54.6821474388
+conditional-reasoning-klauer4slim, NA, -13.4804969794, 34.9609939588, 63.9225319321
+conditional-reasoning-mt-collapseddeliberation, NA, -81.6810229354, 167.362045871, 181.842814857
+conditional-reasoning-mt-distinctdeliberation, NA, -13.4804969794, 32.9609939588, 54.6821474388
+inference-guessing, NA, -334.565731325, 689.13146265, 765.598042086
+rouder-storageretrieval, NA, -10.6154089246, 29.2308178491, 44.5348182787

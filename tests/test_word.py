@@ -8,10 +8,11 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 """
 
 import string
-from nose.tools import assert_equals, assert_false
-from tests.context import mptpy
+from nose.tools import assert_equals
+
 from mptpy.mpt_word import MPTWord
-from mptpy.tools.parsing import Parser
+
+import context
 
 MODEL_DIR = "tests/test_models/test_build"
 
@@ -50,7 +51,7 @@ def test_is_leaf():
 
 def test_split():
     """ Test if splitting the word into positive and negative subtrees works """
-    def leaf(x): return all([ch in string.ascii_uppercase for ch in x])
+    leaf = lambda x: all([ch in string.ascii_uppercase for ch in x])
     word1 = MPTWord("p A B", leaf_test=leaf)
     assert_equals(word1.split_pos_neg(), ('A', 'B'))
     word2 = MPTWord('a N b N O', leaf_test=leaf)
@@ -58,8 +59,7 @@ def test_split():
     word3 = MPTWord('a b N O N', leaf_test=leaf)
     assert_equals(word3.split_pos_neg(), ('b N O', 'N'))
 
-    parser = Parser()
-    word4 = parser.parse(MODEL_DIR + "/test1.model").word
+    word4 = context.PARSER.parse(MODEL_DIR + "/test1.model").word
     assert_equals(word4.split_pos_neg(), ('bc c 0 1 a 2 e 2 3', 'd 4 5'))
 
 

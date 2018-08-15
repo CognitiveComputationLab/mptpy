@@ -1,0 +1,16 @@
+# Riefer Batchelder 1988
+# S. 334, Fig 2. Tree diagram for Batchelder and Riefer's (1986) multinomial model for storage and retrieval. 
+# 
+
+# Pair clusters
+
+c * r 				# E1
+c * (1 - r) + (1 - c) * (1 - u)^2			# E4
+(1 - c) * u^2 				# E2
+(1 - c) * 2u(1 - u)			# E3
+
+
+
+# Singletons
+u 		#F1
+(1 - u)	#F2

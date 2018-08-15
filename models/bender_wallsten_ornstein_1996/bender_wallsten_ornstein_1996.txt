@@ -1,0 +1,8 @@
+# Bender_Wallsten_Ornstein_1996
+# S. 190
+# 
+qij * r1ij * r2ij 		# Retrieve(S2)-SSij-E1
+qij * r1ij * 1-r2ij 	# FailToRetrieve(F2)-SFij-E2
+qij * (1 - r1ij) * r2ij # Retrieve(S2)-FSij-E3
+qij * (1 - r1ij) * (1 - r2ij) # FailToRetrieve(F2)-FFij-E4
+(1 - qij)				# FailToEncode-FFij-E4

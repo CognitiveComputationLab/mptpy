@@ -1,0 +1,5 @@
+# Conrey_Sherman_et al_2005
+# S. S. 473, Fig 2  - compatible
+# 
+A + (1 - A) * C #plus
+(1 - A) * (1 - C) # minus

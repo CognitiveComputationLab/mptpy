@@ -8,6 +8,7 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 """
 
 import re
+from collections import OrderedDict
 from mptpy.node import Node
 
 
@@ -178,4 +179,9 @@ def get_formulae(mpt):
 
         return lines
 
-    return recursive_to_formulae(mpt.root)
+    formulae = recursive_to_formulae(mpt.root)
+    ordered = OrderedDict()
+    for key in sorted(formulae, key=int):
+        ordered[key] = formulae[key]
+
+    return ordered
