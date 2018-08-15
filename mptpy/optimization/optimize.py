@@ -27,13 +27,13 @@ class Optimizer():
         if ignore_params is None:
             ignore_params = []
         self.mpt = mpt
-        self.deletion_file = '../out/delete_{}.txt'.format(name)
+        self.deletion_file = 'delete_{}.txt'.format(name)
         self.deletion = Deletion(
             mpt,
             ignore_params=ignore_params,
             out=self.deletion_file)
         self.ignore_params = ignore_params
-        self.eval_file = '../out/evals_{}.txt'.format(name)
+        self.eval_file = 'evals_{}.txt'.format(name)
         self.data_path = data_path
         self.no_del_trees = 0
         self.func = func
