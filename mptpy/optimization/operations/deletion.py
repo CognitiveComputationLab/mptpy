@@ -6,7 +6,7 @@ Paulina Friemann <friemanp@cs.uni-freiburg.de>
 Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 
 """
-
+import sys
 import os
 import itertools as it
 from functools import partial
@@ -67,14 +67,19 @@ class Deletion():
         candidates = sorted(self.compressed(bin_s[0]), key=self.abstract)
 
         unique = []
+        print("remove redundancies")
+        sys.stdout.flush()
         for _, group in it.groupby(candidates, key=self.abstract):
             unique.append(list(group)[0])
-
+        print("done.")
+        print()
+        print("write to file")
         f = open(self.out, 'w')
         for cand in unique:
             f.write(cand)
             f.write("\n")
         f.close()
+        print("done")
 
         return unique
 

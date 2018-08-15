@@ -7,6 +7,7 @@
 
 """
 
+import sys
 import os
 import random
 from collections import Counter
@@ -43,6 +44,8 @@ class Optimizer():
             deletion_trees = self.deletion.generate_candidates()
             self.no_del_trees = len(deletion_trees) - 1
         else:
+            print("Deletion list exists. Load..")
+            sys.stdout.flush()
             self.no_del_trees = sum(1 for line in open(self.deletion_file))
 
     def random_search(self):
@@ -51,7 +54,10 @@ class Optimizer():
             self.mpt, self.func, self.data_path, sep=self.sep)
         self.write_to_file(str(self.mpt), evaluation)
 
+        i = 0
         while(1):
+            i += 1
+            print("Optimizing {}...".format(i))
             model, evaluation = self.eval_random_model(self.mpt.subtrees)
             if model:
                 self.write_to_file(str(model), evaluation)
@@ -72,8 +78,10 @@ class Optimizer():
 
             evaluation = fitting.fit_mpt(
                 model, self.func, self.data_path, sep=self.sep)
+            print(str(model))
             print(evaluation)
             print()
+            sys.stdout.flush()
             return str(model), evaluation
 
         return None, None
