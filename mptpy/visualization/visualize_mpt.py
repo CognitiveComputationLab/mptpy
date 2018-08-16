@@ -60,7 +60,7 @@ def _dfs_print(node, depth=0):
         print(to_print)
         return
 
-    _dfs_print(node.neg, depth + 1)
+    _dfs_print(node.pos, depth + 1)
     to_print += node.content  # current node
     print(to_print)
-    _dfs_print(node.pos, depth + 1)
+    _dfs_print(node.neg, depth + 1)

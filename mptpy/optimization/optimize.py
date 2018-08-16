@@ -52,6 +52,9 @@ class Optimizer():
 
         evaluation = fitting.fit_mpt(
             self.mpt, self.func, self.data_path, sep=self.sep)
+        from pprint import pprint
+        pprint(evaluation)
+        exit()
         self.write_to_file(str(self.mpt), evaluation)
 
         i = 0

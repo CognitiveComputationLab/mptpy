@@ -104,6 +104,7 @@ class Parser():
         -------
         """
         lines = open_model(file_path)
+
         parser = self.instantiate(lines)
         built = parser.build(lines)
         return built
@@ -116,6 +117,7 @@ class Parser():
             g in groupby(
                 lines,
                 key=lambda x: x != '') if k]
+
         joint = self.build_mpt_from_subtrees(subtrees)
 
         return joint
@@ -141,6 +143,7 @@ class Parser():
             mpts.append(MPT(bmpt))
             leaf_step += len(subtree)
 
+
         joint = joint_tree.join(mpts)
         joint.subtrees = subtrees  # TODO to easy?
 
@@ -155,7 +158,7 @@ class Parser():
         lines : [str]
             lines in the file
         """
-        if any(["*" in line or "+" in line for line in lines]):
+        if any(["1 -" in line or "1-" in line for line in lines]):
             return self
 
         return BmptParser()

@@ -90,6 +90,7 @@ def easy_to_bmpt(lines, sep=' ', leaf_step=0):
             answer[1][i] = branch.split("*")
 
     tree_str = dict_to_bmpt(tree, sep=sep)
+
     return tree_str
 
 
@@ -109,7 +110,7 @@ def dict_to_bmpt(tree, sep=" "):
 
     """
 
-    if len(tree.keys()) == 1:
+    if len(tree.keys()) == 1 and list(tree.items())[0][1] == [[]] :
         return str(list(tree.keys())[0])
 
     # match the parameters : letter(s) + optional number
@@ -117,7 +118,9 @@ def dict_to_bmpt(tree, sep=" "):
 
     pos_tree, neg_tree = split_tree(tree)
 
-    return sep.join([root, dict_to_bmpt(pos_tree), dict_to_bmpt(neg_tree)])
+    res= sep.join([root, dict_to_bmpt(pos_tree), dict_to_bmpt(neg_tree)])
+
+    return res
 
 
 def split_tree(tree):

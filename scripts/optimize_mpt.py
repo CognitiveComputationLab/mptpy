@@ -100,13 +100,15 @@ def run(model_path, data_path, ignore=None, sep=',', header=None, n_optim=10, ll
     parser = Parser()
     mpt = parser.parse(model_path)
 
+    mpt.draw()
+
     name = model_path.split("/")[-1].split(".")[0]
 
     func = "llik" if llik else "rmse"
 
     optimizer = Optimizer(mpt, data_path, name, sep=sep, func=func, ignore_params=ignore)
     
-    optimizer.init_deletion()
+    #optimizer.init_deletion()
     optimizer.random_search()
 
     # Print the result

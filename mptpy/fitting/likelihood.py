@@ -168,5 +168,4 @@ def log_likelihood(
         n_factorial = log_factorial(observations.sum())
         llik += n_factorial - obs_factorials
     # pylint: enable=no-member
-
     return llik

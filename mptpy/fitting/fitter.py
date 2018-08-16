@@ -34,7 +34,10 @@ def remove_header(data):
     list
         Data without header
     """
+    print(data)
     skip = 0
+    if len(data.shape) == 1:
+        return data
     for line in data:
         if -1 in line:
             skip += 1
@@ -44,7 +47,7 @@ def remove_header(data):
     return data[skip:]
 
 
-def _compute_parameter_ratios(mpt, data):
+def compute_parameter_ratios(mpt, data):
     """ Compute the ratios of the static parameters of an MPT model
 
     Parameters
@@ -67,6 +70,10 @@ def _compute_parameter_ratios(mpt, data):
 
 
 def compute_observations(data, subtrees):
+
+    if len(data.shape) > 1:
+        data = data.sum(axis=0)
+
     subtree_observations = []
     idx = 0
     for subtree in subtrees:
