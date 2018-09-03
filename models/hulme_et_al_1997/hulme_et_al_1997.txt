@@ -1,5 +1,0 @@
-# Hulme_et_al_1997
-# S. 1221
-# 
-I + (1 - I) * Rj	#Correct
-(1 - I) * (1 - Rj)	#Incorrect

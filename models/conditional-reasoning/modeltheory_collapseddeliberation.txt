@@ -1,8 +1,0 @@
-## Modeltheory Johnson-Laird
-## intuition and deliberation collapsed
-## Problem quadratic terms
-## TRY
-(1 - d) * s * (1 - d)  #p
-(1 - d) * s * d + d  #p nq
-(1 - d) * (1 - s) * (1 - d) #p q
-(1 - d) * (1 - s) * d #p q nq

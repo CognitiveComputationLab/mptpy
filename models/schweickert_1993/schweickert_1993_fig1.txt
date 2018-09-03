@@ -1,5 +1,0 @@
-# Schweickert 1993
-# S. 169, Fig 1
-#
-I + (1 - I) * R			#C
-(1 - I) * (1 - R)		#E

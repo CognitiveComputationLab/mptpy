@@ -1,7 +1,0 @@
-# Hu_Batchelder_1994
-# S. 22, Figure 1
-#
-p * p + p * r + r * p 		#CA
-p * q + q * p 				#CAB
-q * q + q * r + r * q		#CB
-r + r 						#C0

@@ -1,9 +1,0 @@
-# Klauer_Ehrenberg_Wegner_2003
-# S. 348 
-# 
-D * c + D * (1 - c) * d (age, gender) * (1 / n) + D * (1 - c) * d (age, not gender) * a (female | old) * (1 / n) + D * (1 - c) * d (not age, gender) * a (old | female) * (1 / n) + D * (1 - c) * d (not age , not gender) * a (old, female) * (1 / n) + (1 - D) * b * a (old, female) * (1 / n) # Correct assignment
-D * (1 - c) * d (age, gender) * (1 - (1 / n)) + D * (1 - c) * d (age, not gender) * a (female | old) * (1 - (1 / n)) + D * (1 - c) * d (not age , gender) * a (old | female) * (1 - (1 / n)) + D * (1 - c) * d (not age, not gender) * a (old, female) * (1 - (1 / n)) + (1 - D) * b * a (old, female) * (1 - (1 / n)) #Within-age-within-gender error
-D * (1 - c) * d (age, not gender) * (1 - a (female | old)) + D * (1 - c) * d (not age, not gender) * a (old, male) + (1 - D) * b * a (old, male) # Within-age-between-gender error 
-D * (1 - c) * d (not age, gender) * (1 - a (old | female)) + D * (1 - c) * d (not age, not gender) * a (young, female) + (1 - D) * b * a (young, female) # Between-age-within-gender error
-D * (1 - c) * d (not age , not gender) * a (young, male) + (1 - D) * b * a (young, male) # Between-age-between-gender error
-(1 - D) * (1 - b) # False rejection

@@ -1,9 +1,0 @@
-# Prinzmetal Henderson Ivry 1995
-# S. 1367, Fig 6: Alpha model
-# 
-TL * TC * NC * alpha + TL * TC * (1 - NC) * alpha + TL * TC * (1 - NC) * (1 - alpha) * 1/3 + TL * (1 - TC) * NC * alpha * 1/3 + TL * (1 - TC) * (1 -NC) * 1/3 + (1 - TL) * TC * NC * 1/3 * 1/2	+ (1 - TL) * TC * (1 - NC) * 1/3 + (1 - TL) * (1 - TC) * (1 - NC) * 1/3 * 1/3 		# C
-TL * TC * NC *  (1 - alpha)	+ TL * TC * (1 - NC) * (1 - alpha) * 1/3 + TL * (1 - TC) * NC * alpha * 1/3 + TL * (1 - TC) * NC * (1 - alpha) + TL * (1 - TC) * (1 -NC) * 1/3 + (1 - TL) * TC * NC * 1/3 * 1/2 + 	(1 - TL) * (1 - TC) * NC * 1/3 + (1 - TL) * (1 - TC) * (1 - NC) * 1/3 * 1/3						#CR
-TL * TC * (1 - NC) * (1 - alpha) * 1/3 + TL * (1 - TC) * NC * alpha * 1/3 + TL * (1 - TC) * (1 -NC) * 1/3 + (1 - TL) * (1 - TC) * (1 - NC) * 1/3 * 1/3						# CF
-(1 - TL) * TC * NC * 2/3 * 1/2	+ (1 - TL) * TC * (1 - NC) * 2/3 + (1 - TL) * (1 - TC) * (1 - NC) * 2/3 * 1/3			# LF
-(1 - TL) * TC * NC * 2/3 * 1/2 + (1 - TL) * (1 - TC) * NC * 2/3	+ (1 - TL) * (1 - TC) * (1 - NC) * 2/3 * 1/3			#LFCR
-(1 - TL) * (1 - TC) * (1 - NC) * 2/3 * 1/3 	#CLF

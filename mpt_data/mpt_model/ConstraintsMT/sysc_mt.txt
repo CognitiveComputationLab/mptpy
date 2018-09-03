@@ -1,4 +1,0 @@
-t.4 < t.3 < t.1
-a = 0.5
-b = 0.333
-#sysp, sysz, c-rep MP
