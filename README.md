@@ -1,7 +1,7 @@
 The mptpy Module
 ================
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://raw.githubusercontent.com/CognitiveComputationLab/mptpy/master/LICENSE)
+[![License: MIT](https://img.shields.io/github/license/CognitiveComputationLab/mptpy.svg)](https://raw.githubusercontent.com/CognitiveComputationLab/mptpy/master/LICENSE)
 
 The `mptpy` module enables the representation and use of Multinomial Process Tree (MPT) models in Python.
 
