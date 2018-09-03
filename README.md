@@ -1,7 +1,7 @@
 The mptpy Module
 ================
 
-The `mptpy` module enables the representation and use of Multinomial Processing Tree (MPT) models in Python.
+The `mptpy` module enables the representation and use of Multinomial Process Tree (MPT) models in Python.
 
 *Currently work in progress. Extended documentation follows...*
 
