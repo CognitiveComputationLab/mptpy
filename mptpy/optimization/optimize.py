@@ -86,7 +86,7 @@ class Optimizer():
 
         return None, None
 
-    
+
     def random_substitution_configs(self, model):
         param_nos = Counter(model.parameters)
         rand_perm = {param: random.randint(0, RGS_enum(param_nos[param]) - 1) for param in param_nos}
@@ -103,7 +103,7 @@ class Optimizer():
             param_rgs[param] = rgs
         return param_rgs
 
-    
+
     def random_deletion_model(self):
         deletion_no = random.randint(0, self.no_del_trees)
         del_tree = self.deletion.read_number(deletion_no)

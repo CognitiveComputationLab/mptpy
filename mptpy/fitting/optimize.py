@@ -12,7 +12,7 @@ from scipy.optimize import minimize
 from . import likelihood as lh
 
 
-def optim_llik(param_values, cat_formulae, param_names, data):
+def optim_llik(param_values, cat_formulae, param_names, data, static_params):
     """ Realizes an objective function based on the log likelihood value of a
     parameterized MPT model.
 
@@ -51,6 +51,10 @@ def optim_llik(param_values, cat_formulae, param_names, data):
 
     # Construct the assignment dictionary
     ass = dict(zip(param_names, param_values))
+    assert not np.any([x in ass for x in static_params.keys()]), \
+        'Static parameter found in constructed assignment dictionary.'
+    ass.update(static_params)
+
     llik = lh.log_likelihood(cat_formulae, ass, data, ignore_factorials=True)
     return -1 * llik
 
@@ -102,7 +106,7 @@ def optim_rmse(param_values, cat_formulae, param_names, data):
     return np.sqrt(np.mean((preds - data) ** 2))
 
 
-def fit_classical(fun, cat_formulae, param_names, data, n_optim=10):
+def fit_classical(fun, cat_formulae, free_params, static_params, data, n_optim=10):
     """ Fits an MPT model using classical function-based optimization routines
     implemented in the Scipy module.
 
@@ -154,15 +158,15 @@ def fit_classical(fun, cat_formulae, param_names, data, n_optim=10):
     n_errs = 0
     for _ in range(n_optim):
         # Initialize the parameter set
-        init_params = np.random.uniform(0.01, 0.99, size=(len(param_names),))
+        init_params = np.random.uniform(0.01, 0.99, size=(len(free_params),))
 
         # Perform the optimization
         res = minimize(
             fun=fun,
             x0=init_params,
-            args=(cat_formulae, param_names, data),
+            args=(cat_formulae, free_params, data, static_params),
             method='L-BFGS-B',
-            bounds=[(0.01, 0.99)] * len(init_params))
+            bounds=[(0.000001, 0.999999)] * len(init_params))
 
         # In case of success, compare the result with the best observed so far
         # and update if better.
