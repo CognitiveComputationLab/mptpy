@@ -7,12 +7,13 @@
 
 """
 
-import sys
-import os
-import random
 from collections import Counter
+import os
+import sys
 
+import numpy as np
 from sympy.combinatorics.partitions import RGS_enum
+
 from mptpy.optimization.operations.deletion import Deletion
 import mptpy.optimization.operations.substitution as substitution
 from mptpy.mpt_word import MPTWord
@@ -89,7 +90,7 @@ class Optimizer():
 
     def random_substitution_configs(self, model):
         param_nos = Counter(model.parameters)
-        rand_perm = {param: random.randint(0, RGS_enum(param_nos[param]) - 1) for param in param_nos}
+        rand_perm = {param: np.random.randint(0, RGS_enum(param_nos[param])) for param in param_nos}
 
         param_rgs = {}
         for param in rand_perm.keys():
@@ -105,12 +106,14 @@ class Optimizer():
 
 
     def random_deletion_model(self):
-        deletion_no = random.randint(0, self.no_del_trees)
+        deletion_no = np.random.randint(0, self.no_del_trees)
         del_tree = self.deletion.read_number(deletion_no)
+
         del_tree = MPTWord(
             del_tree,
             sep=self.mpt.word.sep,
             leaf_test=self.mpt.word.is_leaf)
+
         return del_tree
 
 
