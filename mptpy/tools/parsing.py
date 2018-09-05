@@ -8,6 +8,9 @@ Nicolas Riesterer <riestern@cs.uni-freiburg.de>
 """
 
 import string
+import re
+
+import numpy as np
 from itertools import groupby
 import mptpy.tools.transformations as trans
 
@@ -86,8 +89,56 @@ def open_model(file_path):
     with open(file_path, 'r') as mpt_file:
         lines = strip(mpt_file.readlines())  # remove comments
 
-    return lines
+    return [escape_parameters(x) for x in lines]
 
+def escape_parameters(formula, escape_char='_'):
+    """ Escapes the parameters of a category formula.
+
+    Parameters
+    ----------
+    formula : str
+        Category formula.
+
+    escape_char : str, optional
+        Character string to escape parameters with (prepended and appended to
+        variables).
+
+    Note
+    ----
+    Currently, the algorithm fails to correctly account for variables starting
+    with a '1'.
+
+    Examples
+    --------
+    >>> escape_parameters('a * b * c')
+    '_a_ * _b_ * _c_'
+    >>> escape_parameters('e * ee * a * ea * _ba')
+    '_e_ * _ee_ * _a_ * _ea_ * __ba_'
+    >>> escape_parameters('a1 * a2 * e1a')
+    '_a1_ * _a2_ * _e1a_'
+
+    """
+
+    escaped = ''
+
+    reading_mode = False
+    for char in formula:
+        if char not in ['*', '(', ')', '+', ' ', '-', '1']:
+            if not reading_mode:
+                escaped += escape_char
+                reading_mode = True
+
+        if char in ['*', '(', ')', '+', ' ', '-']:
+            if reading_mode:
+                escaped += escape_char
+                reading_mode = False
+
+        escaped += char
+
+    if reading_mode:
+        escaped += escape_char
+
+    return escaped
 
 class Parser():
     """ Parsing for easy format """
