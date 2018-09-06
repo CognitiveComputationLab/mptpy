@@ -1,19 +1,11 @@
 """ Functions for parsing MPT models.
 
-Copright 2018 Cognitive Computation Lab
-University of Freiburg
-Paulina Friemann <friemanp@cs.uni-freiburg.de>
-Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-
 """
 
 import string
-import re
-
-import numpy as np
 from itertools import groupby
-import mptpy.tools.transformations as trans
 
+import mptpy.tools.transformations as trans
 from mptpy.mpt import MPT
 from . import joint_tree
 
@@ -51,6 +43,7 @@ def get_leaf_info(lines):
     [str]
         list with leaf names
     """
+
     leaves = list(filter(lambda x: x.startswith("["), lines))
     if leaves:
         leaves = leaves[0].strip()
@@ -72,6 +65,7 @@ def strip(lines):
     [str]
         file content without comments
     """
+
     lines = filter(lambda line: line[0] != "#", lines)  # commentary and empty lines
     lines = [line.split("#")[0].strip() for line in lines]  # in-line
 
@@ -86,6 +80,7 @@ def open_model(file_path):
     file_path : str
         path to the mpt file
     """
+
     with open(file_path, 'r') as mpt_file:
         lines = strip(mpt_file.readlines())  # remove comments
 
@@ -141,7 +136,9 @@ def escape_parameters(formula, escape_char='_'):
     return escaped
 
 class Parser():
-    """ Parsing for easy format """
+    """ Parsing for easy format
+
+    """
 
     def parse(self, file_path):
         """ Parse the mpt from the file
@@ -153,7 +150,9 @@ class Parser():
 
         Returns
         -------
+
         """
+
         lines = open_model(file_path)
         parser = self.instantiate(lines)
         built = parser.build(lines)
@@ -161,7 +160,9 @@ class Parser():
 
     def build(self, lines):
         """ Build MPT from lines. Can have multiple subtrees.
+
         """
+
         subtrees = [
             list(g) for k,
             g in groupby(
@@ -183,6 +184,7 @@ class Parser():
         -------
 
         """
+
         mpts = []
         leaf_step = 0
 
@@ -205,7 +207,9 @@ class Parser():
         ----------
         lines : [str]
             lines in the file
+
         """
+
         if any(["*" in line or "+" in line for line in lines]):
             return self
 
@@ -213,14 +217,18 @@ class Parser():
 
 
 class BmptParser(Parser):
-    """ Parsing for BMPT format """
+    """ Parsing for BMPT format
+
+    """
 
     def __init__(self):
         self.leaf_test = None
 
     def build(self, lines):
         """ Build MPT from lines. Can have multiple subtrees.
+
         """
+
         leaves = get_leaf_info(lines)  # retrieve leaf information
         words = list(
             filter(
@@ -240,7 +248,9 @@ class BmptParser(Parser):
         Returns
         -------
         joint tree
+
         """
+
         mpts = []
         for subtree in subtrees:
 

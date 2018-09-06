@@ -1,9 +1,5 @@
 """ Script containing functions related to the optimization of MPTs.
 
-| Copyright 2017 Cognitive Computation Lab
-| University of Freiburg
-| Nicolas Riesterer <riestern@tf.uni-freiburg.de>
-
 """
 
 import numpy as np

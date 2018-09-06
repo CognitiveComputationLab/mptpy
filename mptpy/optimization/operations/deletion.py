@@ -1,16 +1,12 @@
 """ Interface for applying operations to MPTs.
 
-Copright 2018 Cognitive Computation Lab
-University of Freiburg
-Paulina Friemann <friemanp@cs.uni-freiburg.de>
-Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-
 """
 import sys
 import os
 import itertools as it
 from functools import partial
 from collections import Counter
+
 from tqdm import tqdm
 
 from mptpy.optimization.operations.operation import Operation
@@ -86,7 +82,9 @@ class Deletion():
     def abstract(self, candidate):
         """ Calls the abstraction function of the mpt word class
         a 1 0 -> p0 1 0
+
         """
+
         word = mpt_word.MPTWord(candidate, leaf_test=self.mpt.word.is_leaf)
         return word.abstract()
 
@@ -105,7 +103,9 @@ class Deletion():
         ----------
         rem_cats : Counter
             Counter of the remaining categories in the tree using this combinatio
+
         """
+
         candidate = it.compress(subtree.split(self.sep), comb)
         cats = Counter(filter(self.mpt.word.is_leaf, candidate))
         rem_cats = cats_wo_node + cats
@@ -124,7 +124,9 @@ class Deletion():
         -------
         list
             iterable without the d and with a 0 or 1 at [0]
+
         """
+
         comb = list(comb)
         if DELETION_FLAG in comb:
             comb.remove(DELETION_FLAG)
@@ -151,6 +153,7 @@ class Deletion():
         -------
         list
             all possible deletion candidates
+
         """
 
         left_candidates = left + [bytearray([0] * len(left[0]) + [2])]
@@ -186,6 +189,7 @@ class Deletion():
         -------
         list
             all possible subtrees
+
         """
 
         if node.leaf or node.content in self.ignore_params:

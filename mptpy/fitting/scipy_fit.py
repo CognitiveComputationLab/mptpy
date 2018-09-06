@@ -1,19 +1,13 @@
 """ Wrapper class for MPTinR.
 
-Copright 2018 Cognitive Computation Lab
-University of Freiburg
-Paulina Friemann <friemanp@cs.uni-freiburg.de>
-Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-
 """
 
 import math
 import re
-from collections import OrderedDict
+
 import numpy as np
 
 from mptpy.fitting import fitter
-
 from . import likelihood as lh
 from . import optimize as optim
 

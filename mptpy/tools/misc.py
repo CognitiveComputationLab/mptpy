@@ -1,12 +1,6 @@
 """ Miscellaneous helper functions.
 
-| Copyright 2018 Cognitive Computation Lab
-| University of Freiburg
-| Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-| Paulina Friemann <friemanp@cs.uni-freiburg.de>
-
 """
-
 
 import os
 
@@ -29,7 +23,6 @@ def split_half(args):
 
     return args[:split], args[split:]
 
-
 def merge_dicts(*dicts):
     """ Merge two dictionaries
     example: merge({1:'a', 2:'b'}, {1:'c'}) -> {1:['a','c'], 2:['c']}
@@ -49,7 +42,6 @@ def merge_dicts(*dicts):
             else:
                 temp[key] = value
     return temp
-
 
 def write_iterable_to_file(path, iterable_, newline=True):
     """ Writes an iterable to a file.

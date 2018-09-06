@@ -1,10 +1,5 @@
 """ Optimization procedures for MPTs.
 
-| Copyright 2018 Cognitive Computation Lab
-| University of Freiburg
-| Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-| Paulina Friemann <friemanp@cs.uni-freiburg.de>
-
 """
 
 from collections import Counter
