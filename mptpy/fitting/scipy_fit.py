@@ -63,10 +63,7 @@ def fit_easy(
 
     # setup kwargs and fit
     kwargs = _setup_args(cat_formulae, params, func, data_path, sep)
-    static_params = dict()
-    if len(mpt.subtrees) > 1:
-        static_params = fitter.compute_parameter_ratios(mpt, fitter.read_data(data_path))
-    return _fit(kwargs, static_params, n_optim=n_optim)
+    return _fit(kwargs, n_optim=n_optim)
 
 
 def fit_mpt(mpt, func, data_path, sep=',', n_optim=10, use_fia=False):
@@ -125,7 +122,7 @@ def _determine_static_params_values(cat_formulae, static_params, data):
 
     return static_assignment
 
-def _fit(kwargs, static_params, n_optim=10):
+def _fit(kwargs, n_optim=10):
     """ Fit the model
 
     Parameters
@@ -135,11 +132,11 @@ def _fit(kwargs, static_params, n_optim=10):
 
     """
 
-    res, errs = optim.fit_classical(**kwargs, static_params=static_params, n_optim=n_optim)
+    res, errs = optim.fit_classical(**kwargs, n_optim=n_optim)
     print(res)
 
     # Compute the correct criteria (without ignoring factorials)
-    measures = _compute_measures(res, kwargs, static_params)
+    measures = _compute_measures(res, kwargs)
 
     # Compute the RMSE
     rmse = _rmse(measures['ass'], kwargs)
@@ -163,7 +160,7 @@ def _fit(kwargs, static_params, n_optim=10):
     return result
 
 
-def _compute_measures(res, kwargs, static_params):
+def _compute_measures(res, kwargs):
     """ Compute the correct criteria (without ignoring factorials)
     """
     data = kwargs['data']

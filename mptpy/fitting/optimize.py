@@ -150,16 +150,6 @@ def fit_classical(fun, cat_formulae, free_params, static_params, data, n_optim=1
 
     """
 
-    # Initialize the static params dictionary
-    if not static_params:
-        static_params = dict()
-
-    # Check for validity of the static parameters
-    assert np.all([x in param_names for x in static_params.keys()]), \
-        'Static param(s) not in param_names.'
-
-    free_params = [x for x in param_names if x not in static_params]
-
     best_res = None
     n_errs = 0
     for _ in range(n_optim):
