@@ -1,16 +1,9 @@
 """ Interface for applying operations to MPTs.
 
-Copright 2018 Cognitive Computation Lab
-University of Freiburg
-Paulina Friemann <friemanp@cs.uni-freiburg.de>
-Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-
 """
 
 
-from collections import OrderedDict
-
-from sympy.combinatorics.partitions import RGS_enum, RGS_rank, RGS_unrank
+from sympy.combinatorics.partitions import RGS_enum, RGS_unrank
 
 from mptpy.optimization.operations.operation import Operation
 
@@ -54,7 +47,9 @@ def generate_all(mpt, ignore=None):
     ----------
     mpt : MPT
         mpt that is to be modified
+
     """
+
     if ignore is None:
         ignore = set()
 

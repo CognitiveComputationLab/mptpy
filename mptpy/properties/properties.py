@@ -1,10 +1,5 @@
 """ Properties of MPTs.
 
-Copright 2018 Cognitive Computation Lab
-University of Freiburg
-Paulina Friemann <friemanp@cs.uni-freiburg.de>
-Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-
 """
 
 import re
@@ -25,10 +20,10 @@ def check(mpt, mpt_property):
     -------
     boolean
         truth value of the check
+
     """
 
     return globals()[mpt_property](mpt)
-
 
 def identifiable(mpt):
     """ Check for identifiability
@@ -42,12 +37,12 @@ def identifiable(mpt):
     -------
     boolean
         whether tree is identifiable
+
     """
 
     max_params = 0
     for subtree in mpt.subtrees:
         max_params += len(subtree) - 1
-
 
     free_params = [
         x for x in set(mpt.word.parameters) if not re.match(r'y\d+', x)

@@ -1,5 +1,0 @@
-#  Humphreys_Bowyer_1980
-# S.274 untere Abbildung
-#
-a * p * 1 + a * (1 - p) * 1 + (1 - a) * q * x + (1 - a) * (1 - q) * 0 	#LR
-a * p * 0 + a * (1 - p) * 0 + (1 - a) * q * (1 - x) + (1 - a) * (1 - q) * 1		#UR

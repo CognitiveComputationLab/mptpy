@@ -1,10 +1,5 @@
 """ Fitter Implementation using the Expectation Maximization Algorithm
 
-Copright 2018 Cognitive Computation Lab
-University of Freiburg
-Paulina Friemann <friemanp@cs.uni-freiburg.de>
-Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-
 """
 
 from mptpy.fitting import fitter

@@ -1,14 +1,10 @@
 """ Transformation operations working on MPTs or BMPT words.
 
-Copright 2018 Cognitive Computation Lab
-University of Freiburg
-Paulina Friemann <friemanp@cs.uni-freiburg.de>
-Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-
 """
 
 import re
 from collections import OrderedDict
+
 from mptpy.node import Node
 
 
@@ -27,6 +23,7 @@ def word_to_nodes(word, idx=0):
         root node of the MPT
 
     """
+
     node = Node(word[idx])
 
     if not word.is_leaf(word[idx]):
@@ -34,7 +31,6 @@ def word_to_nodes(word, idx=0):
         node.neg = word_to_nodes(word, idx=idx + 1 + len(node.pos))
 
     return node
-
 
 def to_easy(mpt):
     """ Transforms the MPT to the easy format
@@ -58,7 +54,6 @@ def to_easy(mpt):
         line = " + ".join(lines[key]) + "\n"
         easy += line
     return easy
-
 
 def easy_to_bmpt(lines, sep=' ', leaf_step=0):
     """ Turns the lines of a tree in the easy file format
@@ -93,7 +88,6 @@ def easy_to_bmpt(lines, sep=' ', leaf_step=0):
 
     return tree_str
 
-
 def dict_to_bmpt(tree, sep=" "):
     """ Turns a dictionary of answers and corresponding branches
     to a tree in the formal language
@@ -122,7 +116,6 @@ def dict_to_bmpt(tree, sep=" "):
 
     return res
 
-
 def split_tree(tree):
     """ Splits the dictionary of answers and corresponding branches
     to the positive and the negative subtrees
@@ -136,7 +129,9 @@ def split_tree(tree):
     -------
     tuple
         positive subtree, negative subtree
+
     """
+
     neg_tree = dict()
     pos_tree = dict()
 
@@ -149,7 +144,6 @@ def split_tree(tree):
             subtree[answer[0]].append(branch[1:])
 
     return pos_tree, neg_tree
-
 
 def get_formulae(mpt):
     """ Builds a dictionary of the answers and the
@@ -167,7 +161,10 @@ def get_formulae(mpt):
     """
     lines = {answer : [] for answer in mpt.word.answers}
     def recursive_to_formulae(node, temp=""):
-        """ Recursively compute the branch formulae """
+        """ Recursively compute the branch formulae
+
+        """
+
         if node.leaf:
             lines[node.content] += [temp]
             return None

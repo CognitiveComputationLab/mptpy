@@ -1,15 +1,9 @@
 """ Fit an MPT model and return the calculated metrics.
 Usage: python3 -m fit_model <model_file> <data_file>
 
-Copright 2018 Cognitive Computation Lab
-University of Freiburg
-Paulina Friemann <friemanp@cs.uni-freiburg.de>
-Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-
 """
 
 import argparse
-import sys
 
 from mptpy.tools.parsing import Parser
 import mptpy.fitting.scipy_fit as fitting
@@ -75,7 +69,6 @@ def parse_commandlineargs():
     args = parser.parse_args()
     return vars(args)
 
-
 def run(model_path, data_path, sep=',', header=None, n_optim=10, llik=False):
     """ Draw an MPT modelto the command line
 
@@ -85,7 +78,9 @@ def run(model_path, data_path, sep=',', header=None, n_optim=10, llik=False):
         path to the model file
     data : str
         path to the data file
+
     """
+
     parser = Parser()
     mpt = parser.parse(model_path)
     mpt.draw()
@@ -98,8 +93,6 @@ def run(model_path, data_path, sep=',', header=None, n_optim=10, llik=False):
     for key, value in evaluation.items():
         print("{}: {}".format(key, value))
 
-
 if __name__ == "__main__":
-
     ARGS = parse_commandlineargs()
     run(**ARGS)

@@ -1,6 +1,0 @@
-# Hu_Batchelder_1994
-# S. 33, Figure 2.3
-#
-O5 * O7 		#R1
-O5 * (1 - O7)	#R2
-(1 - O5)		#R3

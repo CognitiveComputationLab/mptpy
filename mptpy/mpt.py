@@ -1,10 +1,5 @@
 """ Data structure for Multinomial Processing Trees (MPTs).
 
-| Copyright 2018 Cognitive Computation Lab
-| University of Freiburg
-| Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-| Paulina Friemann <friemanp@cs.uni-freiburg.de>
-
 """
 
 from mptpy.mpt_word import MPTWord
@@ -27,6 +22,7 @@ class MPT(object):
             either tree in bmpt or as root object.
 
         """
+
         self.subtrees = []
         self.word = None
         self.root = None
@@ -56,7 +52,9 @@ class MPT(object):
         -------
         dict
             {category : formulae}
+
         """
+
         return trans.get_formulae(self)
 
     def max_parameters(self):
@@ -66,7 +64,9 @@ class MPT(object):
         -------
         int
             max number of free parameters
+
         """
+
         return sum([len(subtree) - 1 for subtree in self.subtrees])
 
     def get_levels(self, node, level=0):
@@ -80,7 +80,9 @@ class MPT(object):
 
         level : int, optional
             level from which to start counting
+
         """
+
         levels = {level: [node]}
 
         if not node.leaf:
@@ -99,12 +101,17 @@ class MPT(object):
         ----------
         path : str
             where to save the tree
+
         """
+
         to_print = trans.to_easy(self) if form == "easy" else self.word.str_
         misc.write_iterable_to_file(path, to_print, newline=False)
 
     def draw(self):
-        """ Draw MPT to the command line """
+        """ Draw MPT to the command line
+
+        """
+
         cmd_draw(self)
 
     def __eq__(self, other):
@@ -120,7 +127,10 @@ class MPT(object):
         sep = " "
 
         def dfs(node):
-            """ depth first search """
+            """ depth first search
+
+            """
+
             if node.leaf:
                 return str(node.content)
 

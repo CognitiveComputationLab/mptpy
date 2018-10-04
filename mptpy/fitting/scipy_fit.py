@@ -1,19 +1,13 @@
 """ Wrapper class for MPTinR.
 
-Copright 2018 Cognitive Computation Lab
-University of Freiburg
-Paulina Friemann <friemanp@cs.uni-freiburg.de>
-Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-
 """
 
 import math
 import re
-from collections import OrderedDict
+
 import numpy as np
 
 from mptpy.fitting import fitter
-
 from . import likelihood as lh
 from . import optimize as optim
 
@@ -104,17 +98,32 @@ def fit_mpt(mpt, func, data_path, sep=',', n_optim=10, use_fia=False):
         self._clear_temp_dir("temp/")
         self._compute_parameter_ratios(mpt, "temp/")
     """
-    static_params = dict()
-    if len(mpt.subtrees) > 1:
-        print("kjfdsuhiudshfi")
-        static_params = fitter.compute_parameter_ratios(mpt, fitter.read_data(data_path))
 
     cat_formulae = _get_cat_formulae(mpt)
 
     params = list(set(mpt.word.parameters))
-    kwargs = _setup_args(cat_formulae, params, func, data_path, sep)
-    return _fit(kwargs, static_params, n_optim=n_optim)
+    static_params = [x for x in params if x.startswith('y')]
+    free_params = [x for x in params if not x.startswith('y')]
 
+    kwargs = _setup_args(cat_formulae, free_params, func, data_path, sep)
+    static_params = _determine_static_params_values(cat_formulae, static_params, kwargs['data'])
+    kwargs['static_params'] = static_params
+    return _fit(kwargs, n_optim=n_optim)
+
+def _determine_static_params_values(cat_formulae, static_params, data):
+    data = np.array(data)
+
+    split_index = [[y.replace(' ', '') for y in re.split('[\+\* \(\)]+', x)] for x in cat_formulae]
+    split_index = list(zip(split_index, range(len(split_index))))
+
+    static_assignment = {}
+    for param in static_params:
+        indices_pos = [y for x, y in split_index if param in x]
+        indices_neg = [y for x, y in split_index if '1-{}'.format(param) in x]
+
+        static_assignment[param] = data[indices_pos].sum() / (data[indices_pos].sum() + data[indices_neg].sum())
+
+    return static_assignment
 
 def _fit(kwargs, static_params, n_optim=10):
     """ Fit the model
@@ -136,8 +145,7 @@ def _fit(kwargs, static_params, n_optim=10):
     rmse = _rmse(measures['ass'], kwargs)
 
     result = {
-        'n_params': len(kwargs['param_names']),
-        'n_free_params' : measures['free_params'],
+        'n_params': len(kwargs['free_params']),
         'n_datasets': len(kwargs['data']),
         'func_min': res.fun,
         'LogLik': measures['llik'],
@@ -160,11 +168,12 @@ def _compute_measures(res, kwargs, static_params):
     """
     data = kwargs['data']
     formulae = kwargs['cat_formulae']
-    params = kwargs['param_names']
-    free_params = [x for x in params if x not in static_params]
+
+    free_params = kwargs['free_params']
     measures = {}
-    measures['ass'] = dict(zip(free_params, res.x))
-    measures['ass'].update(static_params)
+    measures['ass'] = dict(list(zip(kwargs['free_params'], res.x)))
+    measures['ass'].update(kwargs['static_params'])
+
     measures['llik'] = lh.log_likelihood(
         formulae, measures['ass'], data, ignore_factorials=False)
     measures['llik-r'] = lh.log_likelihood(
@@ -172,11 +181,10 @@ def _compute_measures(res, kwargs, static_params):
     measures['aic'] = -2 * measures['llik'] + 2 * len(free_params)
     measures['bic'] = -2 * measures['llik'] + \
         np.log(data.sum()) * len(free_params)
-    
+
     measures['G2'] = _g2(data, formulae, measures['ass'])
     measures['aic-r'] = measures['G2'] + 2* len(free_params)
     measures['bic-r'] = measures['G2'] + np.log(data.sum()) * len(free_params)
-    measures['free_params'] = len(free_params)
 
     return measures
 
@@ -224,7 +232,7 @@ def _get_cat_formulae(mpt):
     return values
 
 
-def _setup_args(cat_formulae, params, func, data_path, sep=','):
+def _setup_args(cat_formulae, free_params, func, data_path, sep=','):
     """ Compute the arguments needed for the fitting
 
     Parameters
@@ -246,6 +254,6 @@ def _setup_args(cat_formulae, params, func, data_path, sep=','):
 
     kwargs['cat_formulae'] = cat_formulae
 
-    kwargs['param_names'] = sorted(params)
+    kwargs['free_params'] = sorted(free_params)
 
     return kwargs

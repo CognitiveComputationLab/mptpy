@@ -1,6 +1,0 @@
-# Conrey_Sherman_et al_2005
-# S. 474 - practice, left
-# 
-AC * D * OB + AC * D * (1 - OB) + AC * (1 - D) # None
-(1 - AC) * D + (1 - AC) * (1 - D) * (G - 1)  #plus
-(1 - AC) * (1 - D) * G # minus

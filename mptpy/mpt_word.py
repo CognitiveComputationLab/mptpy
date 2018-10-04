@@ -1,10 +1,5 @@
 """ Class module for MPTs in the BMPT language.
 
-Copright 2018 Cognitive Computation Lab
-University of Freiburg
-Paulina Friemann <friemanp@cs.uni-freiburg.de>
-Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-
 """
 
 import string
@@ -13,7 +8,9 @@ from collections import OrderedDict
 
 
 class MPTWord(object):
-    """ MPT in the BMPT format """
+    """ MPT in the BMPT format
+
+    """
 
     def __init__(self, word, sep=" ", leaf_test=None):
         self.str_ = word
@@ -34,7 +31,9 @@ class MPTWord(object):
         -------
         list
             list of all the answers, with duplicates
+
         """
+
         list_ = self.str_.split(self.sep)
         return list(filter(self.is_leaf, list_))
 
@@ -46,7 +45,9 @@ class MPTWord(object):
         -------
         list
             list of all the parameters, with duplicates
+
         """
+
         list_ = self.str_.split(self.sep)
         return list(filterfalse(self.is_leaf, list_))
 
@@ -57,7 +58,9 @@ class MPTWord(object):
         -------
         str
             a b 1 0 c 1 0 -> p0 p1 1 0 p2 1 0
+
         """
+
         abst = ""
 
         # this retains the order
@@ -86,7 +89,9 @@ class MPTWord(object):
 
         neg_subtree : str
             String representation of the negative subtree.
+
         """
+
         expected_outcomes = 1
         pos = []
         split_string = self.str_.split()

@@ -1,16 +1,9 @@
 """ Optimize an MPT model and return the optimal model.
 Usage: python3 -m optimize_mpt <model_file> <data_file>
 
-Copright 2018 Cognitive Computation Lab
-University of Freiburg
-Paulina Friemann <friemanp@cs.uni-freiburg.de>
-Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-
 """
 
-import re
 import argparse
-import sys
 
 from mptpy.tools.parsing import Parser
 from mptpy.optimization.optimize import Optimizer
@@ -86,7 +79,6 @@ def parse_commandlineargs():
     args = parser.parse_args()
     return vars(args)
 
-
 def run(model_path, data_path, ignore=None, sep=',', header=None, n_optim=10, llik=False):
     """ Draw an MPT modelto the command line
 
@@ -107,16 +99,13 @@ def run(model_path, data_path, ignore=None, sep=',', header=None, n_optim=10, ll
     func = "llik" if llik else "rmse"
 
     optimizer = Optimizer(mpt, data_path, name, sep=sep, func=func, ignore_params=ignore)
-    
-    #optimizer.init_deletion()
+
+    optimizer.init_deletion()
     optimizer.random_search()
 
     # Print the result
     print()
 
-
-
 if __name__ == "__main__":
-
     ARGS = parse_commandlineargs()
     run(**ARGS)

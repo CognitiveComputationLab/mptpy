@@ -1,17 +1,12 @@
 """ Draw an MPT model to the command line.
 Usage: python3 -m visualize_mpt <model_file>
 
-Copright 2018 Cognitive Computation Lab
-University of Freiburg
-Paulina Friemann <friemanp@cs.uni-freiburg.de>
-Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-
 """
 
 
 import sys
 
-from mptpy.tools.parsing import EasyParser
+from mptpy.tools.parsing import Parser
 
 
 def run(file):
@@ -21,15 +16,15 @@ def run(file):
     ----------
     file : str
         path to the model file
+
     """
-    parser = EasyParser()
+
+    parser = Parser()
     mpt = parser.parse(file)
     mpt.draw()
     print(mpt)
 
-
 if __name__ == "__main__":
-
     if len(sys.argv) < 2:
         print("Usage: python3 -m visualize_mpt <model_file>")
         exit()

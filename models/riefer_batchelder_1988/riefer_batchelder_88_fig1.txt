@@ -1,8 +1,0 @@
-# Riefer Batchelder 1988
-# S. 334, Fig 1: Tree diagram for Greeno, James, DaPolito, and Poison's
-(1978) model for proaetive inhibition. 
-# 
-p * q * r 				# BC
-p * q * (1 - r)			# B-C
-p * (1 -q) * r 			# -BC
-p * (1 -q) * (1 - r) + (1 - p)	# -(BC)

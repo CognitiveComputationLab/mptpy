@@ -1,29 +1,24 @@
 """ Data structure for Multinomial Processing Trees (MPTs) nodes.
 
-| Copyright 2018 Cognitive Computation Lab
-| University of Freiburg
-| Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-| Paulina Friemann <friemanp@cs.uni-freiburg.de>
-
 """
 
 
 class Node(object):
-    """ Class for MPT nodes """
+    """ Class for MPT nodes
 
-    def __init__(
-            self,
-            content,
-            pos=None,
-            neg=None
-    ):
+    """
+
+    def __init__(self, content, pos=None, neg=None):
         self.content = content
         self.pos = pos
         self.neg = neg
 
     @property
     def leaf(self):
-        """ Whether node is leaf """
+        """ Whether node is leaf
+
+        """
+
         return self.pos is None
 
     def answers(self):
@@ -33,7 +28,9 @@ class Node(object):
         -------
         list
             Answer categories in subtree
+
         """
+
         if self.leaf:
             return [self.content]
 
@@ -47,7 +44,9 @@ class Node(object):
         -------
         int
             number of nodes
+
         """
+
         if self.leaf:
             return 1
 

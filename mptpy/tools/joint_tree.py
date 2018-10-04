@@ -1,10 +1,6 @@
 """ This scripts implements an algorithm to convert joint models into
 equivalent single-tree models.
 
-Copyright 2017 Cognitive Computation Lab
-University of Freiburg
-Nicolas Riesterer <riestern@tf.uni-freiburg.de>
-
 """
 
 import math
@@ -26,6 +22,7 @@ def join(args, prefix_no=0):
     -------
     MPT
         joint mpt
+
     """
 
     if len(args) <= 1:

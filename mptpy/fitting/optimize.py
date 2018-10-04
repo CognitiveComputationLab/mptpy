@@ -1,9 +1,5 @@
 """ Script containing functions related to the optimization of MPTs.
 
-| Copyright 2017 Cognitive Computation Lab
-| University of Freiburg
-| Nicolas Riesterer <riestern@tf.uni-freiburg.de>
-
 """
 
 import numpy as np
@@ -105,7 +101,8 @@ def optim_rmse(param_values, cat_formulae, param_names, data):
     preds = data.sum() * cat_probs
     return np.sqrt(np.mean((preds - data) ** 2))
 
-def fit_classical(fun, cat_formulae, param_names, data, static_params=None, n_optim=100):
+
+def fit_classical(fun, cat_formulae, free_params, static_params, data, n_optim=10):
     """ Fits an MPT model using classical function-based optimization routines
     implemented in the Scipy module.
 
@@ -175,7 +172,7 @@ def fit_classical(fun, cat_formulae, param_names, data, static_params=None, n_op
             x0=init_params,
             args=(cat_formulae, free_params, data, static_params),
             method='L-BFGS-B',
-            bounds=[(0.01, 0.99)] * len(init_params))
+            bounds=[(0.000001, 0.999999)] * len(init_params))
 
         # In case of success, compare the result with the best observed so far
         # and update if better.

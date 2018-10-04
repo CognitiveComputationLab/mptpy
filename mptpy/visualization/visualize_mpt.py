@@ -1,10 +1,5 @@
 """ Module for visualizations of MPTs.
 
-Copright 2018 Cognitive Computation Lab
-University of Freiburg
-Paulina Friemann <friemanp@cs.uni-freiburg.de>
-Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-
 """
 
 
@@ -17,6 +12,7 @@ def to_tikz(mpt):
 
     code_path : str
         specify where to save the tikz code
+
     """
 
     def recursive_translation(node):
@@ -29,7 +25,6 @@ def to_tikz(mpt):
 
     return r"\Tree " + recursive_translation(mpt.root)
 
-
 def cmd_draw(mpt):
     """ Draw the mpt to the command line
 
@@ -37,12 +32,12 @@ def cmd_draw(mpt):
     ----------
     mpt : MPT
         MPT to be drawn
-    """
-    #word = mpt
 
+    """
+
+    #word = mpt
     #subtree = transformations.nested_list(word)
     _dfs_print(mpt.root)
-
 
 def _dfs_print(node, depth=0):
     """ Prints a tree recursively via depth first search
@@ -53,6 +48,7 @@ def _dfs_print(node, depth=0):
         tree as a nested list
 
     """
+
     to_print = '\t' * depth
 
     if node.leaf:  # leaf

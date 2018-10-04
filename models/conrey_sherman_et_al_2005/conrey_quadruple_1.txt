@@ -1,5 +1,0 @@
-# Conrey_Sherman_et al_2005
-# S. 474 - compatible, left
-# 
-AC * D * OB + AC * D * (1 - OB) + AC * (1 - D) + (1 - AC) * D + (1 - AC) * (1 - D) * (1 - G)		# plus
-(1 - AC) * (1 - D) * G 				# minus

@@ -1,15 +1,11 @@
 """ Interface for the fitting and evaluation of MPTs.
 
-Copright 2018 Cognitive Computation Lab
-University of Freiburg
-Paulina Friemann <friemanp@cs.uni-freiburg.de>
-Nicolas Riesterer <riestern@cs.uni-freiburg.de>
-
 """
 
 import os
 
 import numpy as np
+
 from mptpy.tools import misc
 
 
