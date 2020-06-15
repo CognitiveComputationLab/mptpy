@@ -51,7 +51,8 @@ def optim_llik(param_values, cat_formulae, param_names, data, static_params):
         'Static parameter found in constructed assignment dictionary.'
     ass.update(static_params)
 
-    llik = lh.log_likelihood(cat_formulae, ass, data, ignore_factorials=True)
+    cat_probs = lh.category_probabilities(cat_formulae, ass)
+    llik = lh.log_likelihood(cat_probs, data, ignore_factorials=True)
     return -1 * llik
 
 

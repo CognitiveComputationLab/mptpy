@@ -110,7 +110,7 @@ def fit_mpt(mpt, func, data_path, sep=',', n_optim=10, use_fia=False):
 def _determine_static_params_values(cat_formulae, static_params, data):
     data = np.array(data)
 
-    split_index = [[y.replace(' ', '') for y in re.split('[\+\* \(\)]+', x)] for x in cat_formulae]
+    split_index = [[y.replace(' ', '') for y in re.split(r'[\+\* \(\)]+', x)] for x in cat_formulae]
     split_index = list(zip(split_index, range(len(split_index))))
 
     static_assignment = {}
@@ -133,13 +133,10 @@ def _fit(kwargs, n_optim=10):
     """
 
     res, errs = optim.fit_classical(**kwargs, n_optim=n_optim)
-    print(res)
+    #print(res)
 
     # Compute the correct criteria (without ignoring factorials)
     measures = _compute_measures(res, kwargs)
-
-    # Compute the RMSE
-    rmse = _rmse(measures['ass'], kwargs)
 
     result = {
         'n_params': len(kwargs['free_params']),
@@ -151,8 +148,10 @@ def _fit(kwargs, n_optim=10):
         'BIC': measures['bic'],
         'AIC-R': measures['aic-r'],
         'BIC-R': measures['bic-r'],
-        'RMSE': rmse,
+        'RMSE': measures['rmse'],
         'G2' : measures['G2'],
+        'FIA': -999,
+        'aRMSE' : measures['aRMSE'],
         'OptimErrorRatio': errs * 100,
         'ParamAssignment': measures['ass']
     }
@@ -171,45 +170,55 @@ def _compute_measures(res, kwargs):
     measures['ass'] = dict(list(zip(kwargs['free_params'], res.x)))
     measures['ass'].update(kwargs['static_params'])
 
+    probabilities = lh.category_probabilities(formulae, measures['ass'])
+    predicted_data = predict_data(probabilities, data.sum())
+
+    # Compute the RMSE
+    measures['rmse'] = _rmse(data, predicted_data)
+
     measures['llik'] = lh.log_likelihood(
-        formulae, measures['ass'], data, ignore_factorials=False)
+        probabilities, data, ignore_factorials=False)
     measures['llik-r'] = lh.log_likelihood(
-        formulae, measures['ass'], data, ignore_factorials=True)
+        probabilities, data, ignore_factorials=True)
     measures['aic'] = -2 * measures['llik'] + 2 * len(free_params)
     measures['bic'] = -2 * measures['llik'] + \
         np.log(data.sum()) * len(free_params)
 
-    measures['G2'] = _g2(data, formulae, measures['ass'])
+    measures['G2'] = _g2(data, predicted_data)
     measures['aic-r'] = measures['G2'] + 2* len(free_params)
     measures['bic-r'] = measures['G2'] + np.log(data.sum()) * len(free_params)
 
+    sse = np.sum((data - predicted_data)**2)
+    if (len(data) -1 -len(free_params)) > 0:
+        measures['aRMSE'] = np.sqrt(sse / (len(data) - len(free_params)))
+    else:
+        # TODO
+        measures['aRMSE'] = np.sqrt(sse / (len(data)))
+
     return measures
 
-def _g2(data, formulae, assignment):
 
-    probs = np.array([lh.eval_formula(x, assignment) for x in formulae])
+def predict_data(probabilities, N):
+    preds = probabilities * N
+    return preds
 
-    assert math.isclose(np.sum(probs), 1)
 
-    g2 = 2 * np.sum(data * np.log(data / (data.sum() * probs)))
+def _g2(data, predict_data):
+    g2 = 2 * np.sum(data * np.log(data / predict_data))
     return g2
 
-def _rmse(ass, kwargs):
+def _rmse(observed, predicted):
     """ Compute the RMSE
 
     Parameters
     ----------
-    ass : dict
-        Parameter Assignment
+    observed : np array
 
-    kwargs : dict
+    predicted : np array
 
     """
-    probs = np.array([lh.eval_formula(f, ass)
-                      for f in kwargs['cat_formulae']])
-    preds = probs * kwargs['data']
-    rmse = np.sqrt(np.mean((preds - kwargs['data']) ** 2))
-    return rmse
+    #return np.sqrt(np.mean((predicted - observed) ** 2))
+    return np.sqrt((np.sum((predicted - observed) ** 2)) / len(predicted))
 
 
 def _get_cat_formulae(mpt):

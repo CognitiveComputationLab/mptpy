@@ -2,7 +2,15 @@
 
 """
 
+import math
+
 import numpy as np
+
+
+def category_probabilities(cat_formulae, assignment):
+    cat_probs = [eval_formula(f, assignment) for f in cat_formulae]
+    assert math.isclose(np.sum(cat_probs), 1)
+    return np.array(cat_probs)
 
 
 def eval_formula(formula, assignment):
@@ -76,10 +84,8 @@ def likelihood(cat_formulae, assignment, observations):
     assert len(cat_formulae) == len(observations)
 
     # Evaluate the formulae
-    cat_probs = []
-    for cat_formula in cat_formulae:
-        cat_probs.append(eval_formula(cat_formula, assignment))
-    cat_probs = np.array(cat_probs)
+    cat_probs = category_probabilities(cat_formulae, assignment)
+    
 
     # Compute the likelihood
     factorials = np.array([np.math.factorial(x) for x in observations])
@@ -114,7 +120,7 @@ def log_factorial(val):
 
 
 def log_likelihood(
-        cat_formulae, assignment, observations, ignore_factorials=False):
+        cat_probs, observations, ignore_factorials=False):
     """ Computes the logarithmic likelihood of the MPT model.
 
     Parameters
@@ -150,10 +156,6 @@ def log_likelihood(
     True
 
     """
-
-    # Evaluate the formulae
-    cat_probs = [eval_formula(f, assignment) for f in cat_formulae]
-
     observations = np.array(observations)
 
     # pylint: disable=no-member
