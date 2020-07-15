@@ -3,6 +3,7 @@
 """
 
 import math
+import re
 
 import numpy as np
 
@@ -43,6 +44,9 @@ def eval_formula(formula, assignment):
     expression = formula
     for param, value in sorted(assignment.items(), reverse=True):
         expression = expression.replace(param, str(value))
+
+    # remove leading 0's
+    expression = re.sub(r'\d-0\d', lambda x: re.sub(r'-0', '-', x[0]), n)
 
     # pylint: disable=eval-used
     return eval(expression)
