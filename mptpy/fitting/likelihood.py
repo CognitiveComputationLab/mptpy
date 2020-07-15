@@ -46,7 +46,7 @@ def eval_formula(formula, assignment):
         expression = expression.replace(param, str(value))
 
     # remove leading 0's
-    expression = re.sub(r'\d-0\d', lambda x: re.sub(r'-0', '-', x[0]), n)
+    expression = re.sub(r'\d-0\d', lambda x: re.sub(r'-0', '-', x[0]), expression)
 
     # pylint: disable=eval-used
     return eval(expression)
